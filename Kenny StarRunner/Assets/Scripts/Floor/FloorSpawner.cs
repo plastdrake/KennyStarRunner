@@ -1,18 +1,19 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FloorSpawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public GameObject tilePrefab; // En enda prefab
+    public GameObject straightForward;
+    public GameObject straightRight;
+    public GameObject turnLeft;
+    public GameObject turnRight;
     public GameObject referenceObject;
 
     public float timeOffset = 0.4f;
-    private float startTime;
-    private Vector3 direction = Vector3.forward;
-    private Vector3 previousPosition;
-    private float lastTileLength = 10f;
 
+    private Vector3 previousPosition;
+    private Vector3 direction = Vector3.forward;
+    private float tileLength = 10f;
+    private float startTime;
     private bool lastWasCorner = false;
 
     void Start()
@@ -25,46 +26,35 @@ public class FloorSpawner : MonoBehaviour
     {
         if (Time.time - startTime > timeOffset)
         {
-            bool spawnCorner = Random.value < 0.2f && !lastWasCorner; // 20% chans, ej två i rad
-            lastWasCorner = spawnCorner;
+            GameObject prefabToSpawn = GetStraightPrefab(direction);
 
-            Vector3 spawnPos = previousPosition + direction * (lastTileLength / 2f);
-
-            float length = GetRandomLength();
-            Vector3 scale = new Vector3(3, 1, length);
-
-            Quaternion rotation = Quaternion.identity;
-
-            if (spawnCorner)
+            if (Random.value < 0.2f && !lastWasCorner)
             {
-                Vector3 oldDir = direction;
+                bool turnRightNext = Random.value > 0.5f;
+                prefabToSpawn = turnRightNext ? turnRight : turnLeft;
 
-                // Sväng höger eller vänster
-                bool turnRight = Random.value > 0.5f;
-                direction = GetTurnedDirection(direction, turnRight);
-                rotation = GetRotationFromDirection(direction);
-
-                // Justera position för hörnbytet
-                spawnPos += direction * (length / 2f);
+                direction = GetTurnedDirection(direction, turnRightNext);
+                lastWasCorner = true;
             }
             else
             {
-                spawnPos += direction * (length / 2f);
+                lastWasCorner = false;
             }
 
-            GameObject tile = Instantiate(tilePrefab, spawnPos, rotation);
-            tile.transform.localScale = scale;
-
+            Vector3 spawnPos = previousPosition + direction * tileLength;
+            Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
             previousPosition = spawnPos;
-            lastTileLength = length;
+
             startTime = Time.time;
         }
     }
 
-    float GetRandomLength()
+    GameObject GetStraightPrefab(Vector3 dir)
     {
-        float[] options = { 3f, 6f, 10f };
-        return options[Random.Range(0, options.Length)];
+        if (dir == Vector3.forward || dir == Vector3.back)
+            return straightForward;
+        else
+            return straightRight;
     }
 
     Vector3 GetTurnedDirection(Vector3 current, bool right)
@@ -73,15 +63,6 @@ public class FloorSpawner : MonoBehaviour
         if (current == Vector3.right) return right ? Vector3.back : Vector3.forward;
         if (current == Vector3.back) return right ? Vector3.left : Vector3.right;
         if (current == Vector3.left) return right ? Vector3.forward : Vector3.back;
-        return Vector3.forward;
-    }
-
-    Quaternion GetRotationFromDirection(Vector3 dir)
-    {
-        if (dir == Vector3.forward) return Quaternion.Euler(0, 0, 0);
-        if (dir == Vector3.right) return Quaternion.Euler(0, 90, 0);
-        if (dir == Vector3.back) return Quaternion.Euler(0, 180, 0);
-        if (dir == Vector3.left) return Quaternion.Euler(0, -90, 0);
-        return Quaternion.identity;
+        return current;
     }
 }
