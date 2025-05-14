@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68560581ec21e2d4ab35f73c65aee4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  straightForward: {fileID: 84598921148237557, guid: 27a922c9f1717054fb64ce94fd9935f0, type: 3}
+  straightForward: {fileID: 1496594031166973003, guid: b8eeecf428d2ca7489ae7c560dbfd048, type: 3}
   straightRight: {fileID: 2850851380824672512, guid: df37ee95f30dadc4e9a1082014da989d, type: 3}
   turnLeft: {fileID: 7709087412385115100, guid: cdfc265e3a9eafb4aafb2770d448ade6, type: 3}
   turnRight: {fileID: 9121867362947414948, guid: 82bc003d645218d4bb9738f9d281ab7b, type: 3}
@@ -592,9 +592,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1259706054}
-  trailDistance: 5
-  heightOffset: 3
-  cameraDelay: 0.02
+  localOffset: {x: 0, y: 5, z: -10}
+  followSpeed: 5
 --- !u!1 &84598920958468875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7709087412385115100, guid: cdfc265e3a9eafb4aafb2770d448ade6, type: 3}
