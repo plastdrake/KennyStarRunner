@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FloorSpawner : MonoBehaviour
 {
@@ -26,25 +26,34 @@ public class FloorSpawner : MonoBehaviour
     {
         if (Time.time - startTime > timeOffset)
         {
-            GameObject prefabToSpawn = GetStraightPrefab(direction);
+            GameObject prefabToSpawn;
+            Vector3 spawnPos;
 
-            if (Random.value < 0.2f && !lastWasCorner)
+            bool spawnCorner = Random.value < 0.2f && !lastWasCorner;
+
+            if (spawnCorner)
             {
                 bool turnRightNext = Random.value > 0.5f;
                 prefabToSpawn = turnRightNext ? turnRight : turnLeft;
 
+                Vector3 oldDirection = direction;
                 direction = GetTurnedDirection(direction, turnRightNext);
+
+                // Här är magin ✨: medelvärde mellan gamla och nya riktningen
+                Vector3 offset = (oldDirection + direction).normalized * (tileLength / 2f);
+                spawnPos = previousPosition + offset;
+
                 lastWasCorner = true;
             }
             else
             {
+                prefabToSpawn = GetStraightPrefab(direction);
+                spawnPos = previousPosition + direction * tileLength;
                 lastWasCorner = false;
             }
 
-            Vector3 spawnPos = previousPosition + direction * tileLength;
             Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
             previousPosition = spawnPos;
-
             startTime = Time.time;
         }
     }
