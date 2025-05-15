@@ -31,33 +31,46 @@ public class FloorSpawner : MonoBehaviour
 
             bool randomChance = Random.value < 0.2f;
             bool spawnCorner = false;
+            bool turnRightNext = Random.value > 0.5f;
+
+            Quaternion rotation = Quaternion.identity;
             if (randomChance && !lastWasCorner)
                 spawnCorner = true;
 
             if (spawnCorner)
             {
-                bool turnRightNext = Random.value > 0.5f;
-                if (turnRightNext)
-                    prefabToSpawn = turnRight;
-                else
-                    prefabToSpawn = turnLeft;
+                prefabToSpawn = turnRight;
 
                 Vector3 oldDirection = direction;
                 direction = GetTurnedDirection(direction, turnRightNext);
                 Vector3 offset = (oldDirection + direction).normalized * (tileLength / 2f);
                 spawnPos = previousPosition + offset;
                 lastWasCorner = true;
+
+                float angle = 0f;
+
+                if (direction == Vector3.forward)
+                    angle = turnRightNext ? -90f : 90f;
+                
+                else if (direction == Vector3.back)
+                    angle = turnRightNext ? 90f : -90f;
+                
+
+                rotation = Quaternion.Euler(0, angle, 0);
             }
             else
             {
                 prefabToSpawn = GetStraightPrefab(direction);
+
                 spawnPos = previousPosition + direction * tileLength;
                 lastWasCorner = false;
             }
 
-            Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+
+            Instantiate(prefabToSpawn, spawnPos, rotation);
             previousPosition = spawnPos;
             startTime = Time.time;
+            
         }
     }
 
@@ -65,43 +78,27 @@ public class FloorSpawner : MonoBehaviour
     {
         if (dir == Vector3.forward || dir == Vector3.back)
             return straightForward;
-        else
-            return straightRight;
+
+        return straightRight;
     }
 
     Vector3 GetTurnedDirection(Vector3 current, bool right)
     {
         if (current == Vector3.forward)
-        {
-            if (right)
-                return Vector3.right;
-            else
-                return Vector3.left;
-        }
-        else if (current == Vector3.right)
-        {
-            if (right)
-                return Vector3.back;
-            else
-                return Vector3.forward;
-        }
-        else if (current == Vector3.back)
-        {
-            if (right)
-                return Vector3.left;
-            else
-                return Vector3.right;
-        }
-        else if (current == Vector3.left)
-        {
-            if (right)
-                return Vector3.forward;
-            else
-                return Vector3.back;
-        }
-        else
-        {
-            return current;
-        }
+            return right ? Vector3.right : Vector3.left;
+        
+
+        if (current == Vector3.right)
+            return right ? Vector3.back : Vector3.forward;
+        
+
+        if (current == Vector3.back)
+            return right ? Vector3.left : Vector3.right;
+        
+
+        if (current == Vector3.left) 
+            return right ? Vector3.forward : Vector3.back;
+
+        return current;
     }
 }
