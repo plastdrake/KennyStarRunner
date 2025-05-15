@@ -29,20 +29,23 @@ public class FloorSpawner : MonoBehaviour
             GameObject prefabToSpawn;
             Vector3 spawnPos;
 
-            bool spawnCorner = Random.value < 0.2f && !lastWasCorner;
+            bool randomChance = Random.value < 0.2f;
+            bool spawnCorner = false;
+            if (randomChance && !lastWasCorner)
+                spawnCorner = true;
 
             if (spawnCorner)
             {
                 bool turnRightNext = Random.value > 0.5f;
-                prefabToSpawn = turnRightNext ? turnRight : turnLeft;
+                if (turnRightNext)
+                    prefabToSpawn = turnRight;
+                else
+                    prefabToSpawn = turnLeft;
 
                 Vector3 oldDirection = direction;
                 direction = GetTurnedDirection(direction, turnRightNext);
-
-                // Här är magin ✨: medelvärde mellan gamla och nya riktningen
                 Vector3 offset = (oldDirection + direction).normalized * (tileLength / 2f);
                 spawnPos = previousPosition + offset;
-
                 lastWasCorner = true;
             }
             else
@@ -68,10 +71,37 @@ public class FloorSpawner : MonoBehaviour
 
     Vector3 GetTurnedDirection(Vector3 current, bool right)
     {
-        if (current == Vector3.forward) return right ? Vector3.right : Vector3.left;
-        if (current == Vector3.right) return right ? Vector3.back : Vector3.forward;
-        if (current == Vector3.back) return right ? Vector3.left : Vector3.right;
-        if (current == Vector3.left) return right ? Vector3.forward : Vector3.back;
-        return current;
+        if (current == Vector3.forward)
+        {
+            if (right)
+                return Vector3.right;
+            else
+                return Vector3.left;
+        }
+        else if (current == Vector3.right)
+        {
+            if (right)
+                return Vector3.back;
+            else
+                return Vector3.forward;
+        }
+        else if (current == Vector3.back)
+        {
+            if (right)
+                return Vector3.left;
+            else
+                return Vector3.right;
+        }
+        else if (current == Vector3.left)
+        {
+            if (right)
+                return Vector3.forward;
+            else
+                return Vector3.back;
+        }
+        else
+        {
+            return current;
+        }
     }
 }
