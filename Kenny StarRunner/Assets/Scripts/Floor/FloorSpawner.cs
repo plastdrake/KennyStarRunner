@@ -39,24 +39,76 @@ public class FloorSpawner : MonoBehaviour
 
             if (spawnCorner)
             {
-                prefabToSpawn = turnRight;
+                prefabToSpawn = turnRightNext ? turnRight : turnLeft;
 
                 Vector3 oldDirection = direction;
                 direction = GetTurnedDirection(direction, turnRightNext);
                 Vector3 offset = (oldDirection + direction).normalized * (tileLength / 2f);
                 spawnPos = previousPosition + offset;
-                lastWasCorner = true;
+                if(prefabToSpawn == turnRight)
+                {
+                    //float zOffset = spawnPos.z >= 0 ? 3f : -3f;
+                    //spawnPos += new Vector3(0, 0, zOffset);
+                }
+                else
+                {
+                    //float zOffsetZ = spawnPos.z >= 0 ? 0f : -3f;
+                    //float zOffsetX = spawnPos.z >= 0 ? 3f : -3f;
+                    //spawnPos += new Vector3(zOffsetX, 0, zOffsetZ);
+                }
+
+
+                    lastWasCorner = true;
 
                 float angle = 0f;
 
                 if (direction == Vector3.forward)
+                {
+                    Debug.Log("Forward");
                     angle = turnRightNext ? -90f : 90f;
-                
+                    if(prefabToSpawn == turnRight)
+                    {
+                        spawnPos += new Vector3(-3f, 0, 0);
+                    }
+                }
                 else if (direction == Vector3.back)
+                {
+                    Debug.Log("Back");
                     angle = turnRightNext ? 90f : -90f;
-                
+                    if (prefabToSpawn == turnRight)
+                    {
+                        spawnPos += new Vector3(3f, 0, 0);
+                    }
+                    else
+                        spawnPos += new Vector3(-3f, 0, 0);
+                }
+                else if(direction == Vector3.right)
+                {
+                    Debug.Log("Right");
+                    if (prefabToSpawn == turnRight)
+                    {
+                        spawnPos += new Vector3(0, 0, 3);
+                    }
+                }
+                else if (direction == Vector3.left)
+                {
+                    Debug.Log("Left");
+                    if (prefabToSpawn == turnLeft)
+                    {
+                        Debug.Log("Back");
+                        spawnPos += new Vector3(0, 0, 3);
+                    }
+                }
+                else
+                {
+                    if (prefabToSpawn == turnRight)
+                    {
+                        spawnPos += new Vector3(0, 0, -3f);
+                    }
+                }
 
-                rotation = Quaternion.Euler(0, angle, 0);
+
+                    rotation = Quaternion.Euler(0, angle, 0);
             }
             else
             {
