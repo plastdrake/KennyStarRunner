@@ -52,6 +52,7 @@ public class FloorSpawner : MonoBehaviour
 
                 if (direction == Vector3.forward)
                 {
+                    Debug.Log("Forward");
                     angle = turnRightNext ? -90f : 90f;
                     if(prefabToSpawn == turnRight)
                     {
@@ -59,12 +60,12 @@ public class FloorSpawner : MonoBehaviour
                     }
                     else if (prefabToSpawn == turnLeft)
                     {
-                        Debug.Log("Forward");
                         spawnPos += new Vector3(3f, 0, 0);
                     }
                 }
                 else if (direction == Vector3.back)
                 {
+                    Debug.Log("Back");
                     angle = turnRightNext ? 90f : -90f;
                     if (prefabToSpawn == turnRight)
                     {
@@ -72,40 +73,46 @@ public class FloorSpawner : MonoBehaviour
                     }
                     else if (prefabToSpawn == turnLeft)
                     {
-                        Debug.Log("Back");
                         spawnPos += new Vector3(-3f, 0, 0);
                     }
                 }
                 else if(direction == Vector3.right)
                 {
+                    Debug.Log("Right");
+                    //angle = turnRightNext ? 90f : -90f;
                     if (prefabToSpawn == turnRight)
                     {
                         spawnPos += new Vector3(0, 0, 3);
                     }
                     else if (prefabToSpawn == turnLeft)
                     {
-                        Debug.Log("Right");
                         spawnPos += new Vector3(0, 0, -3);
                     }
                 }
                 else if (direction == Vector3.left)
                 {
+                    Debug.Log("Left");
+                    //angle = turnRightNext ? 90f : -90f;
                     if (prefabToSpawn == turnRight)
                     {
                         spawnPos += new Vector3(0, 0, -3);
                     }
                     else if(prefabToSpawn == turnLeft)
                     {
-                        Debug.Log("Left");
                         spawnPos += new Vector3(0, 0, 3);
                     }
                 }
                 else
                 {
+                    //angle = turnRightNext ? 90f : -90f;
+                    Debug.Log("Hej");
                     if (prefabToSpawn == turnRight)
                     {
-                        spawnPos += new Vector3(0, 0, -3f);
+                        Debug.Log("Wierd right");
                     }
+                    else if (prefabToSpawn == turnLeft)
+                        Debug.Log("Wierd left");
+                    //angle = turnRightNext ? 180f : -180f;
                 }
 
 
@@ -114,7 +121,6 @@ public class FloorSpawner : MonoBehaviour
             else
             {
                 prefabToSpawn = GetStraightPrefab(direction);
-
                 spawnPos = previousPosition + direction * tileLength;
                 lastWasCorner = false;
             }
@@ -124,6 +130,9 @@ public class FloorSpawner : MonoBehaviour
             previousPosition = spawnPos;
             startTime = Time.time;
             
+            //spawnPos = new Vector3();
+            //prefabToSpawn = null;
+            //direction = new Vector3();
         }
     }
 
