@@ -6112,10 +6112,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2740665514157406497}
   - component: {fileID: 2065492706366399143}
-  - component: {fileID: 3714100336472216615}
   - component: {fileID: -3079203872209573400}
+  - component: {fileID: 3714100336472216615}
   - component: {fileID: 3381699962868917759}
   - component: {fileID: 1493220262714431189}
+  - component: {fileID: 4264466471647303013}
   m_Layer: 0
   m_Name: Kenny
   m_TagString: Player
@@ -6185,18 +6186,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3714100336472216615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9194665501881875835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bf93e3c9582f6349abe66a408a45997, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-3079203872209573400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6217,6 +6206,18 @@ MonoBehaviour:
   turnSpeed: 10
   camFrontLocalPos: {x: 0, y: 3, z: 6}
   camFrontLocalEuler: {x: 10, y: 180, z: 0}
+--- !u!114 &3714100336472216615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194665501881875835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf93e3c9582f6349abe66a408a45997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!143 &3381699962868917759
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6235,13 +6236,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 2.4
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &1493220262714431189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6255,6 +6256,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 100
+--- !u!114 &4264466471647303013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194665501881875835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb2ce6e51e5f33469dee27209125de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1493220262714431189}
+  animator: {fileID: 2065492706366399143}
+  movementScript: {fileID: -3079203872209573400}
 --- !u!1 &9196599406694236889
 GameObject:
   m_ObjectHideFlags: 0
