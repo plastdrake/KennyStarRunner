@@ -6033,6 +6033,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 514154125687094689}
   - {fileID: 5330636943058144652}
   - {fileID: 7690199632007543153}
   - {fileID: 5637370393135652916}
@@ -6056,7 +6057,6 @@ Transform:
   - {fileID: 7360979872141817580}
   - {fileID: 6357738185086036575}
   - {fileID: 6485291775960283097}
-  - {fileID: 514154125687094689}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2065492706366399143
@@ -6110,6 +6110,9 @@ MonoBehaviour:
   jumpForce: 11
   doubleJumpForce: 11
   gravity: 18
+  turnSpeed: 10
+  camFrontLocalPos: {x: 0, y: 3, z: 6}
+  camFrontLocalEuler: {x: 10, y: 180, z: 0}
 --- !u!143 &3381699962868917759
 CharacterController:
   m_ObjectHideFlags: 0
