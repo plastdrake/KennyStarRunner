@@ -1,20 +1,23 @@
 using Assets.Scripts.Store;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
+using UnityEngine.UI;
 
 public class BuyItem : MonoBehaviour
 {
 
-    [SerializeField] private Powerup _powerup;
+    [SerializeField] private PowerupManager powerupManager;
+    [SerializeField] private Powerup powerupToBuy;
+    [SerializeField] private Sprite sprite;
 
-    public void BuySelectedItem_Coin()
+    public void Buy()
     {
-        _powerup.SetPowerup(2,1, Item.ItemType.Coin);
-        Debug.Log("Clicked Coin");
-    }
-
-    public void BuySelectedItem_Heart()
-    {
-        _powerup.SetPowerup(1,2, Item.ItemType.Heart);
-        Debug.Log("Clicked Heart");
+        powerupManager.SelectPowerup(powerupToBuy);
+        GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
+        //GetComponentInChildren<TextMeshProUGUI>().color = new Color(0, 0.6f, 0);
+        GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+        GetComponentInChildren<TextMeshProUGUI>().fontWeight = FontWeight.Light;
+        GetComponent<Image>().sprite = sprite;
     }
 }

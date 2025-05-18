@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 877574960067359486}
-  - component: {fileID: 5421153996560757458}
   m_Layer: 0
   m_Name: Powerup
   m_TagString: Untagged
@@ -38,21 +37,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -51.6}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5421153996560757458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 41264145905725861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c53a57544882ba54da028d228fe76fec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplier: 2
-  Amount: 1
-  TypeOfItem: 1
 --- !u!1 &989818769913508299
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +558,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656dd85692750b349bc4f59deefafbb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _powerup: {fileID: 0}
+  powerupManager: {fileID: 0}
+  powerupToBuy: {fileID: 0}
+  sprite: {fileID: 0}
 --- !u!1001 &6448949779952407522
 PrefabInstance:
   m_ObjectHideFlags: 0
