@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7193123930752152119}
   - component: {fileID: 6992258982294524297}
   - component: {fileID: 755444173216148811}
-  - component: {fileID: 3638788340144759336}
   - component: {fileID: 1046023809798690866}
   - component: {fileID: 2810815283783666545}
   - component: {fileID: 1786108612048954418}
+  - component: {fileID: 4259653655867703871}
   m_Layer: 0
   m_Name: ExplosiveBarrel
   m_TagString: Untagged
@@ -90,27 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3638788340144759336
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2489861645466249486}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1046023809798690866
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -167,3 +146,24 @@ MonoBehaviour:
   collisionDamage: {fileID: 2810815283783666545}
   explosionEffectPrefab: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
   explosionScale: 5
+--- !u!135 &4259653655867703871
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2489861645466249486}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.25
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
