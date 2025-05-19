@@ -12,7 +12,7 @@ public class TileEndTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            StartCoroutine(DelayedDestroy(1.0f));
+            StartCoroutine(DelayedDestroy(2.0f));
     }
     private System.Collections.IEnumerator DelayedDestroy(float delay)
     {

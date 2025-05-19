@@ -15,6 +15,7 @@ public class FloorSpawner : MonoBehaviour
     private float currentYAngle;
     private float startTime;
     private bool lastWasCorner = false;
+    private int straightStreakCount = 0;
 
     void Start()
     {
@@ -45,18 +46,20 @@ public class FloorSpawner : MonoBehaviour
             bool spawnCorner = false;
             bool turnRightNext = Random.value > 0.5f;
 
-            if (randomChance && !lastWasCorner)
+            if (straightStreakCount >= 5 && randomChance && !lastWasCorner)
                 spawnCorner = true;
 
             if (spawnCorner)
             {
                 prefabToSpawn = turnRightNext ? turnRight : turnLeft;
                 lastWasCorner = true;
+                straightStreakCount = 0;
             }
             else
             {
                 prefabToSpawn = straightForward;
                 lastWasCorner = false;
+                straightStreakCount++;
             }
             Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
             GameObject newTile = Instantiate(prefabToSpawn, currentPosition, rotation);
