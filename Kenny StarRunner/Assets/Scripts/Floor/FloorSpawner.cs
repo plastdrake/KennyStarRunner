@@ -10,7 +10,6 @@ public class FloorSpawner : MonoBehaviour
     public GameObject player;
     public float timeOffset = 1f;
 
-
     private float maxSpawnDistance = 50f;
     private Vector3 currentPosition;
     private float currentYAngle;
@@ -34,12 +33,10 @@ public class FloorSpawner : MonoBehaviour
     void Update()
     {
         if (Vector3.Distance(player.transform.position, currentPosition) < maxSpawnDistance)
-        {
-            SpawnNewTileIfReady();
-        }
+            SpawnNewTiles();
     }
 
-    private void SpawnNewTileIfReady()
+    private void SpawnNewTiles()
     {
         if (Time.time - startTime > timeOffset)
         {
@@ -61,31 +58,22 @@ public class FloorSpawner : MonoBehaviour
                 prefabToSpawn = straightForward;
                 lastWasCorner = false;
             }
-
             Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
             GameObject newTile = Instantiate(prefabToSpawn, currentPosition, rotation);
-
-            Transform endSnap = newTile.transform.Find("End");
-            if (endSnap == null)
+            Transform foundEnd = newTile.transform.Find("End");
+            if (foundEnd == null)
             {
-                Debug.LogError("Prefab missing End snap point in: " + newTile.name);
                 Destroy(newTile);
                 return;
             }
 
-            TileEndTrigger trigger = endSnap.GetComponent<TileEndTrigger>();
+            TileEndTrigger trigger = foundEnd.GetComponent<TileEndTrigger>();
             if (trigger != null)
-            {
                 trigger.parentTile = newTile;
-                Debug.Log("Connected trigger to tile: " + newTile.name);
-            }
-            else
-            {
-                Debug.LogWarning("End found, but no TileEndTrigger on it: " + newTile.name);
-            }
+
 
             // Koppla End-trigger till sin tile
-            currentPosition = endSnap.position;
+            currentPosition = foundEnd.position;
 
             if (prefabToSpawn == turnRight)
                 currentYAngle += 90f;
