@@ -8,8 +8,10 @@ public class FloorSpawner : MonoBehaviour
     public GameObject turnRight;
     public GameObject referenceObject;
     public GameObject player;
-    public float timeOffset = 0.4f;
+    public float timeOffset = 1f;
 
+
+    private float maxSpawnDistance = 50f;
     private Vector3 currentPosition;
     private float currentYAngle;
     private float startTime;
@@ -31,7 +33,10 @@ public class FloorSpawner : MonoBehaviour
 
     void Update()
     {
-        SpawnNewTileIfReady();
+        if (Vector3.Distance(player.transform.position, currentPosition) < maxSpawnDistance)
+        {
+            SpawnNewTileIfReady();
+        }
     }
 
     private void SpawnNewTileIfReady()
