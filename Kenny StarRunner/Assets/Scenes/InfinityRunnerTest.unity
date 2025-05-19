@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
-  jumpForce: 5
+  rotationSpeed: 90
 --- !u!54 &1259706056
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -503,7 +503,6 @@ MonoBehaviour:
   referenceObject: {fileID: 99725813}
   player: {fileID: 1259706050}
   timeOffset: 0.4
-  forceRemoveDistance: 5
 --- !u!1 &2117670165
 GameObject:
   m_ObjectHideFlags: 0
