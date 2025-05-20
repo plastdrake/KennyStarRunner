@@ -8,23 +8,37 @@ public class BuyItem : MonoBehaviour
 {
 
     [SerializeField] private PowerupManager powerupManager;
+    [SerializeField] private MoneyManager _moneyManager;
     [SerializeField] private Powerup powerupToBuy;
     [SerializeField] private Sprite sprite;
     private TextMeshProUGUI buttonText;
+    private Button btn;
     private bool _hasBeenBought;
     void Start()
     {
         powerupManager.Register(this);
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
+        btn = GetComponentInChildren<Button>();
+        CheckBalance();
     }
     public Powerup GetPowerup() => powerupToBuy;
 
     public void Buy()
     {
         _hasBeenBought = true;
+        if (!CheckBalance()) return;
         powerupManager.SelectPowerup(powerupToBuy);
+        _moneyManager.Adjust(-powerupToBuy.Price);
     }
 
+    private bool CheckBalance()
+    {
+        if (powerupToBuy.Price <= _moneyManager.GetBalance()) return true;
+        
+        btn.interactable = false;
+        return false;
+
+    }
 
     public void UpdateVisuals(bool isEquipped)
     {

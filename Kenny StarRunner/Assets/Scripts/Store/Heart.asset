@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53a57544882ba54da028d228fe76fec, type: 3}
   m_Name: Heart
   m_EditorClassIdentifier: 
+  Price: 2000
   Multiplier: 1
   Amount: 2
   TypeOfItem: 0
