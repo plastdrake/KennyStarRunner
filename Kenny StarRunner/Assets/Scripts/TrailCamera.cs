@@ -5,18 +5,16 @@ using UnityEngine;
 public class TrailCamera : MonoBehaviour
 {
     public Transform target;
-    public float trailDistance = 5.0f;
-    public float heightOffset = 3.0f;
-    public float cameraDelay = 0.02f;
+    public Vector3 localOffset = new Vector3(0f, 5f, -10f);
+    public float followSpeed = 5f;
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        Vector3 followPos = target.position - target.forward * trailDistance;
+        Quaternion targetRotation = target.rotation;
 
-        followPos.y += heightOffset;
-        transform.position += (followPos - transform.position) * cameraDelay;
+        Vector3 desiredPosition = target.position + targetRotation * localOffset;
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
 
-        transform.LookAt(target.transform);
+        transform.LookAt(target);
     }
 }
