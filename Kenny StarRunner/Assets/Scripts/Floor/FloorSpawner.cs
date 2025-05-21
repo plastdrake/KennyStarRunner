@@ -63,8 +63,11 @@ public class FloorSpawner : MonoBehaviour
                 straightStreakCount++;
             }
             Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
+            Vector3 spawnPos = currentPosition;
+            spawnPos.y = 0f;
             GameObject newTile = Instantiate(prefabToSpawn, currentPosition, rotation);
             Transform foundEnd = newTile.transform.Find("End");
+
             if (foundEnd == null)
             {
                 Destroy(newTile);
@@ -77,7 +80,9 @@ public class FloorSpawner : MonoBehaviour
 
 
             // Koppla End-trigger till sin tile
-            currentPosition = foundEnd.position;
+            Vector3 newEndPosition = foundEnd.position;
+            newEndPosition.y = 0f;
+            currentPosition = newEndPosition;
 
             if (prefabToSpawn == turnRight)
                 currentYAngle += 90f;
