@@ -18,11 +18,6 @@ public class MoneyManager : MonoBehaviour
         UpdateText();
     }
 
-    public void Add(int amount)
-    {
-        _amount += amount;
-    }
-
     void UpdateText()
     {
         _textMeshPro.text = _amount.ToString();

@@ -11,12 +11,14 @@ public class BuyItem : MonoBehaviour
     [SerializeField] private MoneyManager _moneyManager;
     [SerializeField] private Powerup powerupToBuy;
     [SerializeField] private Sprite sprite;
+    [SerializeField] private TMP_Text _price;
     private TextMeshProUGUI buttonText;
     private Button btn;
     private bool _hasBeenBought;
     void Start()
     {
         powerupManager.Register(this);
+        _price.text = powerupToBuy.Price.ToString();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
         btn = GetComponentInChildren<Button>();
         CheckBalance();
@@ -25,8 +27,8 @@ public class BuyItem : MonoBehaviour
 
     public void Buy()
     {
-        _hasBeenBought = true;
         if (!CheckBalance()) return;
+        _hasBeenBought = true;
         powerupManager.SelectPowerup(powerupToBuy);
         _moneyManager.Adjust(-powerupToBuy.Price);
     }
