@@ -19,6 +19,7 @@ public class FloorSpawner : MonoBehaviour
 
     void Start()
     {
+        if (straightForward is null) Debug.Log("Straight är null");
         Transform refEnd = referenceObject.transform.Find("End");
         if (refEnd == null)
         {
