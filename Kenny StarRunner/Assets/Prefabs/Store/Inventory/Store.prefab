@@ -697,7 +697,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <b><size=80%>x</size></b>2
+  m_text: <b><size=80%>x</size></b>3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
@@ -1045,7 +1045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6544aa94208f3f42b581f9158cd8ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedPowerups: []
 --- !u!114 &4942607846875037430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2119,7 +2118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989332349456510209, guid: 59ecff1b994c14444a39de1296a55f2d, type: 3}
       propertyPath: m_Name
-      value: Hotbar
+      value: StoreMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8989332349456510209, guid: 59ecff1b994c14444a39de1296a55f2d, type: 3}
       propertyPath: m_Layer
@@ -2498,6 +2497,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 25ea5e4d6a711e14ab4b99a240ffc08c, type: 3}
+    - target: {fileID: 2523735425688469253, guid: 764328de6684e364c8a2f5d142a2be36, type: 3}
+      propertyPath: m_Name
+      value: ShopItemButton
+      objectReference: {fileID: 0}
     - target: {fileID: 2814575364674966972, guid: 764328de6684e364c8a2f5d142a2be36, type: 3}
       propertyPath: m_SizeDelta.x
       value: 150

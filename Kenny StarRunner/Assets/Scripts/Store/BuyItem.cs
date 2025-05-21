@@ -18,7 +18,6 @@ public class BuyItem : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("Starting");
         powerupManager.Register(this);
         _price.GetComponentInChildren<TMP_Text>().text = powerupToBuy.Price.ToString();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
@@ -29,10 +28,10 @@ public class BuyItem : MonoBehaviour
 
     public void Buy()
     {
-        Debug.Log("Clicked");
         if (!_hasBeenBought)
         {
-            if (!CheckBalance()) return;
+            if (!CheckBalance()) 
+                return;
 
             _hasBeenBought = true;
             _price.gameObject.SetActive(false);
@@ -45,12 +44,9 @@ public class BuyItem : MonoBehaviour
     //TODO Flytta till MoneyManager
     public bool CheckBalance()
     {
-        Debug.Log("Checking Balance");
         if (powerupToBuy.Price <= _moneyManager.GetBalance() || _hasBeenBought)
-        {
-            
             return true;
-        }
+        
         
         btn.interactable = false;
         _price.GetComponentInChildren<TMP_Text>().color = new Color(0.5f,0,0);
@@ -60,7 +56,9 @@ public class BuyItem : MonoBehaviour
 
     public void UpdateVisuals(bool isEquipped)
     {
-        if (!_hasBeenBought) return;
+        if (!_hasBeenBought) 
+            return;
+
         if (buttonText == null)
             buttonText = GetComponentInChildren<TextMeshProUGUI>();
         if (isEquipped)

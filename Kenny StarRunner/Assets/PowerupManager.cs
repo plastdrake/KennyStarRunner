@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PowerupManager : MonoBehaviour
 {
-    public List<Powerup> selectedPowerups = new List<Powerup>();
     private Powerup _equippedPowerUp;
     private List<BuyItem> allItems = new List<BuyItem>();
 
