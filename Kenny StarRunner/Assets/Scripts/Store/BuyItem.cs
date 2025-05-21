@@ -11,14 +11,15 @@ public class BuyItem : MonoBehaviour
     [SerializeField] private MoneyManager _moneyManager;
     [SerializeField] private Powerup powerupToBuy;
     [SerializeField] private Sprite sprite;
-    [SerializeField] private TMP_Text _price;
+    [SerializeField] private GameObject _price;
     private TextMeshProUGUI buttonText;
     private Button btn;
     private bool _hasBeenBought;
+    
     void Start()
     {
         powerupManager.Register(this);
-        _price.text = powerupToBuy.Price.ToString();
+        _price.GetComponentInChildren<TMP_Text>().text = powerupToBuy.Price.ToString();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
         btn = GetComponentInChildren<Button>();
         CheckBalance();
@@ -27,17 +28,29 @@ public class BuyItem : MonoBehaviour
 
     public void Buy()
     {
-        if (!CheckBalance()) return;
-        _hasBeenBought = true;
+        if (!_hasBeenBought)
+        {
+            if (!CheckBalance()) return;
+
+            _hasBeenBought = true;
+            _price.gameObject.SetActive(false);
+            _moneyManager.Adjust(-powerupToBuy.Price);
+        }
+
         powerupManager.SelectPowerup(powerupToBuy);
-        _moneyManager.Adjust(-powerupToBuy.Price);
+        powerupManager.RefreshBalance();
     }
 
-    private bool CheckBalance()
+    public bool CheckBalance()
     {
-        if (powerupToBuy.Price <= _moneyManager.GetBalance()) return true;
+        if (powerupToBuy.Price <= _moneyManager.GetBalance() || _hasBeenBought)
+        {
+            
+            return true;
+        }
         
         btn.interactable = false;
+        _price.GetComponentInChildren<TMP_Text>().color = new Color(0.5f,0,0);
         return false;
 
     }

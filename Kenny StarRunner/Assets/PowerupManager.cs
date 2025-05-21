@@ -18,12 +18,20 @@ public class PowerupManager : MonoBehaviour
         _equippedPowerUp = powerup;
         Debug.Log($"Selected powerup: {powerup.TypeOfItem}");
         UpdateAll();
+        RefreshBalance();
     }
     private void UpdateAll()
     {
         foreach (var item in allItems)
         {
             item.UpdateVisuals(item.GetPowerup() == _equippedPowerUp);
+        }
+    }
+    public void RefreshBalance()
+    {
+        foreach (var item in allItems)
+        {
+            item.CheckBalance();
         }
     }
 }

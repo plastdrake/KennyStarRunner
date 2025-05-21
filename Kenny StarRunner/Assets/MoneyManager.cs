@@ -4,7 +4,7 @@ using UnityEngine;
 public class MoneyManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textMeshPro;
-    public int _amount  = 1000;
+    private int _amount  = 3000;
 
 
     void Start()
