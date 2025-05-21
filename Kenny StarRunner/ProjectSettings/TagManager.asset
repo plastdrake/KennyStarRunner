@@ -9,6 +9,8 @@ TagManager:
   - Corner-Right
   - Floor-Small
   - Corner
+  - Health
+  - Ammo
   layers:
   - Default
   - TransparentFX
@@ -45,6 +47,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Menu
+    uniqueID: 3480713259
+    locked: 0
+  - name: Item
+    uniqueID: 1044378507
     locked: 0
   m_RenderingLayers:
   - Default
