@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Kenny StarRunner/Assets/Prefabs/Store/Inventory/Store.prefab.meta
+guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c
+========
 guid: a54f2c041272f3541b5f794c6a662736
+>>>>>>>> main:Kenny StarRunner/Assets/Prefabs/ExplosiveBarrel.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

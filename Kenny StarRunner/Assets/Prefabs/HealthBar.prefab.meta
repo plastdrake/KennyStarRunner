@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Kenny StarRunner/Assets/Prefabs/Store/Inventory/StoreComponents/Slot.prefab.meta
+guid: 763b570196e6f144ba8209d756902fd8
+========
 guid: b73882a4c36651849911f7cb90f2c2ea
+>>>>>>>> main:Kenny StarRunner/Assets/Prefabs/HealthBar.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
