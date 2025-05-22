@@ -5,12 +5,14 @@ public class FloorSpawner : MonoBehaviour
 {
     public GameObject straightForward;
     public List<GameObject> straightFormardWithHoles;
+    public List<GameObject> slideUnderObsticles;
     public GameObject turnLeft;
     public GameObject turnRight;
     public GameObject startObject;
     public GameObject player;
+    //private HashSet<Vector3Int> occupiedPositions = new HashSet<Vector3Int>();
 
-    private float maxSpawnDistance = 50f;
+
     private Vector3 currentPosition;
     private float currentYAngle;
     private bool lastWasCorner = false;
@@ -20,7 +22,6 @@ public class FloorSpawner : MonoBehaviour
 
     void Start()
     {
-        if (straightForward == null) Debug.Log("Straight är null");
         Transform refEnd = startObject.transform.Find("End");
         currentPosition = refEnd.position;
         currentYAngle = refEnd.eulerAngles.y;
@@ -28,10 +29,28 @@ public class FloorSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, currentPosition) < maxSpawnDistance)
+        if (Vector3.Distance(player.transform.position, currentPosition) < 50f)
             SpawnNewTiles();
     }
 
+    private GameObject StraightObsticleToSpawn()
+    {
+        GameObject prefab;
+        bool randomObsticle = Random.value < 0.7f;
+        if(randomObsticle)
+        {
+            int index = Random.Range(0, straightFormardWithHoles.Count);
+            prefab = straightFormardWithHoles[index];
+            return prefab;
+        }
+        else
+        {
+            Debug.Log("Här ska det vara ett slide under hinder");
+            int index = Random.Range(0, slideUnderObsticles.Count);
+            prefab = slideUnderObsticles[index];
+            return prefab;
+        }
+    }
     private void SpawnNewTiles()
     {
         GameObject prefabToSpawn;
@@ -54,17 +73,9 @@ public class FloorSpawner : MonoBehaviour
             lastWasCorner = false;
             straightStreakCount++;
             if (Random.value < 0.2f && straightFormardWithHoles.Count > 0 && !lastWasGap)
-            {
-                int index = Random.Range(0, straightFormardWithHoles.Count);
-                prefabToSpawn = straightFormardWithHoles[index];
-                //lastWasGap = true;
-            }
-            //else
-            //{
-            //    lastWasGap = false;
-            //}
+                prefabToSpawn = StraightObsticleToSpawn();
         }
-
+        
         if (prefabToSpawn == straightForward && Random.value < 0.09f && lastWasGap == false)
         {
             Vector3 direction = Quaternion.Euler(0, currentYAngle, 0) * Vector3.forward;
@@ -73,11 +84,14 @@ public class FloorSpawner : MonoBehaviour
             return;
         }
 
-
-            Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
+        Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
         Vector3 spawnPos = currentPosition;
         spawnPos.y = 0f;
+        Vector3Int checkPos = Vector3Int.RoundToInt(spawnPos);
 
+        //if (occupiedPositions.Contains(checkPos))
+        //    return;
+        //occupiedPositions.Add(checkPos);
         GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
         Transform foundEnd = newTile.transform.Find("End");
 
