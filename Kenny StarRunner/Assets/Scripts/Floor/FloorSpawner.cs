@@ -9,25 +9,18 @@ public class FloorSpawner : MonoBehaviour
     public GameObject startObject;
     public GameObject player;
 
-
     private float maxSpawnDistance = 50f;
     private Vector3 currentPosition;
     private float currentYAngle;
     private bool lastWasCorner = false;
     private int straightStreakCount = 0;
-    public float gapDistance = 8f;
-    bool lastWasGap = false;
+    private float gapDistance = 8f;
+    private bool lastWasGap = false;
 
     void Start()
     {
         if (straightForward == null) Debug.Log("Straight är null");
         Transform refEnd = startObject.transform.Find("End");
-        if (refEnd == null)
-        {
-            Debug.LogError("Reference object missing End snap point.");
-            return;
-        }
-
         currentPosition = refEnd.position;
         currentYAngle = refEnd.eulerAngles.y;
     }
