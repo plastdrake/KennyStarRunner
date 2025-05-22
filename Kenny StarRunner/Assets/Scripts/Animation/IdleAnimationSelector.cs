@@ -21,7 +21,7 @@ public class IdleAnimationSelector : MonoBehaviour
 
         if (isIdle && !wasIdle)
         {
-            // Just entered idle
+            currentIdleIndex = 0;
             idleCoroutine = StartCoroutine(IdleLoop());
         }
         else if (!isIdle && wasIdle)
@@ -32,9 +32,8 @@ public class IdleAnimationSelector : MonoBehaviour
                 StopCoroutine(idleCoroutine);
                 idleCoroutine = null;
             }
-            // Immediately force the animator to the correct state
-            // (Optional: If you want to force the run state, you can do so here)
-            // animator.Play("Run"); // Uncomment and set your run state name if needed
+            // Instantly force the animator to the correct state
+            animator.CrossFade("Run", 0f, 0, 0f); // Replace "Run" with your actual run state name if needed
         }
 
         wasIdle = isIdle;
@@ -51,10 +50,9 @@ public class IdleAnimationSelector : MonoBehaviour
 
             yield return new WaitForSeconds(waitTime);
 
-            // Check again before switching idle
             bool isStillIdle = animator.GetFloat("Speed") < 0.1f && !animator.GetBool("IsInAir");
             if (!isStillIdle)
-                yield break; // Exit coroutine if not idle
+                yield break;
 
             int nextIndex;
             do
@@ -65,8 +63,7 @@ public class IdleAnimationSelector : MonoBehaviour
 
             currentIdleIndex = nextIndex;
 
-            // Use Play for immediate switch
-            animator.Play(idleStates[currentIdleIndex], 0, 0f);
+            animator.CrossFade(idleStates[currentIdleIndex], 0.2f, 0, 0f);
         }
     }
 }

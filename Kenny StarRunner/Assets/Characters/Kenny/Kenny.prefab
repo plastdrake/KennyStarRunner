@@ -6247,7 +6247,10 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Armature'\n\tTransform 'Armature'\n\tFrom animation
+    clip 'ActionPose'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -6265,11 +6268,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 15
-  sideSpeed: 8
+  strafeSpeedMultiplier: 0.6
   jumpForce: 11
   doubleJumpForce: 11
   gravity: 18
   turnSpeed: 10
+  runAnimationAuthoredSpeed: 8
+  IsFreeRunning: 0
+  slideBoost: 4
+  slideDuration: 0.7
+  slideColliderHeight: 1
+  meshRoot: {fileID: 5330636943058144652}
   camFrontLocalPos: {x: 0, y: 3, z: 6}
   camFrontLocalEuler: {x: 10, y: 180, z: 0}
 --- !u!114 &3714100336472216615
