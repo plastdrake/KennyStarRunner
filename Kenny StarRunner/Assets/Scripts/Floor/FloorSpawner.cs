@@ -8,18 +8,19 @@ public class FloorSpawner : MonoBehaviour
     public GameObject turnRight;
     public GameObject startObject;
     public GameObject player;
-    public float timeOffset = 1f;
+
 
     private float maxSpawnDistance = 50f;
     private Vector3 currentPosition;
     private float currentYAngle;
-    private float startTime;
     private bool lastWasCorner = false;
     private int straightStreakCount = 0;
+    public float gapDistance = 8f;
+    bool lastWasGap = false;
 
     void Start()
     {
-        if (straightForward is null) Debug.Log("Straight är null");
+        if (straightForward == null) Debug.Log("Straight är null");
         Transform refEnd = startObject.transform.Find("End");
         if (refEnd == null)
         {
@@ -29,7 +30,6 @@ public class FloorSpawner : MonoBehaviour
 
         currentPosition = refEnd.position;
         currentYAngle = refEnd.eulerAngles.y;
-        startTime = Time.time;
     }
 
     void Update()
@@ -40,54 +40,62 @@ public class FloorSpawner : MonoBehaviour
 
     private void SpawnNewTiles()
     {
-        if (Time.time - startTime > timeOffset)
+        GameObject prefabToSpawn;
+        bool randomChance = Random.value < 0.2f;
+        bool spawnCorner = false;
+        bool turnRightNext = Random.value > 0.5f;
+
+        if (straightStreakCount >= 5 && randomChance && !lastWasCorner)
+            spawnCorner = true;
+
+        if (spawnCorner)
         {
-            GameObject prefabToSpawn;
-            bool randomChance = Random.value < 0.2f;
-            bool spawnCorner = false;
-            bool turnRightNext = Random.value > 0.5f;
-
-            if (straightStreakCount >= 5 && randomChance && !lastWasCorner)
-                spawnCorner = true;
-
-            if (spawnCorner)
-            {
-                prefabToSpawn = turnRightNext ? turnRight : turnLeft;
-                lastWasCorner = true;
-                straightStreakCount = 0;
-            }
-            else
-            {
-                prefabToSpawn = straightForward;
-                lastWasCorner = false;
-                straightStreakCount++;
-            }
-            Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
-            Vector3 spawnPos = currentPosition;
-            spawnPos.y = 0f;
-            GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
-            Transform foundEnd = newTile.transform.Find("End");
-
-            if (foundEnd == null)
-            {
-                Destroy(newTile);
-                return;
-            }
-
-            TileEndTrigger trigger = foundEnd.GetComponent<TileEndTrigger>();
-            if (trigger != null)
-                trigger.parentTile = newTile;
-
-            Vector3 newEndPosition = foundEnd.position;
-            newEndPosition.y = 0f;
-            currentPosition = newEndPosition;
-
-            if (prefabToSpawn == turnRight)
-                currentYAngle += 90f;
-            else if (prefabToSpawn == turnLeft)
-                currentYAngle -= 90f;
-
-            startTime = Time.time;
+            prefabToSpawn = turnRightNext ? turnRight : turnLeft;
+            lastWasCorner = true;
+            straightStreakCount = 0;
         }
+        else
+        {
+            prefabToSpawn = straightForward;
+            lastWasCorner = false;
+            straightStreakCount++;
+        }
+
+        if (prefabToSpawn == straightForward && Random.value < 0.09f && lastWasGap == false)
+        {
+            Vector3 direction = Quaternion.Euler(0, currentYAngle, 0) * Vector3.forward;
+            currentPosition += direction * gapDistance;
+            lastWasGap = true;
+            return;
+        }
+
+        Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
+        Vector3 spawnPos = currentPosition;
+        spawnPos.y = 0f;
+
+        GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
+        Transform foundEnd = newTile.transform.Find("End");
+
+        if (foundEnd == null)
+        {
+            Destroy(newTile);
+            return;
+        }
+
+        TileEndTrigger trigger = foundEnd.GetComponent<TileEndTrigger>();
+        if (trigger != null)
+            trigger.parentTile = newTile;
+
+        Vector3 newEndPosition = foundEnd.position;
+        newEndPosition.y = 0f;
+        currentPosition = newEndPosition;
+
+        if (prefabToSpawn == turnRight)
+            currentYAngle += 90f;
+        else if (prefabToSpawn == turnLeft)
+            currentYAngle -= 90f;
+
+        if (lastWasGap)
+            lastWasGap = false;
     }
 }
