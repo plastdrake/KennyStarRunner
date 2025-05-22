@@ -6,7 +6,7 @@ public class FloorSpawner : MonoBehaviour
     public GameObject straightForward;
     public GameObject turnLeft;
     public GameObject turnRight;
-    public GameObject referenceObject;
+    public GameObject startObject;
     public GameObject player;
     public float timeOffset = 1f;
 
@@ -19,7 +19,8 @@ public class FloorSpawner : MonoBehaviour
 
     void Start()
     {
-        Transform refEnd = referenceObject.transform.Find("End");
+        if (straightForward is null) Debug.Log("Straight är null");
+        Transform refEnd = startObject.transform.Find("End");
         if (refEnd == null)
         {
             Debug.LogError("Reference object missing End snap point.");
@@ -62,8 +63,11 @@ public class FloorSpawner : MonoBehaviour
                 straightStreakCount++;
             }
             Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
-            GameObject newTile = Instantiate(prefabToSpawn, currentPosition, rotation);
+            Vector3 spawnPos = currentPosition;
+            spawnPos.y = 0f;
+            GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
             Transform foundEnd = newTile.transform.Find("End");
+
             if (foundEnd == null)
             {
                 Destroy(newTile);
@@ -74,9 +78,9 @@ public class FloorSpawner : MonoBehaviour
             if (trigger != null)
                 trigger.parentTile = newTile;
 
-
-            // Koppla End-trigger till sin tile
-            currentPosition = foundEnd.position;
+            Vector3 newEndPosition = foundEnd.position;
+            newEndPosition.y = 0f;
+            currentPosition = newEndPosition;
 
             if (prefabToSpawn == turnRight)
                 currentYAngle += 90f;
