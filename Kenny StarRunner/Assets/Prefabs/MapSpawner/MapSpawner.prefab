@@ -45,6 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   straightForward: {fileID: 239340012298965693, guid: c96fa330bf47d8e42ade6187ca9a2705, type: 3}
+  straightFormardWithHoles:
+  - {fileID: 4430592477842729271, guid: cfd93b70eccc6fd4db09f8936f7d8f58, type: 3}
+  - {fileID: 7547473980795266541, guid: f8a324f86f1a0f64f92fab5fa8e9e98c, type: 3}
+  - {fileID: 5499210692519709477, guid: 9fd18dbfb45ac33498d069bdc984a301, type: 3}
+  - {fileID: 8730443478350835034, guid: a9c3b04ac95f2454892f442f24c0482d, type: 3}
+  - {fileID: 958528172744557864, guid: a575efe7041c06046bc3440201c3312e, type: 3}
+  - {fileID: 9105352898025896660, guid: 37d07577a4b05fa4984c148b76cddaa0, type: 3}
   turnLeft: {fileID: 7689473947568273768, guid: 986e7b5b1024d8a4e8518c4f698f41b7, type: 3}
   turnRight: {fileID: 9061667870722388206, guid: cf657015afff3a04f8c407df3f62b525, type: 3}
   startObject: {fileID: 0}

@@ -119,53 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &258142070
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 258142072}
-  - component: {fileID: 258142071}
-  m_Layer: 0
-  m_Name: CoinScriptTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &258142071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258142070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44271bbe4d1c21445aeb99688987fbcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _coinStraight: {fileID: 0}
-  _coinDiagonal: {fileID: 0}
-  _coinInAir: {fileID: 0}
---- !u!4 &258142072
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258142070}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -113.53949, y: 6.5365906, z: 507.51868}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1063957739
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,12 +240,7 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &1170522955 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 239340012298965693, guid: c96fa330bf47d8e42ade6187ca9a2705, type: 3}
-  m_PrefabInstance: {fileID: 1888598287}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1888598287
+--- !u!1001 &1352277435
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -600,7 +548,7 @@ PrefabInstance:
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: startObject
       value: 
-      objectReference: {fileID: 1170522955}
+      objectReference: {fileID: 0}
     - target: {fileID: 4227238576342062621, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.920434
@@ -658,5 +606,4 @@ SceneRoots:
   - {fileID: 1063957741}
   - {fileID: 6328204449540029197}
   - {fileID: 1901337561}
-  - {fileID: 1888598287}
-  - {fileID: 258142072}
+  - {fileID: 1352277435}

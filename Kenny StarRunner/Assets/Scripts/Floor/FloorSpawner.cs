@@ -4,6 +4,7 @@ using UnityEngine;
 public class FloorSpawner : MonoBehaviour
 {
     public GameObject straightForward;
+    public List<GameObject> straightFormardWithHoles;
     public GameObject turnLeft;
     public GameObject turnRight;
     public GameObject startObject;
@@ -52,6 +53,16 @@ public class FloorSpawner : MonoBehaviour
             prefabToSpawn = straightForward;
             lastWasCorner = false;
             straightStreakCount++;
+            if (Random.value < 0.2f && straightFormardWithHoles.Count > 0 && !lastWasGap)
+            {
+                int index = Random.Range(0, straightFormardWithHoles.Count);
+                prefabToSpawn = straightFormardWithHoles[index];
+                //lastWasGap = true;
+            }
+            //else
+            //{
+            //    lastWasGap = false;
+            //}
         }
 
         if (prefabToSpawn == straightForward && Random.value < 0.09f && lastWasGap == false)
@@ -62,7 +73,8 @@ public class FloorSpawner : MonoBehaviour
             return;
         }
 
-        Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
+
+            Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
         Vector3 spawnPos = currentPosition;
         spawnPos.y = 0f;
 
