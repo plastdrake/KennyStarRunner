@@ -44,9 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68560581ec21e2d4ab35f73c65aee4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  straightForward: {fileID: 1496594031166973003, guid: b8eeecf428d2ca7489ae7c560dbfd048, type: 3}
-  turnLeft: {fileID: 7709087412385115100, guid: cdfc265e3a9eafb4aafb2770d448ade6, type: 3}
-  turnRight: {fileID: 4584396316932101577, guid: 9983f822e52216647bdda373a4be851b, type: 3}
-  referenceObject: {fileID: 0}
+  straightForward: {fileID: 239340012298965693, guid: c96fa330bf47d8e42ade6187ca9a2705, type: 3}
+  turnLeft: {fileID: 7689473947568273768, guid: 986e7b5b1024d8a4e8518c4f698f41b7, type: 3}
+  turnRight: {fileID: 9061667870722388206, guid: cf657015afff3a04f8c407df3f62b525, type: 3}
+  startObject: {fileID: 0}
   player: {fileID: 0}
-  timeOffset: 0.4
