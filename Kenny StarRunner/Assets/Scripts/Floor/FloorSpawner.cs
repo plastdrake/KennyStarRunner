@@ -88,10 +88,6 @@ public class FloorSpawner : MonoBehaviour
         Vector3 spawnPos = currentPosition;
         spawnPos.y = 0f;
         Vector3Int checkPos = Vector3Int.RoundToInt(spawnPos);
-
-        //if (occupiedPositions.Contains(checkPos))
-        //    return;
-        //occupiedPositions.Add(checkPos);
         GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
         Transform foundEnd = newTile.transform.Find("End");
 
