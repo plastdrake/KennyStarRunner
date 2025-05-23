@@ -7,6 +7,8 @@ public class PlayerDeathHandler : MonoBehaviour
     [SerializeField] private MonoBehaviour movementScript; // Reference to your movement script
     [SerializeField] private Rigidbody rb; // Reference to Rigidbody
     [SerializeField] private Collider deathCollider; // Reference to CapsuleCollider (or similar)
+    [SerializeField] private AudioSource audioSource; // Reference to AudioSource
+    [SerializeField] private AudioClip deathClip; // Death sound clip
 
     private void Awake()
     {
@@ -18,6 +20,8 @@ public class PlayerDeathHandler : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         if (deathCollider == null)
             deathCollider = GetComponent<Collider>();
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -37,6 +41,10 @@ public class PlayerDeathHandler : MonoBehaviour
         // Play the fall down animation
         if (animator != null)
             animator.SetTrigger("FallDown");
+
+        // Play death sound
+        if (audioSource != null && deathClip != null)
+            audioSource.PlayOneShot(deathClip);
 
         // Disable movement
         if (movementScript != null)
