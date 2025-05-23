@@ -6671,7 +6671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   propeller: {fileID: 9115233383297674914}
-  spinSpeed: 360
+  spinSpeed: 720
 --- !u!4 &9115233383297674914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2183316082603532642, guid: 0ec5bf50a943aa2488edb97f72313c45, type: 3}
