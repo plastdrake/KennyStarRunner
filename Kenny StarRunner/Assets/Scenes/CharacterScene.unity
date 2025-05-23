@@ -748,6 +748,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -3079203872209573400, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
+      propertyPath: slideBoost
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -3079203872209573400, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: forwardSpeed
       value: 8
       objectReference: {fileID: 0}

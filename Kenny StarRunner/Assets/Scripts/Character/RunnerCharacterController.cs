@@ -297,8 +297,17 @@ public class RunnerCharacterController : MonoBehaviour
 
     private void StartSlide()
     {
+        // Only allow slide if not already sliding, grounded, and running forward
         if (isSliding || !controller.isGrounded)
             return;
+
+        // Only allow slide if running forward
+        if (IsFreeRunning)
+        {
+            if (forwardInput <= 0.01f)
+                return;
+        }
+        // In non-free run mode, always running forward, so no extra check needed
 
         isSliding = true;
         slideTimer = slideDuration;
