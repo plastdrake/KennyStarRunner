@@ -107,6 +107,7 @@ public class RunnerCharacterController : MonoBehaviour
         // Ensure animator starts in idle
         animator.SetFloat("Speed", 0f);
         animator.SetBool("IsInAir", false);
+        animator.SetBool("IsSliding", false);
         animator.speed = 1f;
 
         // Store original collider values
@@ -243,10 +244,12 @@ public class RunnerCharacterController : MonoBehaviour
                 if (meshRoot != null)
                 {
                     meshRoot.localPosition = meshRootDefaultLocalPos;
-                    meshRoot.localRotation = meshRootDefaultLocalRot;
+                    // meshRoot.localRotation is now handled in LateUpdate
                 }
 
                 isSliding = false;
+                if (animator != null)
+                    animator.SetBool("IsSliding", false);
             }
         }
 
@@ -288,10 +291,13 @@ public class RunnerCharacterController : MonoBehaviour
 
     void LateUpdate()
     {
-        // Force the meshRoot rotation during slide, after Animator runs
-        if (isSliding && meshRoot != null)
+        // Always set meshRoot rotation based on slide state
+        if (meshRoot != null)
         {
-            meshRoot.localRotation = meshRootDefaultLocalRot * Quaternion.Euler(0, 45f, 0);
+            if (isSliding)
+                meshRoot.localRotation = meshRootDefaultLocalRot * Quaternion.Euler(0, 45f, 0);
+            else
+                meshRoot.localRotation = meshRootDefaultLocalRot;
         }
     }
 
@@ -330,7 +336,9 @@ public class RunnerCharacterController : MonoBehaviour
 
         // Optionally trigger a slide animation
         if (animator != null)
-            animator.SetTrigger("Slide");
+        {
+            animator.SetBool("IsSliding", true);
+        }
     }
 
     private void OnJump()

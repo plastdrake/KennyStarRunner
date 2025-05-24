@@ -254,11 +254,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3079203872209573400, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: forwardSpeed
-      value: 8
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: -3079203872209573400, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: slideDuration
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -3079203872209573400, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: doubleJumpForce
