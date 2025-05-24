@@ -579,6 +579,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1936628934}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: straightForward
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: c96fa330bf47d8e42ade6187ca9a2705, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: rampUpPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
