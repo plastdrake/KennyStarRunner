@@ -264,6 +264,10 @@ PrefabInstance:
       propertyPath: doubleJumpForce
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1493220262714431189, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
+      propertyPath: MaxHealth
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1633627829561695844, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -609,7 +613,7 @@ PrefabInstance:
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: 'slideUnderObstacles.Array.data[0]'
       value: 
-      objectReference: {fileID: 239340012298965693, guid: c96fa330bf47d8e42ade6187ca9a2705, type: 3}
+      objectReference: {fileID: 239340012298965693, guid: 590f1014e0d888f4183827212778bfee, type: 3}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: 'slideUnderObsticles.Array.data[0]'
       value: 
