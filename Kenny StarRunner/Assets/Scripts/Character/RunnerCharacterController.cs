@@ -9,6 +9,7 @@ public class RunnerCharacterController : MonoBehaviour
     public float doubleJumpForce = 50f;
     public float gravity = 15f;
     public float turnSpeed = 10f; // For smooth turning
+    public float freeRunTurnSpeed = 120f; // Degrees per second for free run smooth turning
 
     public float runAnimationAuthoredSpeed = 8f; // Set this to your run animation's intended speed
     public bool IsFreeRunning = false; // Toggle for free running mode
@@ -96,7 +97,7 @@ public class RunnerCharacterController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        moveDirection = Vector3.forward;
+        moveDirection = transform.forward;
         targetRotation = transform.rotation;
 
         camTransform = GetComponentInChildren<Camera>().transform;
@@ -106,6 +107,7 @@ public class RunnerCharacterController : MonoBehaviour
         // Ensure animator starts in idle
         animator.SetFloat("Speed", 0f);
         animator.SetBool("IsInAir", false);
+        animator.SetBool("IsSliding", false);
         animator.speed = 1f;
 
         // Store original collider values
@@ -124,18 +126,62 @@ public class RunnerCharacterController : MonoBehaviour
     {
         // Clamp very small forwardInput to zero to avoid accidental movement on start
         float clampedForwardInput = Mathf.Abs(forwardInput) < 0.01f ? 0f : forwardInput;
-        float speed = IsFreeRunning ? Mathf.Max(0f, clampedForwardInput) * forwardSpeed : forwardSpeed;
+        float speed;
+        float horizontalInput = moveInput.x; // -1 (left), 0 (center), 1 (right)
+
+        // --- Calculate blend tree parameters ---
+        float moveX = 0f;
+        float moveY = 0f;
+
+        if (IsFreeRunning)
+        {
+            // Allow negative forwardInput for backward movement
+            speed = clampedForwardInput * forwardSpeed;
+
+            // Set MoveY for blend tree (forward/backward)
+            if (clampedForwardInput > 0.01f)
+                moveY = 1f;
+            else if (clampedForwardInput < -0.01f)
+                moveY = -1f;
+            else
+                moveY = 0f;
+            moveX = 0f;
+
+            // Smoothly rotate with horizontal input (A/D or left/right arrow)
+            if (Mathf.Abs(horizontalInput) > 0.01f)
+            {
+                float turnAmount = horizontalInput * freeRunTurnSpeed * Time.deltaTime;
+                moveDirection = Quaternion.Euler(0, turnAmount, 0) * moveDirection;
+                moveDirection.Normalize();
+                targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            }
+            animator.SetFloat("Strafe", 0f);
+        }
+        else
+        {
+            // Only allow forward movement
+            speed = forwardSpeed;
+
+            // Set MoveY for blend tree (always forward in non-free run)
+            moveY = 1f;
+            // Set MoveX for blend tree (strafe)
+            if (horizontalInput > 0.01f)
+                moveX = 1f;
+            else if (horizontalInput < -0.01f)
+                moveX = -1f;
+            else
+                moveX = 0f;
+
+            animator.SetFloat("Strafe", horizontalInput);
+        }
+
+        // Set blend tree parameters
+        animator.SetFloat("MoveX", moveX);
+        animator.SetFloat("MoveY", moveY);
 
         // Apply slide boost if sliding
         if (isSliding)
             speed += slideBoost;
-
-        // Calculate strafe speed as a multiple of forward speed
-        float currentSideSpeed = forwardSpeed * strafeSpeedMultiplier;
-
-        // Free side-to-side movement (relative to current forward)
-        float horizontalInput = moveInput.x; // -1 (left), 0 (center), 1 (right)
-        animator.SetFloat("Strafe", horizontalInput);
 
         // Camera reverse while holding CameraReverse action (e.g., V)
         if (cameraReverseHeld)
@@ -198,16 +244,29 @@ public class RunnerCharacterController : MonoBehaviour
                 if (meshRoot != null)
                 {
                     meshRoot.localPosition = meshRootDefaultLocalPos;
-                    meshRoot.localRotation = meshRootDefaultLocalRot;
+                    // meshRoot.localRotation is now handled in LateUpdate
                 }
 
                 isSliding = false;
+                if (animator != null)
+                    animator.SetBool("IsSliding", false);
             }
         }
 
-        // Calculate movement vector in the new forward direction
-        Vector3 right = Vector3.Cross(Vector3.up, moveDirection); // right relative to current forward
-        Vector3 moveVector = (moveDirection * speed) + (right * horizontalInput * currentSideSpeed) + (Vector3.up * verticalVelocity);
+        // Calculate movement vector
+        Vector3 moveVector;
+        if (IsFreeRunning)
+        {
+            // In free run, move forward/backward along moveDirection, no strafe
+            moveVector = (moveDirection * speed) + (Vector3.up * verticalVelocity);
+        }
+        else
+        {
+            // In non-free run, move forward and strafe
+            float currentSideSpeed = forwardSpeed * strafeSpeedMultiplier;
+            Vector3 right = Vector3.Cross(Vector3.up, moveDirection); // right relative to current forward
+            moveVector = (moveDirection * speed) + (right * horizontalInput * currentSideSpeed) + (Vector3.up * verticalVelocity);
+        }
 
         // Set animation speed based on horizontal movement magnitude
         Vector3 horizontalMove = moveVector;
@@ -216,7 +275,7 @@ public class RunnerCharacterController : MonoBehaviour
         animator.SetFloat("Speed", animSpeed);
 
         // Set animator playback speed based on forwardSpeed (not actual movement)
-        bool isRunning = speed > 0.1f && isGrounded;
+        bool isRunning = Mathf.Abs(speed) > 0.1f && isGrounded;
         if (isRunning)
         {
             float normalizedSpeed = runAnimationAuthoredSpeed > 0f ? Mathf.Abs(forwardSpeed / runAnimationAuthoredSpeed) : 1f;
@@ -232,17 +291,29 @@ public class RunnerCharacterController : MonoBehaviour
 
     void LateUpdate()
     {
-        // Force the meshRoot rotation during slide, after Animator runs
-        if (isSliding && meshRoot != null)
+        // Always set meshRoot rotation based on slide state
+        if (meshRoot != null)
         {
-            meshRoot.localRotation = meshRootDefaultLocalRot * Quaternion.Euler(0, 45f, 0);
+            if (isSliding)
+                meshRoot.localRotation = meshRootDefaultLocalRot * Quaternion.Euler(0, 45f, 0);
+            else
+                meshRoot.localRotation = meshRootDefaultLocalRot;
         }
     }
 
     private void StartSlide()
     {
+        // Only allow slide if not already sliding, grounded, and running forward
         if (isSliding || !controller.isGrounded)
             return;
+
+        // Only allow slide if running forward
+        if (IsFreeRunning)
+        {
+            if (forwardInput <= 0.01f)
+                return;
+        }
+        // In non-free run mode, always running forward, so no extra check needed
 
         isSliding = true;
         slideTimer = slideDuration;
@@ -265,7 +336,9 @@ public class RunnerCharacterController : MonoBehaviour
 
         // Optionally trigger a slide animation
         if (animator != null)
-            animator.SetTrigger("Slide");
+        {
+            animator.SetBool("IsSliding", true);
+        }
     }
 
     private void OnJump()
@@ -278,13 +351,21 @@ public class RunnerCharacterController : MonoBehaviour
 
     private void OnTurnLeft()
     {
-        moveDirection = Quaternion.Euler(0, -90, 0) * moveDirection;
-        targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        if (!IsFreeRunning)
+        {
+            moveDirection = Quaternion.Euler(0, -90, 0) * moveDirection;
+            targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        }
+        // In free run, turning is handled by horizontal input
     }
 
     private void OnTurnRight()
     {
-        moveDirection = Quaternion.Euler(0, 90, 0) * moveDirection;
-        targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        if (!IsFreeRunning)
+        {
+            moveDirection = Quaternion.Euler(0, 90, 0) * moveDirection;
+            targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        }
+        // In free run, turning is handled by horizontal input
     }
 }
