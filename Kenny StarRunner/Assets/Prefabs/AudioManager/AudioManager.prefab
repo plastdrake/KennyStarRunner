@@ -148,3 +148,5 @@ MonoBehaviour:
   _lanaPengar: {fileID: 8300000, guid: 1c33c0f680a925546b8e4f38c27beaa6, type: 3}
   _barrelExplosion: {fileID: 8300000, guid: 9dc2586219ea5be47a087f0d97e77eaf, type: 3}
   _mineExplosion: {fileID: 8300000, guid: f4cdde3320f97c14f8290760a075f3fb, type: 3}
+  _coinPickup: {fileID: 8300000, guid: 9e3983e7b8fa9ee4695c4a6d298ebd96, type: 3}
+  _buy: {fileID: 8300000, guid: d7f50a8e000fdee48b526f7d37e8d38e, type: 3}

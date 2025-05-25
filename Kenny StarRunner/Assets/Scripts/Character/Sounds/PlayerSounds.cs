@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class PlayerSounds : MonoBehaviour
 {
-    //Player sounds
     public AudioSource _audioSource;
+    //Player sounds
+    [Header("Player sounds")]
     public AudioClip _wollieBollie;
     public AudioClip _ischloPischlo;
-    public AudioClip _lanaPengar;
+    
 
     //Explosion sounds
+    [Header("Explosion sounds")]
     public AudioClip _barrelExplosion;
     public AudioClip _mineExplosion;
+
+    //Pickup sounds
+    [Header("Pickup sounds")]
+    public AudioClip _coinPickup;
+
+    //Shop sounds
+    [Header("Shop sounds")]
+    public AudioClip _buy;
+    public AudioClip _lanaPengar;
+    //public AudioClip _equip;
 
     //Active sound
     private AudioClip _currentSound;
     private bool _isPlaying;
+
+    //Player sounds
     public void JumpSound()
     {
         _currentSound = _wollieBollie;
@@ -29,6 +43,7 @@ public class PlayerSounds : MonoBehaviour
         StartCoroutine(PlaySound());
     }
 
+    //Explosion sounds
     public void BarrelExplosionSound()
     {
         _currentSound = _barrelExplosion;
@@ -40,10 +55,26 @@ public class PlayerSounds : MonoBehaviour
         _currentSound = _mineExplosion;
         StartCoroutine(PlaySound());
     }
+
+    //Buy sounds
+    public void BuySound()
+    {
+        _currentSound = _buy;
+        StartCoroutine(PlaySound());
+    }
     public void NotEnoughMoneySound()
     {
         _currentSound = _lanaPengar;
         StartCoroutine(PlaySound());
+    }
+
+    //Pickups sounds
+    public void CoinPickupSound()
+    {
+        //_currentSound = _coinPickup;
+        //StartCoroutine(PlaySound());
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(_coinPickup);
     }
     private IEnumerator PlaySound()
     {

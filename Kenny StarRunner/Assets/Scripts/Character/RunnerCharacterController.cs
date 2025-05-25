@@ -347,7 +347,7 @@ public class RunnerCharacterController : MonoBehaviour
         if (controller.isGrounded)
         {
             jumpRequest = true;
-            if (Random.value < 0.2f)
+            if (Random.value < 0.1f)
                 playerSounds.JumpSound();
         }
         else if (canDoubleJump)
