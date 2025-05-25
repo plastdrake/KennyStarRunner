@@ -144,3 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 283562714894184311}
   _wollieBollie: {fileID: 8300000, guid: c523800eb2115544788e3f2e66ee5b32, type: 3}
+  _ischloPischlo: {fileID: 8300000, guid: 3ac9d028b30927643bbe8c55dfdde4cd, type: 3}
+  _lanaPengar: {fileID: 8300000, guid: 1c33c0f680a925546b8e4f38c27beaa6, type: 3}
+  _barrelExplosion: {fileID: 8300000, guid: 9dc2586219ea5be47a087f0d97e77eaf, type: 3}
+  _mineExplosion: {fileID: 8300000, guid: f4cdde3320f97c14f8290760a075f3fb, type: 3}

@@ -49,9 +49,10 @@ public class RunnerCharacterController : MonoBehaviour
     private Vector2 moveInput;
     private float forwardInput = 0f;
     private bool cameraReverseHeld = false;
-
+    private PlayerSounds playerSounds;
     void Awake()
     {
+        playerSounds = GetComponentInChildren<PlayerSounds>();
         inputActions = new InputSystem_Actions();
         moveInput = Vector2.zero;
         forwardInput = 0f;
@@ -344,7 +345,11 @@ public class RunnerCharacterController : MonoBehaviour
     private void OnJump()
     {
         if (controller.isGrounded)
+        {
             jumpRequest = true;
+            if (Random.value < 0.2f)
+                playerSounds.JumpSound();
+        }
         else if (canDoubleJump)
             doubleJumpRequest = true;
     }
