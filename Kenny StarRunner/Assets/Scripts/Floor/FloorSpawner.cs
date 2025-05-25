@@ -4,14 +4,15 @@ using UnityEngine;
 public class FloorSpawner : MonoBehaviour
 {
     public GameObject straightForward;
-    public List<GameObject> straightFormardWithHoles;
-    public List<GameObject> slideUnderObsticles;
+    public List<GameObject> straightForwardWithHoles;
+    public List<GameObject> slideUnderObstacles;
+    public List<GameObject> rampUpPrefabs;
+    public List<GameObject> rampDownPrefabs;
     public GameObject turnLeft;
     public GameObject turnRight;
     public GameObject startObject;
     public GameObject player;
     //private HashSet<Vector3Int> occupiedPositions = new HashSet<Vector3Int>();
-
 
     private Vector3 currentPosition;
     private float currentYAngle;
@@ -19,6 +20,7 @@ public class FloorSpawner : MonoBehaviour
     private int straightStreakCount = 0;
     private float gapDistance = 8f;
     private bool lastWasGap = false;
+    private bool lastWasRamp = false;
 
     void Start()
     {
@@ -33,24 +35,39 @@ public class FloorSpawner : MonoBehaviour
             SpawnNewTiles();
     }
 
-    private GameObject StraightObsticleToSpawn()
+    private GameObject GetStraightObstacleToSpawn()
     {
-        GameObject prefab;
-        bool randomObsticle = Random.value < 0.7f;
-        if(randomObsticle)
+        bool randomObstacle = Random.value < 0.7f;
+        if (randomObstacle && straightForwardWithHoles.Count > 0)
         {
-            int index = Random.Range(0, straightFormardWithHoles.Count);
-            prefab = straightFormardWithHoles[index];
-            return prefab;
+            int index = Random.Range(0, straightForwardWithHoles.Count);
+            return straightForwardWithHoles[index];
         }
-        else
+        else if (slideUnderObstacles.Count > 0)
         {
-            Debug.Log("Här ska det vara ett slide under hinder");
-            int index = Random.Range(0, slideUnderObsticles.Count);
-            prefab = slideUnderObsticles[index];
-            return prefab;
+            Debug.Log("Spawning a slide-under obstacle");
+            int index = Random.Range(0, slideUnderObstacles.Count);
+            return slideUnderObstacles[index];
         }
+        return straightForward;
     }
+
+    private GameObject GetRampToSpawn()
+    {
+        bool spawnUp = Random.value < 0.5f;
+        if (spawnUp && rampUpPrefabs.Count > 0)
+        {
+            int index = Random.Range(0, rampUpPrefabs.Count);
+            return rampUpPrefabs[index];
+        }
+        else if (rampDownPrefabs.Count > 0)
+        {
+            int index = Random.Range(0, rampDownPrefabs.Count);
+            return rampDownPrefabs[index];
+        }
+        return null;
+    }
+
     private void SpawnNewTiles()
     {
         GameObject prefabToSpawn;
@@ -58,13 +75,15 @@ public class FloorSpawner : MonoBehaviour
         bool spawnCorner = false;
         bool turnRightNext = Random.value > 0.5f;
 
-        if (straightStreakCount >= 5 && randomChance && !lastWasCorner)
+        // Decide if we should spawn a corner
+        if (straightStreakCount >= 5 && randomChance && !lastWasCorner && !lastWasRamp)
             spawnCorner = true;
 
         if (spawnCorner)
         {
             prefabToSpawn = turnRightNext ? turnRight : turnLeft;
             lastWasCorner = true;
+            lastWasRamp = false;
             straightStreakCount = 0;
         }
         else
@@ -72,11 +91,37 @@ public class FloorSpawner : MonoBehaviour
             prefabToSpawn = straightForward;
             lastWasCorner = false;
             straightStreakCount++;
-            if (Random.value < 0.2f && straightFormardWithHoles.Count > 0 && !lastWasGap)
-                prefabToSpawn = StraightObsticleToSpawn();
+
+            // 20% chance to spawn an obstacle (if available and not after a gap)
+            if (Random.value < 0.2f && straightForwardWithHoles.Count > 0 && !lastWasGap)
+                prefabToSpawn = GetStraightObstacleToSpawn();
+
+            // 10% chance to spawn a ramp (if available, not after a corner or ramp)
+            if (!lastWasRamp && !lastWasCorner && (rampUpPrefabs.Count > 0 || rampDownPrefabs.Count > 0))
+            {
+                if (Random.value < 0.1f)
+                {
+                    GameObject rampPrefab = GetRampToSpawn();
+                    if (rampPrefab != null)
+                    {
+                        prefabToSpawn = rampPrefab;
+                        lastWasRamp = true;
+                        straightStreakCount = 0;
+                    }
+                }
+                else
+                {
+                    lastWasRamp = false;
+                }
+            }
+            else
+            {
+                lastWasRamp = false;
+            }
         }
-        
-        if (prefabToSpawn == straightForward && Random.value < 0.09f && lastWasGap == false)
+
+        // 9% chance to spawn a gap (only for straight tiles, not after a gap)
+        if (prefabToSpawn == straightForward && Random.value < 0.09f && !lastWasGap)
         {
             Vector3 direction = Quaternion.Euler(0, currentYAngle, 0) * Vector3.forward;
             currentPosition += direction * gapDistance;
@@ -86,7 +131,6 @@ public class FloorSpawner : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
         Vector3 spawnPos = currentPosition;
-        spawnPos.y = 0f;
         Vector3Int checkPos = Vector3Int.RoundToInt(spawnPos);
         GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
         Transform foundEnd = newTile.transform.Find("End");
@@ -102,7 +146,6 @@ public class FloorSpawner : MonoBehaviour
             trigger.parentTile = newTile;
 
         Vector3 newEndPosition = foundEnd.position;
-        newEndPosition.y = 0f;
         currentPosition = newEndPosition;
 
         if (prefabToSpawn == turnRight)
