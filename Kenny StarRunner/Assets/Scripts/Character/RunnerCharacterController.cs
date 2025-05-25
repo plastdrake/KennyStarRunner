@@ -97,7 +97,7 @@ public class RunnerCharacterController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        moveDirection = Vector3.forward;
+        moveDirection = transform.forward;
         targetRotation = transform.rotation;
 
         camTransform = GetComponentInChildren<Camera>().transform;
