@@ -24,7 +24,7 @@ public class PlayerSounds : MonoBehaviour
     [Header("Shop sounds")]
     public AudioClip _buy;
     public AudioClip _lanaPengar;
-    //public AudioClip _equip;
+    public AudioClip _equip;
 
     //Active sound
     private AudioClip _currentSound;
@@ -43,6 +43,8 @@ public class PlayerSounds : MonoBehaviour
         StartCoroutine(PlaySound());
     }
 
+
+
     //Explosion sounds
     public void BarrelExplosionSound()
     {
@@ -56,6 +58,9 @@ public class PlayerSounds : MonoBehaviour
         StartCoroutine(PlaySound());
     }
 
+
+
+
     //Buy sounds
     public void BuySound()
     {
@@ -67,13 +72,18 @@ public class PlayerSounds : MonoBehaviour
         _currentSound = _lanaPengar;
         StartCoroutine(PlaySound());
     }
+    public void EquipSound()
+    {
+        _currentSound = _equip;
+        StartCoroutine(PlaySound());
+    }
+
+
+
 
     //Pickups sounds
     public void CoinPickupSound()
     {
-        //_currentSound = _coinPickup;
-        //StartCoroutine(PlaySound());
-        _audioSource.Stop();
         _audioSource.PlayOneShot(_coinPickup);
     }
     private IEnumerator PlaySound()
