@@ -132,11 +132,6 @@ public class FloorSpawner : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
         Vector3 spawnPos = currentPosition;
         Vector3Int checkPos = Vector3Int.RoundToInt(spawnPos);
-
-        //if (occupiedPositions.Contains(checkPos))
-        //    return;
-        //occupiedPositions.Add(checkPos);
-
         GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
         Transform foundEnd = newTile.transform.Find("End");
 
