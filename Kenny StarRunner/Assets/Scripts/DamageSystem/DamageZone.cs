@@ -26,8 +26,8 @@ public class DamageZone : MonoBehaviour
 
         if (Time.time - lastTime < damageCooldown)
             return;
-
-        damageable.TakeDamage(damageAmount);
+        Debug.Log(this.gameObject.tag);
+        damageable.TakeDamage(damageAmount, this.gameObject);
         lastDamageTimes[other.gameObject] = Time.time;
         OnDamageDealt?.Invoke(other.gameObject, damageAmount);
     }

@@ -11,6 +11,9 @@ TagManager:
   - Corner
   - Health
   - Ammo
+  - Barell
+  - Mine
+  - Electricity
   layers:
   - Default
   - TransparentFX
