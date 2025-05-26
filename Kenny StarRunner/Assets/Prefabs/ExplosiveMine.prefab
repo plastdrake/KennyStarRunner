@@ -74,6 +74,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveMine
       objectReference: {fileID: 0}
+    - target: {fileID: 2489861645466249486, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
+      propertyPath: m_TagString
+      value: Mine
+      objectReference: {fileID: 0}
     - target: {fileID: 4259653655867703871, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
       propertyPath: m_Radius
       value: 0.67904687

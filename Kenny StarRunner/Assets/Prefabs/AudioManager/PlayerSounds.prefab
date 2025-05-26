@@ -46,7 +46,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -147,4 +147,5 @@ MonoBehaviour:
   _ischloPischlo: {fileID: 8300000, guid: 3ac9d028b30927643bbe8c55dfdde4cd, type: 3}
   _barrelExplosion: {fileID: 8300000, guid: 9dc2586219ea5be47a087f0d97e77eaf, type: 3}
   _mineExplosion: {fileID: 8300000, guid: f4cdde3320f97c14f8290760a075f3fb, type: 3}
+  _electricity: {fileID: 8300000, guid: 5b2131565b244bd408a7df8f83b96e9a, type: 3}
   _coinPickup: {fileID: 8300000, guid: 9e3983e7b8fa9ee4695c4a6d298ebd96, type: 3}

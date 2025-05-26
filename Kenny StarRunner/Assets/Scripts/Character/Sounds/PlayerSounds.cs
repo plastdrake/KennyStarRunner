@@ -9,12 +9,12 @@ public class PlayerSounds : MonoBehaviour
     [Header("Player sounds")]
     public AudioClip _wollieBollie;
     public AudioClip _ischloPischlo;
-    
 
     //Explosion sounds
     [Header("Explosion sounds")]
     public AudioClip _barrelExplosion;
     public AudioClip _mineExplosion;
+    public AudioClip _electricity;
 
     //Pickup sounds
     [Header("Pickup sounds")]
@@ -23,6 +23,7 @@ public class PlayerSounds : MonoBehaviour
     //Active sound
     private AudioClip _currentSound;
     private bool _isPlaying;
+    private bool _isDead;
 
     //Player sounds
     public void JumpSound()
@@ -33,8 +34,10 @@ public class PlayerSounds : MonoBehaviour
 
     public void DeadSound()
     {
+        _isDead = true;
         _currentSound = _ischloPischlo;
         StartCoroutine(PlaySound());
+        _isDead = false;
     }
 
 
@@ -42,24 +45,18 @@ public class PlayerSounds : MonoBehaviour
     //Explosion sounds
     public void BarrelExplosionSound()
     {
-        //_currentSound = _barrelExplosion;
-        //StartCoroutine(PlaySound());
         _audioSource.PlayOneShot(_barrelExplosion);
     }
 
     public void MineExplosionSound()
     {
-        //_currentSound = _mineExplosion;
-        //StartCoroutine(PlaySound());
         _audioSource.PlayOneShot(_mineExplosion);
     }
 
-
-
-
-
-
-
+    public void Electricuted()
+    {
+        _audioSource.PlayOneShot(_electricity);
+    }
 
     //Pickups sounds
     public void CoinPickupSound()
@@ -68,7 +65,7 @@ public class PlayerSounds : MonoBehaviour
     }
     private IEnumerator PlaySound()
     {
-        if(_isPlaying)
+        if(_isPlaying && !_isDead)
             yield break;
         _isPlaying = true;
         _audioSource.PlayOneShot(_currentSound);

@@ -17,9 +17,9 @@ public class Health : MonoBehaviour, IDamageable
         CurrentHealth = MaxHealth;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, GameObject obj)
     {
-        DamageSounds();
+        DamageSounds(obj);
         if (CurrentHealth <= 0f)
             return;
 
@@ -39,12 +39,14 @@ public class Health : MonoBehaviour, IDamageable
         CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
     }
 
-    private void DamageSounds()
+    private void DamageSounds(GameObject obj)
     {
         //Här får man utöka så att man tar in objektet eller skickar med en sträng med objektets tag så man kan avgöra vilken explosion sound det är
-        if (tag.Contains("Barell"))
+        if (obj.tag.Contains("Barell"))
             playerSounds.BarrelExplosionSound();
-        else if (tag.Contains("Mine"))
+        else if (obj.tag.Contains("Mine"))
             playerSounds.MineExplosionSound();
+        else if(obj.tag.Contains("Electricity"))
+            playerSounds.Electricuted();
     }
 }

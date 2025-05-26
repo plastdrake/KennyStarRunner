@@ -32,7 +32,7 @@ public class CollisionDamage : MonoBehaviour
             return;
 
         Debug.Log("Dealing damage to: " + target.name);
-        damageable.TakeDamage(damageAmount);
+        damageable.TakeDamage(damageAmount, this.gameObject);
         lastDamageTimes[target] = Time.time;
         OnDamageDealt?.Invoke(target, damageAmount);
     }
