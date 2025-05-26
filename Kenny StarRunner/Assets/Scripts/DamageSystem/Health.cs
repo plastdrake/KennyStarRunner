@@ -9,14 +9,17 @@ public class Health : MonoBehaviour, IDamageable
     public float CurrentHealth { get; private set; }
 
     public event Action OnDeath;
+    private PlayerSounds playerSounds;
 
     private void Awake()
     {
+        playerSounds = GetComponentInChildren<PlayerSounds>();
         CurrentHealth = MaxHealth;
     }
 
     public void TakeDamage(float amount)
     {
+        DamageSounds();
         if (CurrentHealth <= 0f)
             return;
 
@@ -34,5 +37,14 @@ public class Health : MonoBehaviour, IDamageable
             return;
 
         CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
+    }
+
+    private void DamageSounds()
+    {
+        //Här får man utöka så att man tar in objektet eller skickar med en sträng med objektets tag så man kan avgöra vilken explosion sound det är
+        if (tag.Contains("Barell"))
+            playerSounds.BarrelExplosionSound();
+        else if (tag.Contains("Mine"))
+            playerSounds.MineExplosionSound();
     }
 }
