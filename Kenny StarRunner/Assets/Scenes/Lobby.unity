@@ -871,6 +871,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 739033855510790742, guid: ccaec939a1e6088428db620bea681eea, type: 3}
+      propertyPath: m_Name
+      value: StoreText (TMP)
+      objectReference: {fileID: 0}
     - target: {fileID: 863617172271465074, guid: ccaec939a1e6088428db620bea681eea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.1120744
@@ -918,7 +922,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 739033855510790742, guid: ccaec939a1e6088428db620bea681eea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: ccaec939a1e6088428db620bea681eea, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
