@@ -32,6 +32,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: RedLight
+    second: {fileID: 2100000, guid: 145c539ad56314f47a1fb2cbd8467a2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Rubber
     second: {fileID: 2100000, guid: ae0ea485a8ba34a489ed577072d4e316, type: 2}
   - first:
