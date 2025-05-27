@@ -9,5 +9,6 @@ namespace Assets.Scripts.Store
         [SerializeField] public int Multiplier;
         [SerializeField] public int Amount;
         [SerializeField] public Item.ItemType TypeOfItem;
+        [SerializeField] public int HatIndex;
     }
 }

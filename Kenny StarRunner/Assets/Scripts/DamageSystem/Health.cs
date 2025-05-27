@@ -1,10 +1,11 @@
 using UnityEngine;
 using System;
+using Assets.Scripts.Store; // For Item.ItemType
 
 public class Health : MonoBehaviour, IDamageable
 {
     [SerializeField]
-    public float MaxHealth = 100f;
+    public float MaxHealth = 20f;
 
     public float CurrentHealth { get; private set; }
 
@@ -14,6 +15,24 @@ public class Health : MonoBehaviour, IDamageable
     private void Awake()
     {
         playerSounds = GetComponentInChildren<PlayerSounds>();
+
+        float extraHealth = 0f;
+
+        // Check if the player has a heart powerup equipped
+        if (GameManager.Instance != null && GameManager.Instance.EquippedPowerupType == Item.ItemType.Heart)
+        {
+            // If you want to use a fixed value, set it here (e.g., 5f)
+            // extraHealth = 5f;
+
+            // If you want to use the Powerup asset's Amount, you need to store a reference to the equipped Powerup in GameManager
+            // Example (if you add EquippedPowerup to GameManager):
+            // if (GameManager.Instance.EquippedPowerup != null)
+            //     extraHealth = GameManager.Instance.EquippedPowerup.Amount;
+
+            extraHealth = 5f; // Change this value as needed or fetch from Powerup asset
+        }
+
+        MaxHealth += extraHealth;
         CurrentHealth = MaxHealth;
     }
 
@@ -41,12 +60,11 @@ public class Health : MonoBehaviour, IDamageable
 
     private void DamageSounds(GameObject obj)
     {
-        //Här får man utöka så att man tar in objektet eller skickar med en sträng med objektets tag så man kan avgöra vilken explosion sound det är
         if (obj.tag.Contains("Barell"))
             playerSounds.BarrelExplosionSound();
         else if (obj.tag.Contains("Mine"))
             playerSounds.MineExplosionSound();
-        else if(obj.tag.Contains("Electricity"))
+        else if (obj.tag.Contains("Electricity"))
             playerSounds.Electricuted();
     }
 }
