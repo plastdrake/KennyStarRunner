@@ -21,7 +21,6 @@ public class CollisionDamage : MonoBehaviour
         var damageable = target.GetComponent<IDamageable>();
         if (damageable == null)
         {
-            Debug.Log("No IDamageable found on: " + target.name);
             return;
         }
 
