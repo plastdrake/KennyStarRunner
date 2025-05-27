@@ -1,52 +1,20 @@
-using NUnit.Framework;
 using UnityEngine;
 
 public class CoinsScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Tooltip("How much money this coin is worth.")]
+    public int coinValue = 1;
 
-    public GameObject? _coinStraight;
-    public GameObject? _coinDiagonal;
-    public GameObject? _coinInAir;
-    private GameObject? prefabToSpawn;
-    private Vector3 spawnPos;
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        SpawnCoin();
-    }
-
-    private void SpawnCoin()
-    {
-        //Måste också kika så att det är en rak prefab
-        bool randomChanceToSpawnAir, randomChanceToSpawnDiagonal, randomChanceToSpawnStraight;
-
-        randomChanceToSpawnAir = Random.value < 0.1f;
-        randomChanceToSpawnDiagonal = Random.value < 0.1f;
-        randomChanceToSpawnStraight = Random.value < 0.3f;
-        if (randomChanceToSpawnStraight)
+        // Check if the player triggered the coin
+        if (other.CompareTag("Player"))
         {
-            spawnPos = _coinStraight.transform.position;
-            prefabToSpawn = _coinStraight;
-            return;
+            // Add money to the player via GameManager
+            GameManager.Instance.AddMoney(coinValue);
+
+            // Destroy the coin object after pickup
+            Destroy(gameObject);
         }
-        else if (randomChanceToSpawnAir)
-        {
-            spawnPos = _coinInAir.transform.position;
-            prefabToSpawn = _coinInAir;
-            return;
-        }
-        else if (randomChanceToSpawnDiagonal)
-        {
-            spawnPos = _coinDiagonal.transform.position;
-            prefabToSpawn = _coinDiagonal;
-            return;
-        }
-        GameObject newCoin = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
     }
 }
