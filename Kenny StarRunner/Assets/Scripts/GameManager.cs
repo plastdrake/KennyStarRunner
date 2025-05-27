@@ -4,6 +4,7 @@ using Assets.Scripts.Store; // Needed for Powerup and Item.ItemType
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    [SerializeField] private int startingMoney = 3000;
 
     // Session data
     public int EquippedHatIndex { get; private set; } = -1;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Money = startingMoney;
         }
         else
         {

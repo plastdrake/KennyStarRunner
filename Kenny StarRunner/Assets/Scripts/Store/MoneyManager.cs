@@ -4,8 +4,6 @@ using UnityEngine;
 public class MoneyManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textMeshPro;
-    private int _amount  = 3000;
-
 
     void Start()
     {
@@ -14,14 +12,25 @@ public class MoneyManager : MonoBehaviour
 
     public void Adjust(int amount)
     {
-        _amount += amount;
-        UpdateText();
+        if (GameManager.Instance != null)
+        {
+            if (amount > 0)
+                GameManager.Instance.AddMoney(amount);
+            else
+                GameManager.Instance.SpendMoney(-amount); // SpendMoney expects positive value
+
+            UpdateText();
+        }
     }
 
     void UpdateText()
     {
-        _textMeshPro.text = _amount.ToString();
+        if (GameManager.Instance != null)
+            _textMeshPro.text = GameManager.Instance.Money.ToString();
     }
 
-    public int GetBalance() => _amount;
+    public int GetBalance()
+    {
+        return GameManager.Instance != null ? GameManager.Instance.Money : 0;
+    }
 }
