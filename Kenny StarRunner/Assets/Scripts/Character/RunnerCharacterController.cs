@@ -210,7 +210,6 @@ public class RunnerCharacterController : MonoBehaviour
             {
                 verticalVelocity = jumpForce;
                 animator.SetTrigger("Jump");
-                animator.ResetTrigger("Jump");
                 animator.SetBool("IsInAir", true);
                 jumpRequest = false;
             }
