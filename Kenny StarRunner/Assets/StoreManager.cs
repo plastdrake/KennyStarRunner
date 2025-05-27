@@ -7,7 +7,7 @@ public class StoreManager : MonoBehaviour
     [SerializeField] private TMP_Text _storeText;
 
     private bool _isPlayerInRange;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void OnTriggerEnter(Collider other)
     {
         _isPlayerInRange = true;
@@ -25,6 +25,10 @@ public class StoreManager : MonoBehaviour
         Debug.Log("Closing");
         _store.SetActive(false);
         _storeText.gameObject.SetActive(false);
+
+        // Lock and hide the cursor when leaving the store
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -33,6 +37,10 @@ public class StoreManager : MonoBehaviour
         {
             Debug.Log("Pressing F");
             _store.SetActive(true);
+
+            // Unlock and show the cursor when entering the store
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

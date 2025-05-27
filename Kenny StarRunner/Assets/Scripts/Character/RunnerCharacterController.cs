@@ -89,11 +89,28 @@ public class RunnerCharacterController : MonoBehaviour
     void OnEnable()
     {
         inputActions.Player.Enable();
+
+        // Lock and hide the cursor when the character is enabled
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void OnDisable()
     {
         inputActions.Player.Disable();
+
+        // Unlock and show the cursor when the character is disabled
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     void Start()
@@ -131,6 +148,13 @@ public class RunnerCharacterController : MonoBehaviour
 
     void Update()
     {
+        // Allow the player to unlock the cursor with Escape
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         float clampedForwardInput = Mathf.Abs(forwardInput) < 0.01f ? 0f : forwardInput;
         float speed;
         float horizontalInput = moveInput.x;

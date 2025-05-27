@@ -6,6 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [SerializeField] private int startingMoney = 3000;
 
+    // Custom cursor fields
+    [SerializeField] private Texture2D customCursor;
+    [SerializeField] private Vector2 cursorHotspot = Vector2.zero;
+
     // Session data
     public int EquippedHatIndex { get; private set; } = -1;
     public int Money { get; private set; } = 0;
@@ -32,10 +36,31 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             Money = startingMoney;
+            SetCustomCursor(); // Set the custom cursor at startup
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    // Custom cursor methods
+    public void SetCustomCursor()
+    {
+        if (customCursor != null)
+            Cursor.SetCursor(customCursor, cursorHotspot, CursorMode.Auto);
+    }
+
+    public void SetDefaultCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            SetCustomCursor();
         }
     }
 
