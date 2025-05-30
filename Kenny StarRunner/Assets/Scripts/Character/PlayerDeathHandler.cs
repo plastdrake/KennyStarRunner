@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerDeathHandler : MonoBehaviour
 {
@@ -7,8 +8,6 @@ public class PlayerDeathHandler : MonoBehaviour
     [SerializeField] private MonoBehaviour movementScript; // Reference to your movement script
     [SerializeField] private Rigidbody rb; // Reference to Rigidbody
     [SerializeField] private Collider deathCollider; // Reference to CapsuleCollider (or similar)
-    //[SerializeField] private AudioSource audioSource; // Reference to AudioSource
-    //[SerializeField] private AudioClip deathClip; // Death sound clip
     private PlayerSounds playerSounds;
 
     private void Awake()
@@ -21,8 +20,6 @@ public class PlayerDeathHandler : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         if (deathCollider == null)
             deathCollider = GetComponent<Collider>();
-        //if (audioSource == null)
-        //    audioSource = GetComponent<AudioSource>();
         playerSounds = GetComponentInChildren<PlayerSounds>();
     }
 
@@ -45,8 +42,6 @@ public class PlayerDeathHandler : MonoBehaviour
             animator.SetTrigger("FallDown");
 
         // Play death sound
-        //if (audioSource != null && deathClip != null)
-        //    audioSource.PlayOneShot(deathClip);
         playerSounds.DeadSound();
 
         // Disable movement
@@ -68,5 +63,14 @@ public class PlayerDeathHandler : MonoBehaviour
             rb.useGravity = true;
             rb.linearVelocity = Vector3.zero; // Correct property is 'velocity'
         }
+
+        // Start coroutine to load lobby after delay
+        StartCoroutine(LoadLobbyAfterDelay(3f)); // 3 seconds delay
+    }
+
+    private System.Collections.IEnumerator LoadLobbyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("StoreScene");
     }
 }

@@ -1543,6 +1543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LobbyBackgroundMusic
       objectReference: {fileID: 0}
+    - target: {fileID: 4560134584576155722, guid: 736a141ab8205964b9844b6bb392162b, type: 3}
+      propertyPath: m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 6707848806249310802, guid: 736a141ab8205964b9844b6bb392162b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9218524
