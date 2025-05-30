@@ -10,6 +10,10 @@ public class PlayerLifetimeCounter : MonoBehaviour
 
     [SerializeField] private RunnerCharacterController runnerController;
 
+    [SerializeField] private float baseSpeed = 16f;
+    [SerializeField] private float speedPerSecond = 0.1f;
+    [SerializeField] private float maxSpeed = 40f;
+
     void Awake()
     {
         if (runnerController == null)
@@ -28,6 +32,9 @@ public class PlayerLifetimeCounter : MonoBehaviour
             if (runnerController != null && !runnerController.IsFreeRunning)
             {
                 timerText.text = timeAlive.ToString("D4");
+                // Increase speed based on time survived
+                float newSpeed = baseSpeed + (timeAlive * speedPerSecond);
+                runnerController.forwardSpeed = Mathf.Min(newSpeed, maxSpeed);
                 timeAlive++;
             }
             yield return new WaitForSeconds(1f);

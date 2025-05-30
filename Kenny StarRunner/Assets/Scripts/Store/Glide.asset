@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c53a57544882ba54da028d228fe76fec, type: 3}
-  m_Name: Coin 2
+  m_Name: Glide
   m_EditorClassIdentifier: 
   Price: 3000
   Multiplier: 3
   Amount: 1
-  TypeOfItem: 1
+  TypeOfItem: 2
   HatIndex: 2

@@ -1,13 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Assets.Scripts.Store; // For Item.ItemType
 
 public class RunnerCharacterController : MonoBehaviour
 {
-    public float forwardSpeed = 8f;
+    public float forwardSpeed = 16f;
     public float strafeSpeedMultiplier = 0.6f;
     public float jumpForce = 200f;
     public float doubleJumpForce = 50f;
     public float gravity = 15f;
+    [SerializeField] private float normalGravity = 15f;
+    [SerializeField] private float glideGravity = 8f;
+
     public float turnSpeed = 10f;
     public float freeRunTurnSpeed = 120f;
 
@@ -157,6 +161,15 @@ public class RunnerCharacterController : MonoBehaviour
 
     void Update()
     {
+        // --- GLIDE HAT GRAVITY LOGIC ---
+        bool hasGlide = false;
+        if (GameManager.Instance != null && GameManager.Instance.EquippedPowerupType.HasValue)
+        {
+            hasGlide = GameManager.Instance.EquippedPowerupType.Value == Item.ItemType.Glide;
+        }
+        gravity = hasGlide ? glideGravity : normalGravity;
+        // --- END GLIDE HAT LOGIC ---
+
         // Allow the player to unlock the cursor with Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
