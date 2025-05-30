@@ -46,7 +46,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.04
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -144,5 +144,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 5847432524595482143}
   _buy: {fileID: 8300000, guid: d7f50a8e000fdee48b526f7d37e8d38e, type: 3}
-  _lanaPengar: {fileID: 8300000, guid: 1c33c0f680a925546b8e4f38c27beaa6, type: 3}
+  _notEnoughMoney: {fileID: 8300000, guid: b630303625dac034c9459cacd4acc825, type: 3}
   _equip: {fileID: 8300000, guid: 3199b86b107e54f4b8185eb04adcdc30, type: 3}

@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopSound : MonoBehaviour
@@ -8,8 +10,9 @@ public class ShopSound : MonoBehaviour
     //Shop sounds
     [Header("Shop sounds")]
     public AudioClip _buy;
-    public AudioClip _lanaPengar;
+    public AudioClip _notEnoughMoney;
     public AudioClip _equip;
+    public AudioClip _openMenu;
 
     private AudioClip _currentSound;
     private bool _isPlaying;
@@ -17,19 +20,26 @@ public class ShopSound : MonoBehaviour
     //Buy sounds
     public void BuySound()
     {
+
         _currentSound = _buy;
-        StartCoroutine(PlaySound());
+        _audioSource.PlayOneShot(_buy);
     }
     public void NotEnoughMoneySound()
     {
-        _currentSound = _lanaPengar;
+        _currentSound = _notEnoughMoney;
         StartCoroutine(PlaySound());
+
     }
     public void EquipSound()
     {
-        _currentSound = _equip;
-        StartCoroutine(PlaySound());
+        _audioSource.PlayOneShot(_equip);
     }
+
+    public void OpenMenuSound()
+    {
+        _audioSource.PlayOneShot(_openMenu);
+    }
+
 
     private IEnumerator PlaySound()
     {

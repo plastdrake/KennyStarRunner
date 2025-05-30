@@ -31,7 +31,7 @@ public class FloorSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, currentPosition) < 50f)
+        if (Vector3.Distance(player.transform.position, currentPosition) < 200f)
             SpawnNewTiles();
     }
 
