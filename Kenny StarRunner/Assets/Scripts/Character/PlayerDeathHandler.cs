@@ -8,6 +8,7 @@ public class PlayerDeathHandler : MonoBehaviour
     [SerializeField] private MonoBehaviour movementScript; // Reference to your movement script
     [SerializeField] private Rigidbody rb; // Reference to Rigidbody
     [SerializeField] private Collider deathCollider; // Reference to CapsuleCollider (or similar)
+    [SerializeField] private PlayerLifetimeCounter lifetimeCounter; // Reference to timer script
     private PlayerSounds playerSounds;
 
     private void Awake()
@@ -20,6 +21,8 @@ public class PlayerDeathHandler : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         if (deathCollider == null)
             deathCollider = GetComponent<Collider>();
+        if (lifetimeCounter == null)
+            lifetimeCounter = GetComponent<PlayerLifetimeCounter>();
         playerSounds = GetComponentInChildren<PlayerSounds>();
     }
 
@@ -42,7 +45,8 @@ public class PlayerDeathHandler : MonoBehaviour
             animator.SetTrigger("FallDown");
 
         // Play death sound
-        playerSounds.DeadSound();
+        if (playerSounds != null)
+            playerSounds.DeadSound();
 
         // Disable movement
         if (movementScript != null)
@@ -64,7 +68,11 @@ public class PlayerDeathHandler : MonoBehaviour
             rb.linearVelocity = Vector3.zero; // Correct property is 'velocity'
         }
 
-        // Start coroutine to load lobby after delay
+        // Stop the lifetime counter
+        if (lifetimeCounter != null)
+            lifetimeCounter.OnPlayerDeath();
+
+        // Start coroutine to load store scene after delay
         StartCoroutine(LoadLobbyAfterDelay(3f)); // 3 seconds delay
     }
 

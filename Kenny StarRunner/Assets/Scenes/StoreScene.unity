@@ -476,6 +476,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 692461312}
   m_SourcePrefab: {fileID: 100100000, guid: 94b842da98a555a49b0e4af2f957ecb9, type: 3}
+--- !u!1 &145252427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9001329460007405395, guid: 1a7dc0f3c920e374c97badc8c07dabaa, type: 3}
+  m_PrefabInstance: {fileID: 466964667}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &225926351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2292473366934533597, guid: 7ed8736e1c41a994c86d94e25ec23c10, type: 3}
@@ -759,11 +764,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 401512183733920794, guid: 1a7dc0f3c920e374c97badc8c07dabaa, type: 3}
       propertyPath: m_text
-      value: 'High Score
-
-        Kenny: 1337
-
-        Pontus: 12'
+      value: High Score
       objectReference: {fileID: 0}
     - target: {fileID: 8371211296610296742, guid: 1a7dc0f3c920e374c97badc8c07dabaa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -812,8 +813,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9001329460007405395, guid: 1a7dc0f3c920e374c97badc8c07dabaa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 466964669}
   m_SourcePrefab: {fileID: 100100000, guid: 1a7dc0f3c920e374c97badc8c07dabaa, type: 3}
+--- !u!114 &466964669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145252427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3bc9399ab93088468a7c03be6f9a830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highScoreText: {fileID: 466964671}
+--- !u!114 &466964671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 401512183733920794, guid: 1a7dc0f3c920e374c97badc8c07dabaa, type: 3}
+  m_PrefabInstance: {fileID: 466964667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145252427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &542470481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1886260128373561415, guid: afeb743dddc9b0743864684446f03561, type: 3}

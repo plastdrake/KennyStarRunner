@@ -17,16 +17,26 @@ public class GameManager : MonoBehaviour
     public Item.ItemType? EquippedPowerupType { get; private set; } = null; // Nullable for "none"
     public Powerup EquippedPowerup { get; private set; } = null;
 
-    // High score (persistent)
-    private const string HighScoreKey = "HighScore";
-    public int HighScore
+    // Top 3 high scores (persistent)
+    private const string HighScore1Key = "HighScore1";
+    private const string HighScore2Key = "HighScore2";
+    private const string HighScore3Key = "HighScore3";
+    public int[] HighScores { get; private set; } = new int[3];
+    public int HighScore => HighScores[0];
+
+    private void LoadHighScores()
     {
-        get => PlayerPrefs.GetInt(HighScoreKey, 0);
-        private set
-        {
-            PlayerPrefs.SetInt(HighScoreKey, value);
-            PlayerPrefs.Save();
-        }
+        HighScores[0] = PlayerPrefs.GetInt(HighScore1Key, 0);
+        HighScores[1] = PlayerPrefs.GetInt(HighScore2Key, 0);
+        HighScores[2] = PlayerPrefs.GetInt(HighScore3Key, 0);
+    }
+
+    private void SaveHighScores()
+    {
+        PlayerPrefs.SetInt(HighScore1Key, HighScores[0]);
+        PlayerPrefs.SetInt(HighScore2Key, HighScores[1]);
+        PlayerPrefs.SetInt(HighScore3Key, HighScores[2]);
+        PlayerPrefs.Save();
     }
 
     void Awake()
@@ -37,6 +47,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             Money = startingMoney;
             SetCustomCursor(); // Set the custom cursor at startup
+            LoadHighScores();  // Load top 3 scores at startup
         }
         else
         {
@@ -114,12 +125,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Try to insert a new score into the top 3 high scores
+    public void TrySetHighScore(int score)
+    {
+        for (int i = 0; i < HighScores.Length; i++)
+        {
+            if (score > HighScores[i])
+            {
+                // Shift lower scores down
+                for (int j = HighScores.Length - 1; j > i; j--)
+                {
+                    HighScores[j] = HighScores[j - 1];
+                }
+                HighScores[i] = score;
+                SaveHighScores();
+                break;
+            }
+        }
+    }
+
+    // For compatibility: sets high score from CurrentScore
     public void TrySetHighScore()
     {
-        if (CurrentScore > HighScore)
-        {
-            HighScore = CurrentScore;
-        }
+        TrySetHighScore(CurrentScore);
     }
 
     public void ResetScore()

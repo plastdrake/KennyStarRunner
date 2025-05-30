@@ -1,32 +1,44 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerLifetimeCounter : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //public TMP_Text timerText; // Dra in UI Text i Inspector
-    //private int timeAlive = 0;
-    //private bool isAlive = true;
+    public TMP_Text timerText;
+    private int timeAlive = 0;
+    private bool isAlive = true;
 
-    //void Start()
-    //{
-    //    StartCoroutine(TimerCoroutine());
-    //}
+    [SerializeField] private RunnerCharacterController runnerController;
 
-    //private IEnumerator TimerCoroutine()
-    //{
-    //    while (isAlive)
-    //    {
-    //        timerText.text = timeAlive.ToString("D4");
-    //        yield return new WaitForSeconds(1f);
-    //        timeAlive++;
-    //    }
-    //}
+    void Awake()
+    {
+        if (runnerController == null)
+            runnerController = GetComponent<RunnerCharacterController>();
+    }
 
-    //public void OnPlayerDeath()
-    //{
-    //    isAlive = false;
-    //}
+    void Start()
+    {
+        StartCoroutine(TimerCoroutine());
+    }
+
+    private IEnumerator TimerCoroutine()
+    {
+        while (isAlive)
+        {
+            if (runnerController != null && !runnerController.IsFreeRunning)
+            {
+                timerText.text = timeAlive.ToString("D4");
+                timeAlive++;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    public void OnPlayerDeath()
+    {
+        isAlive = false;
+        // Set high score if this run is better
+        if (GameManager.Instance != null)
+            GameManager.Instance.TrySetHighScore(timeAlive);
+    }
 }

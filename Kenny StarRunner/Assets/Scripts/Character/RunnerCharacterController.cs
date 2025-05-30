@@ -50,6 +50,12 @@ public class RunnerCharacterController : MonoBehaviour
     private bool cameraReverseHeld = false;
     private PlayerSounds playerSounds;
 
+    // Falling too long death logic
+    [SerializeField] private float maxAirTime = 6.5f; // seconds before death
+    private float airTimer = 0f;
+    private bool hasFallenToDeath = false;
+    [SerializeField] private Health health;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -58,6 +64,9 @@ public class RunnerCharacterController : MonoBehaviour
         inputActions = new InputSystem_Actions();
         moveInput = Vector2.zero;
         forwardInput = 0f;
+
+        if (health == null)
+            health = GetComponent<Health>();
 
         // Movement input
         inputActions.Player.Move.performed += ctx =>
@@ -315,6 +324,23 @@ public class RunnerCharacterController : MonoBehaviour
 
         if (controller != null)
             controller.Move(moveVector * Time.deltaTime);
+
+        // "Falling too long" death logic
+        if (controller != null && !controller.isGrounded)
+        {
+            airTimer += Time.deltaTime;
+            if (!hasFallenToDeath && airTimer >= maxAirTime)
+            {
+                hasFallenToDeath = true;
+                if (health != null)
+                    health.TakeDamage(9999, gameObject); // Triggers death
+            }
+        }
+        else
+        {
+            airTimer = 0f;
+            hasFallenToDeath = false;
+        }
     }
 
     void LateUpdate()
