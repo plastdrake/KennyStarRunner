@@ -401,6 +401,10 @@ public class RunnerCharacterController : MonoBehaviour
         {
             animator.SetBool("IsSliding", true);
         }
+
+        // Play slide sound
+        if (playerSounds != null)
+            playerSounds.SlideSound();
     }
 
     private void OnJump()
@@ -408,11 +412,15 @@ public class RunnerCharacterController : MonoBehaviour
         if (controller != null && controller.isGrounded)
         {
             jumpRequest = true;
-            if (playerSounds != null && Random.value < 0.1f)
+            if (playerSounds != null)
                 playerSounds.JumpSound();
         }
         else if (canDoubleJump)
+        {
             doubleJumpRequest = true;
+            if (playerSounds != null)
+                playerSounds.JumpSound();
+        }
     }
 
     private void OnTurnLeft()
