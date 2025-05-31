@@ -9,6 +9,28 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] private CanvasGroup fadeCanvasGroup; // Assign the CanvasGroup of your black image
     [SerializeField] private float fadeDuration = 1f;
 
+    private void Start()
+    {
+        // Start fade-in when the scene loads
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.alpha = 1f;
+            StartCoroutine(FadeIn());
+        }
+    }
+
+    private IEnumerator FadeIn()
+    {
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            fadeCanvasGroup.alpha = 1f - Mathf.Clamp01(t / fadeDuration);
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 0f;
+    }
+
     // Call this from a UI Button
     public void LoadScene()
     {
