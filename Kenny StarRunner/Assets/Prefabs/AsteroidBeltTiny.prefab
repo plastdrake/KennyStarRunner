@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7004418474851395966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9101708927469499872}
+  - component: {fileID: 3038186055550483132}
+  m_Layer: 0
+  m_Name: AsteroidBeltTiny
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9101708927469499872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004418474851395966}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 7.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &3038186055550483132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004418474851395966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313a99ef00c57274b8a18aa1b8400881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbitPrefabs:
+  - {fileID: -5797440493459935491, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+  - {fileID: -941227528790107229, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+  - {fileID: 5871759740544941083, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+  - {fileID: 7697708260947371301, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+  - {fileID: 1715409064309873591, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+  prefabCounts: 0200000003000000010000000200000004000000
+  orbitRadius: 45
+  orbitSpacing: 4
+  orbitDensity: 0.5
+  orbitSpeed: 4
+  radiusRandomness: 5
+  heightRange: {x: -10, y: 10}
+  scaleRange: {x: 0.5, y: 2}
+  selfRotationSpeedMin: -31
+  selfRotationSpeedMax: 31
+  removeColliders: 0
