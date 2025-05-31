@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class RunnerCharacterController : MonoBehaviour
 {
+
+    public static event System.Action<bool> OnMovementChanged;
     public float forwardSpeed = 8f;
     public float strafeSpeedMultiplier = 0.6f;
     public float jumpForce = 200f;
@@ -73,11 +75,14 @@ public class RunnerCharacterController : MonoBehaviour
         {
             moveInput = ctx.ReadValue<Vector2>();
             forwardInput = moveInput.y;
+            Debug.Log("Should fire Event");
+            OnMovementChanged?.Invoke(true);
         };
         inputActions.Player.Move.canceled += ctx =>
         {
             moveInput = Vector2.zero;
             forwardInput = 0f;
+            OnMovementChanged?.Invoke(false);
         };
 
         // Jump input
