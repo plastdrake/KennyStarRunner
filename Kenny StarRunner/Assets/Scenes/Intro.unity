@@ -275,7 +275,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644176500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 3.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -283,7 +283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.5, y: -38.3}
+  m_AnchoredPosition: {x: -0.7, y: -38.3}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &644176502
@@ -307,15 +307,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "A long time ago in a galaxy\r\nway less cool than it is now...\r\n\r\nEpisode
-    I\r\nKENNY STARRUNNER\r\n\r\nGalaxen \xE4r i kaos!\r\n\r\nDen onda fris\xF6rsyndikaten
-    \"Cutthroat Clippers\"\r\nhar tagit \xF6ver stj\xE4rnsystem efter stj\xE4rnsystem\r\nmed
-    hj\xE4lp av sin fruktade fris\xF6rlaser 9000\u2122.\r\n\r\nKaos r\xE5der p\xE5
-    fris\xF6rskolorna.\r\nIngen v\xE5gar klippa. Ingen v\xE5gar tro.\r\n\r\nMen ett
-    ov\xE4ntat hopp \xE5terst\xE5r...\r\n\r\nKENNY, en fris\xF6rstudent med underk\xE4nt
-    i teori\r\nmen VG i att springa snabbt, har valts ut\r\nav galaxens sista h\xE5rm\xE4stare.\r\n\r\nHans
-    uppdrag: att hitta sitt mod,\r\nr\xE4dda frisyrerna \u2013 och kanske\r\n\xE4ven
-    hela galaxen...\r\n\r\nHan \xE4r inte smart.\r\nHan \xE4r inte redo.\r\nMen han
-    springer. STARKT.\r\n\r\nHan \xE4r...\r\nKENNY STARRUNNER.\r\n\r"
+    I\r\nKENNY STARRUNNER\r\n\r\nThe galaxy is in chaos!\r\n\r\nThe evil hairdressing
+    syndicate known as the Cutthroat Clippers has conquered star system after star
+    system with their feared Laser Trimmer 9000\u2122.\r\n\r\nHair academies are
+    in ruins. No one dares to cut. No one dares to hope.\r\n\r\nBut one last chance
+    remains...\r\n\r\nKENNY \u2014 a hairdressing student with a failing theory grade
+    but top marks in running \u2014 has been chosen by the galaxy\u2019s last Hair
+    Master.\r\n\r\nHis mission: to find his courage, restore the hairstyles, and
+    maybe... just maybe... save the galaxy.\r\n\r\nHe\u2019s not smart.\r\nHe\u2019s
+    not ready.\r\nBut he runs. HARD.\r\n\r\nHe is...\r\nKENNY STARRUNNER.\r\r\n\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5be63959106c45d40acbc19862af91c3, type: 2}
   m_sharedMaterial: {fileID: -7336817386255597827, guid: 5be63959106c45d40acbc19862af91c3, type: 2}
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -6.128174, w: 0}
+  m_margin: {x: 0, y: 0, z: -17.216003, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a2148edf9ff0640a8288f3853df49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 2
+  scrollSpeed: 3.3
 --- !u!1 &1137443060
 GameObject:
   m_ObjectHideFlags: 0
