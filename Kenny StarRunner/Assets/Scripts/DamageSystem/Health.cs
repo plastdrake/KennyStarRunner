@@ -29,7 +29,7 @@ public class Health : MonoBehaviour, IDamageable
             // if (GameManager.Instance.EquippedPowerup != null)
             //     extraHealth = GameManager.Instance.EquippedPowerup.Amount;
 
-            extraHealth = 5f; // Change this value as needed or fetch from Powerup asset
+            extraHealth = 10f; // Change this value as needed or fetch from Powerup asset
         }
 
         MaxHealth += extraHealth;

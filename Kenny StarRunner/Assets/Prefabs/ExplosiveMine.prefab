@@ -78,6 +78,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Mine
       objectReference: {fileID: 0}
+    - target: {fileID: 3293486437920945848, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
+      propertyPath: m_Height
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293486437920945848, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
+      propertyPath: m_Radius
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293486437920945848, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4259653655867703871, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
       propertyPath: m_Radius
       value: 0.67904687

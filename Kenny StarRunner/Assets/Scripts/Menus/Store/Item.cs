@@ -13,7 +13,8 @@ namespace Assets.Scripts.Store
         public enum ItemType
         {
             Heart,
-            Coin
+            Coin,
+            Glide
         }
     }
 }
