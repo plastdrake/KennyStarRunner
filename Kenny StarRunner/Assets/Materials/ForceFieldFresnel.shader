@@ -15,6 +15,7 @@ Shader "Custom/ForceFieldFresnelRippleWorld"
         _DistortStrength ("Distort Strength", Range(0,0.2)) = 0.08
         _DistortSpeed ("Distort Speed", Range(0,5)) = 1
         _WorldScale ("World Effect Scale", Float) = 1
+        _WorldRotation ("World Effect Rotation (Euler XYZ)", Vector) = (0,0,0,0)
     }
     SubShader
     {
@@ -60,6 +61,22 @@ Shader "Custom/ForceFieldFresnelRippleWorld"
             float _DistortStrength;
             float _DistortSpeed;
             float _WorldScale;
+            float4 _WorldRotation; // Euler angles in degrees
+
+            // Helper: Euler XYZ to rotation matrix
+            float3x3 EulerToMatrix(float3 euler)
+            {
+                float3 rad = radians(euler);
+                float cx = cos(rad.x), sx = sin(rad.x);
+                float cy = cos(rad.y), sy = sin(rad.y);
+                float cz = cos(rad.z), sz = sin(rad.z);
+
+                float3x3 mx = float3x3(1,0,0, 0,cx,-sx, 0,sx,cx);
+                float3x3 my = float3x3(cy,0,sy, 0,1,0, -sy,0,cy);
+                float3x3 mz = float3x3(cz,-sz,0, sz,cz,0, 0,0,1);
+
+                return mul(mz, mul(my, mx));
+            }
 
             v2f vert (appdata v)
             {
@@ -74,8 +91,9 @@ Shader "Custom/ForceFieldFresnelRippleWorld"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // Use world position for seamless effects
-                float3 wp = i.worldPos * _WorldScale;
+                // Apply world rotation to world position
+                float3x3 rot = EulerToMatrix(_WorldRotation.xyz);
+                float3 wp = mul(rot, i.worldPos) * _WorldScale;
 
                 // Ripple effect: animate with sine wave in world space
                 float ripple = sin((wp.x + wp.y + wp.z + _Time.y * _RippleSpeed) * _RippleFrequency) * _RippleStrength;
@@ -106,4 +124,3 @@ Shader "Custom/ForceFieldFresnelRippleWorld"
         }
     }
 }
-
