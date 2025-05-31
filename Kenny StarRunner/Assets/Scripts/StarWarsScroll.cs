@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class StarWarsScroll : MonoBehaviour
@@ -7,5 +8,6 @@ public class StarWarsScroll : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);
+        GetComponent<TextMeshPro>().ForceMeshUpdate();
     }
 }
