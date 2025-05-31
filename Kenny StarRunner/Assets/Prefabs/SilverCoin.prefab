@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 669214649802268316}
   - component: {fileID: 1902185123090926915}
   m_Layer: 0
-  m_Name: Coin
+  m_Name: SilverCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44271bbe4d1c21445aeb99688987fbcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinValue: 10
+  coinValue: 20
 --- !u!114 &669214649802268316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +146,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28f96bec9b6e68149847049c740f8072, type: 2}
+  - {fileID: 2100000, guid: 863ea8b1f081d884eb846e75b0b480d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
