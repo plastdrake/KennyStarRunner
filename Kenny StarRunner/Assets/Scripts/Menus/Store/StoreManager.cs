@@ -5,6 +5,7 @@ public class StoreManager : MonoBehaviour
 {
     [SerializeField] private GameObject _store;
     [SerializeField] private TMP_Text _storeText;
+    private MenuManager _menuManager;
 
     private bool _isPlayerInRange;
 
@@ -31,12 +32,18 @@ public class StoreManager : MonoBehaviour
         Cursor.visible = false;
     }
 
+    void Start()
+    {
+        _menuManager = FindObjectOfType<MenuManager>();
+    }
+
     void Update()
     {
         if (_isPlayerInRange && Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("Pressing F");
             _store.SetActive(true);
+            _menuManager.CloseMainMenu();
+            _menuManager.CloseSettings();
 
             // Unlock and show the cursor when entering the store
             Cursor.lockState = CursorLockMode.None;
