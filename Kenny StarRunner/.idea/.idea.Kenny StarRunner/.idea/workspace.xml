@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ce789d9-a2fd-4fdd-8475-0ddf997c56cb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Kenny StarRunner/.idea/._workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Kenny StarRunner/.idea/._workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Kenny StarRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Kenny StarRunner/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/._CameraTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/._CameraTransition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CameraTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CameraTransition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/._GameManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/._GameManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Menus/._MenuManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Menus/._MenuManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Menus/._MenuManager.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Menus/._MenuManager.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Menus/MenuManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Menus/MenuManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Menus/MenuManager.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Menus/MenuManager.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/._StoreScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/._StoreScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/._TestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/._TestScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/._TestScene.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/._TestScene.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/StoreScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StoreScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TestScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TestScene.unity.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menus/Store/BuyItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menus/Store/BuyItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menus/Store/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menus/Store/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/._Anton SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/._Anton SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menus/MenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menus/MenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

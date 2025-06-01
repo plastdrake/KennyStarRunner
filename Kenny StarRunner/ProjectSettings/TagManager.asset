@@ -19,6 +19,8 @@ TagManager:
   - Slippery
   - LeftRailing
   - RightRailing
+  - MainCam
+  - HighScoreCam
   layers:
   - Default
   - TransparentFX
