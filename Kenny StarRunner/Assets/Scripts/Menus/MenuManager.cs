@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Timeline.DirectorControlPlayable;
@@ -80,6 +81,14 @@ public class MenuManager : MonoBehaviour
     private void CloseCursor()
     {
         
+    }
+    public void QuitGameMode()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     void Awake()
