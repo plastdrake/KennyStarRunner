@@ -4,7 +4,6 @@ using Assets.Scripts.Store; // For Item.ItemType
 
 public class RunnerCharacterController : MonoBehaviour
 {
-
     public static event System.Action<bool> OnMovementChanged;
     public float forwardSpeed = 16f;
     public float strafeSpeedMultiplier = 0.6f;
@@ -61,6 +60,13 @@ public class RunnerCharacterController : MonoBehaviour
     private float airTimer = 0f;
     private bool hasFallenToDeath = false;
     [SerializeField] private Health health;
+
+    // --- Slippery surface sliding fields ---
+    [Header("Slippery Surface Settings")]
+    public float slipperySlideSpeed = 2f;
+    private bool isOnSlippery = false;
+    private Vector3 slipperyDirection = Vector3.zero;
+    // ---------------------------------------
 
     void Awake()
     {
@@ -319,6 +325,13 @@ public class RunnerCharacterController : MonoBehaviour
             moveVector = (moveDirection * speed) + (right * horizontalInput * currentSideSpeed) + (Vector3.up * verticalVelocity);
         }
 
+        // --- Slippery surface sliding logic ---
+        if (isOnSlippery)
+        {
+            moveVector += slipperyDirection * slipperySlideSpeed;
+        }
+        // --------------------------------------
+
         Vector3 horizontalMove = moveVector;
         horizontalMove.y = 0f;
         float animSpeed = horizontalMove.magnitude;
@@ -442,6 +455,25 @@ public class RunnerCharacterController : MonoBehaviour
         {
             moveDirection = Quaternion.Euler(0, 90, 0) * moveDirection;
             targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        }
+    }
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("LeftRailing"))
+        {
+            // Slide to the right
+            slipperyDirection = Vector3.Cross(Vector3.up, moveDirection).normalized;
+            isOnSlippery = true;
+        }
+        else if (hit.collider.CompareTag("RightRailing"))
+        {
+            // Slide to the left
+            slipperyDirection = Vector3.Cross(moveDirection, Vector3.up).normalized;
+            isOnSlippery = true;
+        }
+        else
+        {
+            isOnSlippery = false;
         }
     }
 }

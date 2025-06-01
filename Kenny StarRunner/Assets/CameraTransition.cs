@@ -31,8 +31,11 @@ public class CameraTransition : MonoBehaviour
     {
         if (!isMoving) 
             return;
-        mainCamera.Priority = 10;
-        highScoreCamera.Priority = 0;
+        if (mainCamera != null && highScoreCamera != null)
+        {
+            mainCamera.Priority = 10;
+            highScoreCamera.Priority = 0;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
