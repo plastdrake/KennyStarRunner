@@ -12,7 +12,6 @@ public class FloorSpawner : MonoBehaviour
     public GameObject turnRight;
     public GameObject startObject;
     public GameObject player;
-    //private HashSet<Vector3Int> occupiedPositions = new HashSet<Vector3Int>();
 
     private Vector3 currentPosition;
     private float currentYAngle;
@@ -22,11 +21,19 @@ public class FloorSpawner : MonoBehaviour
     private bool lastWasGap = false;
     private bool lastWasRamp = false;
 
+    private int currentHeightLevel = 0;
+    private Dictionary<Vector2Int, List<int>> occupiedPositions = new Dictionary<Vector2Int, List<int>>();
+    private float platformLifetime = 60f;
+    private float lastTileLength = 8f; // Default, will be updated dynamically
+
     void Start()
     {
         Transform refEnd = startObject.transform.Find("End");
         currentPosition = refEnd.position;
         currentYAngle = refEnd.eulerAngles.y;
+        lastTileLength = (refEnd.position - startObject.transform.position).magnitude;
+        currentHeightLevel = Mathf.RoundToInt(currentPosition.y / lastTileLength);
+        RegisterTile(currentPosition, currentHeightLevel, lastTileLength);
     }
 
     void Update()
@@ -52,9 +59,9 @@ public class FloorSpawner : MonoBehaviour
         return straightForward;
     }
 
-    private GameObject GetRampToSpawn()
+    private GameObject GetRampToSpawn(bool preferUp = false)
     {
-        bool spawnUp = Random.value < 0.5f;
+        bool spawnUp = preferUp || Random.value < 0.5f;
         if (spawnUp && rampUpPrefabs.Count > 0)
         {
             int index = Random.Range(0, rampUpPrefabs.Count);
@@ -68,23 +75,110 @@ public class FloorSpawner : MonoBehaviour
         return null;
     }
 
+    private void RegisterTile(Vector3 pos, int heightLevel, float tileLength)
+    {
+        Vector2Int pos2D = new Vector2Int(Mathf.RoundToInt(pos.x / tileLength), Mathf.RoundToInt(pos.z / tileLength));
+        if (!occupiedPositions.ContainsKey(pos2D))
+            occupiedPositions[pos2D] = new List<int>();
+        occupiedPositions[pos2D].Add(heightLevel);
+    }
+
+    private bool IsOverlapping(Vector3 pos, int heightLevel, float tileLength, int minSeparation = 2)
+    {
+        Vector2Int pos2D = new Vector2Int(Mathf.RoundToInt(pos.x / tileLength), Mathf.RoundToInt(pos.z / tileLength));
+        if (!occupiedPositions.ContainsKey(pos2D))
+            return false;
+        foreach (int h in occupiedPositions[pos2D])
+        {
+            if (Mathf.Abs(h - heightLevel) < minSeparation)
+                return true;
+        }
+        return false;
+    }
+
+    private float GetTileLength(GameObject prefab)
+    {
+        // Instantiate temporarily to get the length, then destroy
+        GameObject temp = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        Transform end = temp.transform.Find("End");
+        float length = end != null ? (end.position - temp.transform.position).magnitude : 8f;
+        Destroy(temp);
+        return length;
+    }
+
     private void SpawnNewTiles()
     {
         GameObject prefabToSpawn;
-        bool randomChance = Random.value < 0.2f;
+        bool randomChance = Random.value < 0.5f;
         bool spawnCorner = false;
         bool turnRightNext = Random.value > 0.5f;
 
-        // Decide if we should spawn a corner
-        if (straightStreakCount >= 5 && randomChance && !lastWasCorner && !lastWasRamp)
+        if (straightStreakCount >= 3 && randomChance && !lastWasCorner && !lastWasRamp)
             spawnCorner = true;
+
+        // Predict next position if a turn is spawned
+        GameObject turnPrefab = turnRightNext ? turnRight : turnLeft;
+        float turnTileLength = GetTileLength(turnPrefab);
+        Vector3 direction = Quaternion.Euler(0, currentYAngle + (turnRightNext ? 90f : -90f), 0) * Vector3.forward;
+        Vector3 predictedTurnPos = currentPosition + direction * turnTileLength;
+        int predictedHeight = currentHeightLevel;
 
         if (spawnCorner)
         {
-            prefabToSpawn = turnRightNext ? turnRight : turnLeft;
-            lastWasCorner = true;
-            lastWasRamp = false;
-            straightStreakCount = 0;
+            int rampsNeeded = 0;
+            if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, 2))
+                rampsNeeded = Random.Range(2, 4); // 2 or 3 ramps
+
+            for (int i = 0; i < rampsNeeded; i++)
+            {
+                bool goUp = (currentHeightLevel < 10 && (currentHeightLevel == 0 || Random.value < 0.5f));
+                GameObject rampPrefab = goUp && rampUpPrefabs.Count > 0
+                    ? rampUpPrefabs[Random.Range(0, rampUpPrefabs.Count)]
+                    : rampDownPrefabs.Count > 0
+                        ? rampDownPrefabs[Random.Range(0, rampDownPrefabs.Count)]
+                        : null;
+                if (rampPrefab == null) break;
+
+                Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
+                Vector3 spawnPos = currentPosition;
+                GameObject newTile = Instantiate(rampPrefab, spawnPos, rotation);
+                Destroy(newTile, platformLifetime);
+
+                Transform foundEnd = newTile.transform.Find("End");
+                float rampTileLength = foundEnd != null ? (foundEnd.position - newTile.transform.position).magnitude : 8f;
+                if (foundEnd == null)
+                {
+                    Destroy(newTile);
+                    break;
+                }
+                TileEndTrigger trigger = foundEnd.GetComponent<TileEndTrigger>();
+                if (trigger != null)
+                    trigger.parentTile = newTile;
+
+                currentPosition = foundEnd.position;
+                currentHeightLevel += goUp ? 1 : -1;
+                RegisterTile(currentPosition, currentHeightLevel, rampTileLength);
+
+                // Update predictedTurnPos and predictedHeight after each ramp
+                predictedHeight = currentHeightLevel;
+                turnTileLength = GetTileLength(turnPrefab);
+                direction = Quaternion.Euler(0, currentYAngle + (turnRightNext ? 90f : -90f), 0) * Vector3.forward;
+                predictedTurnPos = currentPosition + direction * turnTileLength;
+            }
+
+            if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, 2))
+            {
+                prefabToSpawn = straightForward;
+                lastWasCorner = false;
+                straightStreakCount++;
+            }
+            else
+            {
+                prefabToSpawn = turnPrefab;
+                lastWasCorner = true;
+                lastWasRamp = false;
+                straightStreakCount = 0;
+            }
         }
         else
         {
@@ -92,14 +186,12 @@ public class FloorSpawner : MonoBehaviour
             lastWasCorner = false;
             straightStreakCount++;
 
-            // 20% chance to spawn an obstacle (if available and not after a gap)
             if (Random.value < 0.2f && straightForwardWithHoles.Count > 0 && !lastWasGap)
                 prefabToSpawn = GetStraightObstacleToSpawn();
 
-            // 10% chance to spawn a ramp (if available, not after a corner or ramp)
             if (!lastWasRamp && !lastWasCorner && (rampUpPrefabs.Count > 0 || rampDownPrefabs.Count > 0))
             {
-                if (Random.value < 0.1f)
+                if (Random.value < 0.25f)
                 {
                     GameObject rampPrefab = GetRampToSpawn();
                     if (rampPrefab != null)
@@ -123,30 +215,39 @@ public class FloorSpawner : MonoBehaviour
         // 9% chance to spawn a gap (only for straight tiles, not after a gap)
         if (prefabToSpawn == straightForward && Random.value < 0.09f && !lastWasGap)
         {
-            Vector3 direction = Quaternion.Euler(0, currentYAngle, 0) * Vector3.forward;
-            currentPosition += direction * gapDistance;
+            float straightTileLength = GetTileLength(straightForward);
+            Vector3 gapDirection = Quaternion.Euler(0, currentYAngle, 0) * Vector3.forward;
+            currentPosition += gapDirection * gapDistance;
             lastWasGap = true;
             return;
         }
 
-        Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
-        Vector3 spawnPos = currentPosition;
-        Vector3Int checkPos = Vector3Int.RoundToInt(spawnPos);
-        GameObject newTile = Instantiate(prefabToSpawn, spawnPos, rotation);
-        Transform foundEnd = newTile.transform.Find("End");
+        Quaternion finalRotation = Quaternion.Euler(0, currentYAngle, 0);
+        Vector3 spawnPosFinal = currentPosition;
+        GameObject newTileFinal = Instantiate(prefabToSpawn, spawnPosFinal, finalRotation);
+        Destroy(newTileFinal, platformLifetime);
 
-        if (foundEnd == null)
+        Transform foundEndFinal = newTileFinal.transform.Find("End");
+        float thisTileLength = foundEndFinal != null ? (foundEndFinal.position - newTileFinal.transform.position).magnitude : 8f;
+        if (foundEndFinal == null)
         {
-            Destroy(newTile);
+            Destroy(newTileFinal);
             return;
         }
 
-        TileEndTrigger trigger = foundEnd.GetComponent<TileEndTrigger>();
-        if (trigger != null)
-            trigger.parentTile = newTile;
+        TileEndTrigger triggerFinal = foundEndFinal.GetComponent<TileEndTrigger>();
+        if (triggerFinal != null)
+            triggerFinal.parentTile = newTileFinal;
 
-        Vector3 newEndPosition = foundEnd.position;
+        Vector3 newEndPosition = foundEndFinal.position;
         currentPosition = newEndPosition;
+
+        if (rampUpPrefabs.Contains(prefabToSpawn))
+            currentHeightLevel++;
+        else if (rampDownPrefabs.Contains(prefabToSpawn))
+            currentHeightLevel--;
+
+        RegisterTile(currentPosition, currentHeightLevel, thisTileLength);
 
         if (prefabToSpawn == turnRight)
             currentYAngle += 90f;

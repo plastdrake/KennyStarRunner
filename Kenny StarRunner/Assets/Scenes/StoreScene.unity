@@ -1439,6 +1439,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5873683446364331935, guid: c730b63fd51a0074e97c57624b19a444, type: 3}
+      propertyPath: _audioManager
+      value: 
+      objectReference: {fileID: 740760244}
     - target: {fileID: 6111811466372868227, guid: c730b63fd51a0074e97c57624b19a444, type: 3}
       propertyPath: m_Name
       value: Store
@@ -1484,6 +1488,10 @@ PrefabInstance:
       value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 7479307396450364301, guid: c730b63fd51a0074e97c57624b19a444, type: 3}
+      propertyPath: _audioManager
+      value: 
+      objectReference: {fileID: 740760244}
+    - target: {fileID: 7644951583194833358, guid: c730b63fd51a0074e97c57624b19a444, type: 3}
       propertyPath: _audioManager
       value: 
       objectReference: {fileID: 740760244}
