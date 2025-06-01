@@ -49,6 +49,19 @@ public class FloorSpawner : MonoBehaviour
             SpawnNewTiles();
     }
 
+    void Update()
+    {
+        // Always ensure there are tiles ahead, regardless of the queue state
+        float distanceToEnd = Vector3.Distance(player.transform.position, currentPosition);
+        float minBufferDistance = tilesAheadBuffer * lastTileLength * 0.8f;
+
+        if (distanceToEnd < minBufferDistance)
+        {
+            // Always spawn at least one tile if the player is close to the end
+            SpawnNewTiles();
+        }
+    }
+
     // Called by TileEndTrigger when player passes through an End trigger
     public void OnTileEndReached(TileEndTrigger trigger)
     {
@@ -56,7 +69,7 @@ public class FloorSpawner : MonoBehaviour
         if (trigger.parentTile != null && spawnedTiles.Count > 0 && spawnedTiles.Peek() == trigger.parentTile)
             spawnedTiles.Dequeue();
 
-        // Spawn enough tiles to refill the buffer
+        // Optionally, refill the buffer if you want (not strictly necessary with the new Update logic)
         int toSpawn = tilesAheadBuffer - spawnedTiles.Count;
         for (int i = 0; i < toSpawn; i++)
             SpawnNewTiles();

@@ -802,8 +802,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006509278554318288}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000034776788, y: 0.9925076, z: -0.12218324, w: -0.000000028249552}
-  m_LocalPosition: {x: 0.06323474, y: 5.68537, z: 19.225851}
+  m_LocalRotation: {x: 0.12218325, y: 0.000000014789517, z: -0.000000001820673, w: 0.9925076}
+  m_LocalPosition: {x: 0, y: 4.7971425, z: -12.309572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -841,7 +841,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 50000
   field of view: 60.000004
   orthographic: 0
   orthographic size: 5
@@ -5165,7 +5165,7 @@ MonoBehaviour:
     FieldOfView: 60.000004
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 50000
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -6795,6 +6795,7 @@ MonoBehaviour:
   camFrontLocalEuler: {x: 10, y: 180, z: 0}
   maxAirTime: 6.5
   health: {fileID: 0}
+  slipperySlideSpeed: 2
 --- !u!143 &3381699962868917759
 CharacterController:
   m_ObjectHideFlags: 0
