@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public void SaveHat(int index)
     {
        Hats.Add(index);
+       Debug.Log(index);
     }
     private void LoadHighScores()
     {

@@ -302,31 +302,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.684263
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.1902413
+      value: 3.8254766
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.197096
+      value: -8.421905
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7425484
+      value: 0.99250567
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.097758316
+      value: 0.12219878
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.65695125
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 514154125687094689, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.08648925
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1633627829561695844, guid: 511e72be2e56f8c4691479674c78a5f9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -547,6 +547,10 @@ PrefabInstance:
     - target: {fileID: 7479321665581050864, guid: c3482e3f4dc7f724db268b56af498eff, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628439209343440683, guid: c3482e3f4dc7f724db268b56af498eff, type: 3}
+      propertyPath: startingMoney
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
