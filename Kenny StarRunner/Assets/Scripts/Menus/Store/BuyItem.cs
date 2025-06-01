@@ -31,7 +31,7 @@ public class BuyItem : MonoBehaviour
 
     public void Buy()
     {
-        Debug.Log("Shopsounds: " + _shopSounds);
+        Debug.Log("Costs: " + _price.GetComponentInChildren<TMP_Text>().text);
         if (!_hasBeenBought)
         {
             if (!CheckBalance())

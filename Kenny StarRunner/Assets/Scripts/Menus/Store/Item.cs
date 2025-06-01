@@ -14,7 +14,9 @@ namespace Assets.Scripts.Store
         {
             Heart,
             Coin,
-            Glide
+            Glide,
+            Hairdresser,
+            GalaxyHero
         }
     }
 }
