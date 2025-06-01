@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5195927579943889099}
   - component: {fileID: 7628439209343440683}
+  - component: {fileID: 8511675017930683535}
+  - component: {fileID: 2628952964122746723}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,5 +47,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingMoney: 0
-  customCursor: {fileID: 2800000, guid: 2c1983384545dc6448cfcf48a9340956, type: 3}
+  customCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
+--- !u!114 &8511675017930683535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479321665581050864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f10b28d3028478ca132fbaeb0bf64f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  highScoreCamera: {fileID: 0}
+--- !u!114 &2628952964122746723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479321665581050864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eff58cb5569fe643ae232bda1ff6931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _store: {fileID: 0}
+  _settings: {fileID: 0}
+  _mainMenu: {fileID: 0}
+  _audioManager: {fileID: 0}
+  _hatsMenu: {fileID: 0}
+  _titlesMenu: {fileID: 0}
+  _infoObject: {fileID: 0}
