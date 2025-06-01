@@ -1,12 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StoreManager : MonoBehaviour
 {
     [SerializeField] private GameObject _store;
     [SerializeField] private TMP_Text _storeText;
     private MenuManager _menuManager;
-
+    private InputSystem_Actions storeAction;
     private bool _isPlayerInRange;
 
     void OnTriggerEnter(Collider other)
@@ -31,22 +32,31 @@ public class StoreManager : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Start()
+    void Awake()
     {
         _menuManager = FindFirstObjectByType<MenuManager>();
+        storeAction = new InputSystem_Actions();
+    }
+    private void OnEnable()
+    {
+        storeAction.Enable();
+        storeAction.Player.OpenStore.performed += OnInteract;
     }
 
-    void Update()
+    private void OnDisable()
     {
-        if (_isPlayerInRange && Input.GetKeyDown(KeyCode.F))
-        {
-            _store.SetActive(true);
-            _menuManager.CloseMainMenu();
-            _menuManager.CloseSettings();
+        storeAction.Player.OpenStore.performed -= OnInteract;
+        storeAction.Disable();
+    }
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        if (!_isPlayerInRange) return;
 
-            // Unlock and show the cursor when entering the store
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        _store.SetActive(true);
+        _menuManager.CloseMainMenu();
+        _menuManager.CloseSettings();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
