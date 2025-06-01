@@ -42,7 +42,7 @@ AudioSource:
   m_GameObject: {fileID: 7131057830157030793}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 843482322396462930, guid: ddce5c006d6d47446afedbcfbf1f881d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -145,7 +145,21 @@ MonoBehaviour:
   _audioSource: {fileID: 5596519040622164747}
   _wollieBollie: {fileID: 8300000, guid: c523800eb2115544788e3f2e66ee5b32, type: 3}
   _ischloPischlo: {fileID: 8300000, guid: 3ac9d028b30927643bbe8c55dfdde4cd, type: 3}
+  _footstep: {fileID: 0}
+  _slide: {fileID: 0}
+  _jump: {fileID: 0}
+  footstepVolume: 0.3
+  slideVolume: 0.5
+  jumpVolume: 0.5
+  deathVolume: 0.7
+  _spawnVoiceLine: {fileID: 0}
+  spawnVoiceLineVolume: 1
+  spawnVoiceLineDelay: 10
   _barrelExplosion: {fileID: 8300000, guid: 9dc2586219ea5be47a087f0d97e77eaf, type: 3}
   _mineExplosion: {fileID: 8300000, guid: f4cdde3320f97c14f8290760a075f3fb, type: 3}
   _electricity: {fileID: 8300000, guid: 5b2131565b244bd408a7df8f83b96e9a, type: 3}
+  barrelExplosionVolume: 1
+  mineExplosionVolume: 1
+  electricityVolume: 1
   _coinPickup: {fileID: 8300000, guid: 9e3983e7b8fa9ee4695c4a6d298ebd96, type: 3}
+  coinPickupVolume: 1
