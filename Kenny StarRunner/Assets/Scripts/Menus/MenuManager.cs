@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+ 
     [SerializeField] private GameObject _store;
     [SerializeField] private GameObject _settings;
     [SerializeField] private GameObject _mainMenu;
