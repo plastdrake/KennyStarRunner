@@ -23,7 +23,6 @@ public class StoreManager : MonoBehaviour
 
     public void CloseMenu()
     {
-        Debug.Log("Closing");
         _store.SetActive(false);
         _storeText.gameObject.SetActive(false);
 

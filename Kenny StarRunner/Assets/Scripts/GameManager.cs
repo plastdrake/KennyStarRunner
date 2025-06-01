@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Assets.Scripts.Store; // Needed for Powerup and Item.ItemType
 
@@ -21,9 +23,15 @@ public class GameManager : MonoBehaviour
     private const string HighScore1Key = "HighScore1";
     private const string HighScore2Key = "HighScore2";
     private const string HighScore3Key = "HighScore3";
+
     public int[] HighScores { get; private set; } = new int[3];
+    public List<int> Hats { get; } = new List<int>();
     public int HighScore => HighScores[0];
 
+    public void SaveHat(int index)
+    {
+       Hats.Add(index);
+    }
     private void LoadHighScores()
     {
         HighScores[0] = PlayerPrefs.GetInt(HighScore1Key, 0);

@@ -22,7 +22,10 @@ public class PowerupManager : MonoBehaviour
 
         // Save equipped powerup type in GameManager (if available)
         if (GameManager.Instance != null && powerup != null)
+        {
             GameManager.Instance.EquipPowerup(powerup);
+            GameManager.Instance.SaveHat(powerup.HatIndex);
+        }
 
         // Find HatManager if needed
         if (hatManager == null)

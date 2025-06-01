@@ -20,23 +20,32 @@ public class BuyItem : MonoBehaviour
     
     void Start()
     {
+        
+        
         _shopSounds = _audioManager.GetComponent<ShopSound>();
         powerupManager.Register(this);
         _price.GetComponentInChildren<TMP_Text>().text = powerupToBuy.Price.ToString();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
         btn = GetComponentInChildren<Button>();
+        
+        if (GameManager.Instance != null && GameManager.Instance.Hats.Contains(powerupToBuy.HatIndex))
+        {
+            Debug.Log(GameManager.Instance.EquippedPowerup);
+            Debug.Log(powerupToBuy.HatIndex);
+            _hasBeenBought = true;
+            _price.SetActive(false); 
+            UpdateVisuals(GameManager.Instance.EquippedPowerup == powerupToBuy);
+        }
         CheckBalance();
     }
     public Powerup GetPowerup() => powerupToBuy;
 
     public void Buy()
     {
-        Debug.Log("Costs: " + _price.GetComponentInChildren<TMP_Text>().text);
         if (!_hasBeenBought)
         {
             if (!CheckBalance())
             {
-                if(_shopSounds is null) Debug.Log("Is null");
                 _shopSounds?.NotEnoughMoneySound();
                 return;
             }
