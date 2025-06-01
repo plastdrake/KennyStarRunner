@@ -33,7 +33,7 @@ public class StoreManager : MonoBehaviour
 
     void Start()
     {
-        _menuManager = FindObjectOfType<MenuManager>();
+        _menuManager = FindFirstObjectByType<MenuManager>();
     }
 
     void Update()

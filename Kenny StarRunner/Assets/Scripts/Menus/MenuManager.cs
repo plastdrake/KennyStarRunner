@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _settings;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _audioManager;
+    private CameraTransition _cameraTransition;
 
     public GameObject _hatsMenu;
     public GameObject _titlesMenu;
@@ -70,9 +71,16 @@ public class MenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(_store.activeSelf)
+            Debug.Log("Pressing Escape");
+            if (_cameraTransition.IsHighScoreCameraFocused())
+            {
+                _cameraTransition.MoveToMainCamera(true);
+                return;
+            }
+
+            if (_store.activeSelf)
                 _store.SetActive(false);
-            else if(_settings.activeSelf)
+            else if (_settings.activeSelf)
                 _settings.SetActive(false);
             else
                 _mainMenu.SetActive(!_mainMenu.activeSelf);
@@ -81,6 +89,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        _cameraTransition = GetComponent<CameraTransition>();
         _sounds = _audioManager.GetComponent<ShopSound>();
     }
 }

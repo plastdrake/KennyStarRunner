@@ -359,6 +359,11 @@ public class RunnerCharacterController : MonoBehaviour
         if (controller != null && !controller.isGrounded)
         {
             airTimer += Time.deltaTime;
+            if (GameManager.Instance.EquippedHatIndex == 2)
+                maxAirTime = 6.5f;
+            else 
+                maxAirTime = 4;
+
             if (!hasFallenToDeath && airTimer >= maxAirTime)
             {
                 hasFallenToDeath = true;

@@ -9,6 +9,8 @@ public class CameraTransition : MonoBehaviour
     private MenuManager _menuManager;
     private bool _isHighScoreMenuOpen;
 
+    public bool IsHighScoreCameraFocused() => _isHighScoreMenuOpen;
+
     void OnEnable()
     {
         RunnerCharacterController.OnMovementChanged += MoveToMainCamera;
@@ -19,7 +21,7 @@ public class CameraTransition : MonoBehaviour
         RunnerCharacterController.OnMovementChanged -= MoveToMainCamera;
     }
 
-    public void MoveToHighScore()
+    private void MoveToHighScore()
     {
         if(mainCamera is null || highScoreCamera is null)
             InitializeCamera();
@@ -30,12 +32,14 @@ public class CameraTransition : MonoBehaviour
         _menuManager.CloseMainMenu();
     }
 
-    private void MoveToMainCamera(bool isMoving)
+    public void MoveToMainCamera(bool isMoving)
     {
+        Debug.Log("Moving to Main Camera");
         if (!isMoving) 
             return;
         if(mainCamera is null || highScoreCamera is null)
             InitializeCamera();
+        _isHighScoreMenuOpen = false;
         mainCamera.Priority = 10;
         highScoreCamera.Priority = 0;
     }
@@ -54,13 +58,13 @@ public class CameraTransition : MonoBehaviour
         MoveToMainCamera(true);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && _isHighScoreMenuOpen)
-        {
-            _menuManager.CloseMainMenu();
-            MoveToMainCamera(true);
-        }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape) && _isHighScoreMenuOpen)
+    //    {
+    //        //_menuManager.CloseMainMenu();
+    //        MoveToMainCamera(true);
+    //    }
 
-    }
+    //}
 }
