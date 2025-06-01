@@ -15,6 +15,10 @@ TagManager:
   - Mine
   - Electricity
   - FadeBG
+  - TrackingObject
+  - Slippery
+  - LeftRailing
+  - RightRailing
   - MainCam
   - HighScoreCam
   layers:

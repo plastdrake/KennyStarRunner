@@ -27,6 +27,14 @@ public class FloorSpawner : MonoBehaviour
     private float platformLifetime = 60f;
     private float lastTileLength = 8f; // Default, will be updated dynamically
 
+    // Increased minimum separation for crossings
+    private const int crossingMinSeparation = 6;
+
+    // Buffer: how many tiles ahead of the player should always exist
+    [SerializeField] private int tilesAheadBuffer = 6;
+    // Track spawned tiles for buffer management
+    private Queue<GameObject> spawnedTiles = new Queue<GameObject>();
+
     void Start()
     {
         Transform refEnd = startObject.transform.Find("End");
@@ -35,11 +43,22 @@ public class FloorSpawner : MonoBehaviour
         lastTileLength = (refEnd.position - startObject.transform.position).magnitude;
         currentHeightLevel = Mathf.RoundToInt(currentPosition.y / lastTileLength);
         RegisterTile(currentPosition, currentHeightLevel, lastTileLength);
+
+        // Spawn initial buffer
+        for (int i = 0; i < tilesAheadBuffer; i++)
+            SpawnNewTiles();
     }
 
-    void Update()
+    // Called by TileEndTrigger when player passes through an End trigger
+    public void OnTileEndReached(TileEndTrigger trigger)
     {
-        if (Vector3.Distance(player.transform.position, currentPosition) < 200f)
+        // Remove the tile that was just passed (if it's in the queue)
+        if (trigger.parentTile != null && spawnedTiles.Count > 0 && spawnedTiles.Peek() == trigger.parentTile)
+            spawnedTiles.Dequeue();
+
+        // Spawn enough tiles to refill the buffer
+        int toSpawn = tilesAheadBuffer - spawnedTiles.Count;
+        for (int i = 0; i < toSpawn; i++)
             SpawnNewTiles();
     }
 
@@ -126,7 +145,7 @@ public class FloorSpawner : MonoBehaviour
         if (spawnCorner)
         {
             int rampsNeeded = 0;
-            if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, 2))
+            if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, crossingMinSeparation))
                 rampsNeeded = Random.Range(2, 4); // 2 or 3 ramps
 
             for (int i = 0; i < rampsNeeded; i++)
@@ -153,11 +172,16 @@ public class FloorSpawner : MonoBehaviour
                 }
                 TileEndTrigger trigger = foundEnd.GetComponent<TileEndTrigger>();
                 if (trigger != null)
+                {
                     trigger.parentTile = newTile;
+                    trigger.spawner = this;
+                }
 
                 currentPosition = foundEnd.position;
                 currentHeightLevel += goUp ? 1 : -1;
                 RegisterTile(currentPosition, currentHeightLevel, rampTileLength);
+
+                spawnedTiles.Enqueue(newTile);
 
                 // Update predictedTurnPos and predictedHeight after each ramp
                 predictedHeight = currentHeightLevel;
@@ -166,7 +190,7 @@ public class FloorSpawner : MonoBehaviour
                 predictedTurnPos = currentPosition + direction * turnTileLength;
             }
 
-            if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, 2))
+            if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, crossingMinSeparation))
             {
                 prefabToSpawn = straightForward;
                 lastWasCorner = false;
@@ -241,7 +265,10 @@ public class FloorSpawner : MonoBehaviour
 
         TileEndTrigger triggerFinal = foundEndFinal.GetComponent<TileEndTrigger>();
         if (triggerFinal != null)
+        {
             triggerFinal.parentTile = newTileFinal;
+            triggerFinal.spawner = this; // <-- This sets the reference at runtime!
+        }
 
         Vector3 newEndPosition = foundEndFinal.position;
         currentPosition = newEndPosition;
@@ -253,6 +280,8 @@ public class FloorSpawner : MonoBehaviour
 
         RegisterTile(currentPosition, currentHeightLevel, thisTileLength);
 
+        spawnedTiles.Enqueue(newTileFinal);
+
         if (prefabToSpawn == turnRight)
             currentYAngle += 90f;
         else if (prefabToSpawn == turnLeft)
@@ -263,5 +292,13 @@ public class FloorSpawner : MonoBehaviour
 
         if (lastWasGap)
             lastWasGap = false;
+
+        // Optionally, clean up old tiles from the queue if needed
+        while (spawnedTiles.Count > tilesAheadBuffer + 5) // keep a few extra for safety
+        {
+            var oldTile = spawnedTiles.Dequeue();
+            if (oldTile != null)
+                Destroy(oldTile);
+        }
     }
 }
