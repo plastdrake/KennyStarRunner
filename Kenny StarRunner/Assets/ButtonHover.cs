@@ -19,7 +19,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Hovering");
         if (hoverMenu is not null)
             hoverMenu.SetActive(true);
         
@@ -27,7 +26,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("No longer hovering");
         if (hoverMenu is not null)
             hoverMenu.SetActive(false);
     }

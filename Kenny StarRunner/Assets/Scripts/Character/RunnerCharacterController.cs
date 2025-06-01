@@ -79,7 +79,6 @@ public class RunnerCharacterController : MonoBehaviour
         {
             moveInput = ctx.ReadValue<Vector2>();
             forwardInput = moveInput.y;
-            Debug.Log("Should fire Event");
             OnMovementChanged?.Invoke(true);
         };
         inputActions.Player.Move.canceled += ctx =>
