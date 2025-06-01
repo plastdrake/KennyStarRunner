@@ -122,7 +122,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
@@ -140,7 +140,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -149,7 +149,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -194,6 +194,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""CameraReverse"",
                     ""type"": ""Button"",
                     ""id"": ""bef4a029-01f2-41b5-80b1-6590846de4ae"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd64c204-1381-495d-bca0-67442090fc2c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenStore"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b5a0545-f164-49f3-94da-93941080d98b"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -671,6 +689,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CameraReverse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11a11413-e9dd-454d-93bd-4fcd2262f659"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20813690-1b16-4e28-904b-3e08d1409079"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""OpenStore"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1270,6 +1310,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_TurnLeft = m_Player.FindAction("TurnLeft", throwIfNotFound: true);
         m_Player_TurnRight = m_Player.FindAction("TurnRight", throwIfNotFound: true);
         m_Player_CameraReverse = m_Player.FindAction("CameraReverse", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_OpenStore = m_Player.FindAction("OpenStore", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1375,6 +1417,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_TurnLeft;
     private readonly InputAction m_Player_TurnRight;
     private readonly InputAction m_Player_CameraReverse;
+    private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_OpenStore;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1434,6 +1478,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/CameraReverse".
         /// </summary>
         public InputAction @CameraReverse => m_Wrapper.m_Player_CameraReverse;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/OpenStore".
+        /// </summary>
+        public InputAction @OpenStore => m_Wrapper.m_Player_OpenStore;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1496,6 +1548,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CameraReverse.started += instance.OnCameraReverse;
             @CameraReverse.performed += instance.OnCameraReverse;
             @CameraReverse.canceled += instance.OnCameraReverse;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @OpenStore.started += instance.OnOpenStore;
+            @OpenStore.performed += instance.OnOpenStore;
+            @OpenStore.canceled += instance.OnOpenStore;
         }
 
         /// <summary>
@@ -1543,6 +1601,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CameraReverse.started -= instance.OnCameraReverse;
             @CameraReverse.performed -= instance.OnCameraReverse;
             @CameraReverse.canceled -= instance.OnCameraReverse;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @OpenStore.started -= instance.OnOpenStore;
+            @OpenStore.performed -= instance.OnOpenStore;
+            @OpenStore.canceled -= instance.OnOpenStore;
         }
 
         /// <summary>
@@ -1927,6 +1991,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCameraReverse(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenStore" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenStore(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

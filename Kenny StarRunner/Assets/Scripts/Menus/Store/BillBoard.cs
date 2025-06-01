@@ -25,9 +25,9 @@ public class BillBoard : MonoBehaviour
 
             if (direction.sqrMagnitude > 0.001f)
             {
-                // Face the player, but rotate 180° if needed
+                // Face the player, but rotate 180ï¿½ if needed
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
-                // Add 180° around Y axis
+                // Add 180ï¿½ around Y axis
                 lookRotation *= Quaternion.Euler(0, 180f, 0);
                 transform.rotation = lookRotation;
             }

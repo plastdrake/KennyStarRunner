@@ -1,5 +1,8 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.Timeline.DirectorControlPlayable;
 
 public class MenuManager : MonoBehaviour
 {
@@ -8,12 +11,25 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _settings;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _audioManager;
+    private CameraTransition _cameraTransition;
+    private InputSystem_Actions menuAction;
 
     public GameObject _hatsMenu;
     public GameObject _titlesMenu;
     public GameObject _infoObject;
     
     private ShopSound _sounds;
+
+    private void OnEnable()
+    {
+        menuAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        menuAction.Disable();
+    }
+
     public void CloseStore()
     {
         _store.SetActive(false);
@@ -66,21 +82,34 @@ public class MenuManager : MonoBehaviour
     {
         
     }
-    void Update()
+    public void QuitGameMode()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    void Awake()
+    {
+        _cameraTransition = GetComponent<CameraTransition>();
+        _sounds = _audioManager.GetComponent<ShopSound>();
+        menuAction = new();
+        menuAction.Player.Pause.performed += ctx =>
         {
-            if(_store.activeSelf)
+            if (_cameraTransition.IsHighScoreCameraFocused())
+            {
+                _cameraTransition.MoveToMainCamera(true);
+                return;
+            }
+
+            if (_store.activeSelf)
                 _store.SetActive(false);
-            else if(_settings.activeSelf)
+            else if (_settings.activeSelf)
                 _settings.SetActive(false);
             else
                 _mainMenu.SetActive(!_mainMenu.activeSelf);
-        }
-    }
-
-    void Start()
-    {
-        _sounds = _audioManager.GetComponent<ShopSound>();
+        };
     }
 }
