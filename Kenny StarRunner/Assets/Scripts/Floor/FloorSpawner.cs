@@ -15,35 +15,21 @@ public class FloorSpawner : MonoBehaviour
 
     private Vector3 currentPosition;
     private float currentYAngle;
-    private bool lastWasCorner = false;
     private int straightStreakCount = 0;
     private float gapDistance = 8f;
+    private bool lastWasCorner = false;
     private bool lastWasGap = false;
     private bool lastWasRamp = false;
     private bool lastWasSlideUnder = false;
-
     private int currentHeightLevel = 0;
     private Dictionary<Vector2Int, List<int>> occupiedPositions = new Dictionary<Vector2Int, List<int>>();
-    private float platformLifetime = 60f;
     private float lastTileLength = 8f; // Default, will be updated dynamically
 
     private const int crossingMinSeparation = 6;
-
     [SerializeField] private int tilesAheadBuffer = 6;
 
-    // --- Ordered Destruction Tracking ---
-    private class TileInfo
-    {
-        public GameObject tile;
-        public bool destroyed;
-        public TileInfo(GameObject tile)
-        {
-            this.tile = tile;
-            this.destroyed = false;
-        }
-    }
-    private List<TileInfo> spawnedTiles = new List<TileInfo>();
-    // ------------------------------------
+    // Track spawned tiles in order
+    private List<GameObject> spawnedTiles = new List<GameObject>();
 
     void Start()
     {
@@ -60,70 +46,35 @@ public class FloorSpawner : MonoBehaviour
 
     void Update()
     {
-        // Always ensure there are tiles ahead, regardless of the queue state
         float distanceToEnd = Vector3.Distance(player.transform.position, currentPosition);
         float minBufferDistance = tilesAheadBuffer * lastTileLength * 0.8f;
-
         if (distanceToEnd < minBufferDistance)
         {
             SpawnNewTiles();
         }
-
-        // --- Ordered Destruction Fallback ---
-        // Destroy skipped tiles if all newer tiles are destroyed
-        while (spawnedTiles.Count > 0)
-        {
-            var first = spawnedTiles[0];
-            if (first.destroyed)
-            {
-                spawnedTiles.RemoveAt(0);
-                continue;
-            }
-
-            // Check if all after this are destroyed
-            bool allAfterDestroyed = true;
-            for (int i = 1; i < spawnedTiles.Count; i++)
-            {
-                if (!spawnedTiles[i].destroyed)
-                {
-                    allAfterDestroyed = false;
-                    break;
-                }
-            }
-            if (allAfterDestroyed)
-            {
-                if (first.tile != null)
-                    Destroy(first.tile);
-                spawnedTiles.RemoveAt(0);
-            }
-            else
-            {
-                break;
-            }
-        }
-        // ------------------------------------
-    }
-
-    // Called by TileEndTrigger when player passes through an End trigger
-    public void OnTileEndReached(TileEndTrigger trigger)
-    {
-        // No destruction here; handled by TileEndTrigger's coroutine and OnTileDestroyed
-        int toSpawn = tilesAheadBuffer - spawnedTiles.Count;
-        for (int i = 0; i < toSpawn; i++)
-            SpawnNewTiles();
     }
 
     // Called by TileEndTrigger when a tile is actually destroyed
     public void OnTileDestroyed(GameObject tile)
     {
-        foreach (var info in spawnedTiles)
+        int idx = spawnedTiles.IndexOf(tile);
+        if (idx == -1)
+            return;
+
+        // Destroy all tiles up to and including this one
+        for (int i = 0; i <= idx; i++)
         {
-            if (info.tile == tile)
-            {
-                info.destroyed = true;
-                break;
-            }
+            if (spawnedTiles[i] != null)
+                Destroy(spawnedTiles[i]);
         }
+        spawnedTiles.RemoveRange(0, idx + 1);
+    }
+
+    public void OnTileEndReached(TileEndTrigger trigger)
+    {
+        int toSpawn = tilesAheadBuffer - spawnedTiles.Count;
+        for (int i = 0; i < toSpawn; i++)
+            SpawnNewTiles();
     }
 
     private GameObject GetStraightObstacleToSpawn(bool preventSlideUnder)
@@ -225,7 +176,6 @@ public class FloorSpawner : MonoBehaviour
                 Quaternion rotation = Quaternion.Euler(0, currentYAngle, 0);
                 Vector3 spawnPos = currentPosition;
                 GameObject newTile = Instantiate(rampPrefab, spawnPos, rotation);
-                Destroy(newTile, platformLifetime);
 
                 Transform foundEnd = newTile.transform.Find("End");
                 float rampTileLength = foundEnd != null ? (foundEnd.position - newTile.transform.position).magnitude : 8f;
@@ -245,9 +195,7 @@ public class FloorSpawner : MonoBehaviour
                 currentHeightLevel += goUp ? 1 : -1;
                 RegisterTile(currentPosition, currentHeightLevel, rampTileLength);
 
-                spawnedTiles.Add(new TileInfo(newTile));
-                // (was: spawnedTiles.Enqueue(newTile);)
-                // Now using List<TileInfo>
+                spawnedTiles.Add(newTile);
             }
 
             if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, crossingMinSeparation))
@@ -312,7 +260,6 @@ public class FloorSpawner : MonoBehaviour
         Quaternion finalRotation = Quaternion.Euler(0, currentYAngle, 0);
         Vector3 spawnPosFinal = currentPosition;
         GameObject newTileFinal = Instantiate(prefabToSpawn, spawnPosFinal, finalRotation);
-        Destroy(newTileFinal, platformLifetime);
 
         Transform foundEndFinal = newTileFinal.transform.Find("End");
         float thisTileLength = foundEndFinal != null ? (foundEndFinal.position - newTileFinal.transform.position).magnitude : 8f;
@@ -340,7 +287,7 @@ public class FloorSpawner : MonoBehaviour
 
         RegisterTile(currentPosition, currentHeightLevel, thisTileLength);
 
-        spawnedTiles.Add(new TileInfo(newTileFinal));
+        spawnedTiles.Add(newTileFinal);
 
         if (prefabToSpawn == turnRight)
             currentYAngle += 90f;
