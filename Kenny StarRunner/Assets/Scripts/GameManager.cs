@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public Item.ItemType? EquippedPowerupType { get; private set; } = null; // Nullable for "none"
     public Powerup EquippedPowerup { get; private set; } = null;
 
+    public Powerup EquippedTitle { get; private set; } = null;
+
     // Top 3 high scores (persistent)
     private const string HighScore1Key = "HighScore1";
     private const string HighScore2Key = "HighScore2";
@@ -124,6 +126,11 @@ public class GameManager : MonoBehaviour
         // Optionally: Trigger events or update visuals here
     }
 
+    public void EquipTitle(Powerup title)
+    {
+        EquippedTitle = title;
+    }
+
     // Score management
     public void AddScore(int amount)
     {
@@ -171,6 +178,7 @@ public class GameManager : MonoBehaviour
         CurrentScore = 0;
         EquippedPowerupType = null;
         EquippedPowerup = null;
+        EquippedTitle = null;
         // Reset other session data as needed
     }
 }
