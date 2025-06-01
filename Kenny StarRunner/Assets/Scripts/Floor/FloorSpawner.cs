@@ -27,13 +27,23 @@ public class FloorSpawner : MonoBehaviour
     private float platformLifetime = 60f;
     private float lastTileLength = 8f; // Default, will be updated dynamically
 
-    // Increased minimum separation for crossings
     private const int crossingMinSeparation = 6;
 
-    // Buffer: how many tiles ahead of the player should always exist
     [SerializeField] private int tilesAheadBuffer = 6;
-    // Track spawned tiles for buffer management
-    private Queue<GameObject> spawnedTiles = new Queue<GameObject>();
+
+    // --- Ordered Destruction Tracking ---
+    private class TileInfo
+    {
+        public GameObject tile;
+        public bool destroyed;
+        public TileInfo(GameObject tile)
+        {
+            this.tile = tile;
+            this.destroyed = false;
+        }
+    }
+    private List<TileInfo> spawnedTiles = new List<TileInfo>();
+    // ------------------------------------
 
     void Start()
     {
@@ -44,7 +54,6 @@ public class FloorSpawner : MonoBehaviour
         currentHeightLevel = Mathf.RoundToInt(currentPosition.y / lastTileLength);
         RegisterTile(currentPosition, currentHeightLevel, lastTileLength);
 
-        // Spawn initial buffer
         for (int i = 0; i < tilesAheadBuffer; i++)
             SpawnNewTiles();
     }
@@ -57,22 +66,64 @@ public class FloorSpawner : MonoBehaviour
 
         if (distanceToEnd < minBufferDistance)
         {
-            // Always spawn at least one tile if the player is close to the end
             SpawnNewTiles();
         }
+
+        // --- Ordered Destruction Fallback ---
+        // Destroy skipped tiles if all newer tiles are destroyed
+        while (spawnedTiles.Count > 0)
+        {
+            var first = spawnedTiles[0];
+            if (first.destroyed)
+            {
+                spawnedTiles.RemoveAt(0);
+                continue;
+            }
+
+            // Check if all after this are destroyed
+            bool allAfterDestroyed = true;
+            for (int i = 1; i < spawnedTiles.Count; i++)
+            {
+                if (!spawnedTiles[i].destroyed)
+                {
+                    allAfterDestroyed = false;
+                    break;
+                }
+            }
+            if (allAfterDestroyed)
+            {
+                if (first.tile != null)
+                    Destroy(first.tile);
+                spawnedTiles.RemoveAt(0);
+            }
+            else
+            {
+                break;
+            }
+        }
+        // ------------------------------------
     }
 
     // Called by TileEndTrigger when player passes through an End trigger
     public void OnTileEndReached(TileEndTrigger trigger)
     {
-        // Remove the tile that was just passed (if it's in the queue)
-        if (trigger.parentTile != null && spawnedTiles.Count > 0 && spawnedTiles.Peek() == trigger.parentTile)
-            spawnedTiles.Dequeue();
-
-        // Optionally, refill the buffer if you want (not strictly necessary with the new Update logic)
+        // No destruction here; handled by TileEndTrigger's coroutine and OnTileDestroyed
         int toSpawn = tilesAheadBuffer - spawnedTiles.Count;
         for (int i = 0; i < toSpawn; i++)
             SpawnNewTiles();
+    }
+
+    // Called by TileEndTrigger when a tile is actually destroyed
+    public void OnTileDestroyed(GameObject tile)
+    {
+        foreach (var info in spawnedTiles)
+        {
+            if (info.tile == tile)
+            {
+                info.destroyed = true;
+                break;
+            }
+        }
     }
 
     private GameObject GetStraightObstacleToSpawn(bool preventSlideUnder)
@@ -194,13 +245,9 @@ public class FloorSpawner : MonoBehaviour
                 currentHeightLevel += goUp ? 1 : -1;
                 RegisterTile(currentPosition, currentHeightLevel, rampTileLength);
 
-                spawnedTiles.Enqueue(newTile);
-
-                // Update predictedTurnPos and predictedHeight after each ramp
-                predictedHeight = currentHeightLevel;
-                turnTileLength = GetTileLength(turnPrefab);
-                direction = Quaternion.Euler(0, currentYAngle + (turnRightNext ? 90f : -90f), 0) * Vector3.forward;
-                predictedTurnPos = currentPosition + direction * turnTileLength;
+                spawnedTiles.Add(new TileInfo(newTile));
+                // (was: spawnedTiles.Enqueue(newTile);)
+                // Now using List<TileInfo>
             }
 
             if (IsOverlapping(predictedTurnPos, predictedHeight, turnTileLength, crossingMinSeparation))
@@ -280,7 +327,7 @@ public class FloorSpawner : MonoBehaviour
         if (triggerFinal != null)
         {
             triggerFinal.parentTile = newTileFinal;
-            triggerFinal.spawner = this; // <-- This sets the reference at runtime!
+            triggerFinal.spawner = this;
         }
 
         Vector3 newEndPosition = foundEndFinal.position;
@@ -293,25 +340,16 @@ public class FloorSpawner : MonoBehaviour
 
         RegisterTile(currentPosition, currentHeightLevel, thisTileLength);
 
-        spawnedTiles.Enqueue(newTileFinal);
+        spawnedTiles.Add(new TileInfo(newTileFinal));
 
         if (prefabToSpawn == turnRight)
             currentYAngle += 90f;
         else if (prefabToSpawn == turnLeft)
             currentYAngle -= 90f;
 
-        // Set slide-under flag
         lastWasSlideUnder = slideUnderObstacles.Contains(prefabToSpawn);
 
         if (lastWasGap)
             lastWasGap = false;
-
-        // Optionally, clean up old tiles from the queue if needed
-        while (spawnedTiles.Count > tilesAheadBuffer + 5) // keep a few extra for safety
-        {
-            var oldTile = spawnedTiles.Dequeue();
-            if (oldTile != null)
-                Destroy(oldTile);
-        }
     }
 }

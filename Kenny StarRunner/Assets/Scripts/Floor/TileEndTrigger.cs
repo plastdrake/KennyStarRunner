@@ -4,6 +4,7 @@ public class TileEndTrigger : MonoBehaviour
 {
     public GameObject parentTile;
     public FloorSpawner spawner;
+    private bool destructionStarted = false;
 
     private void Start()
     {
@@ -13,9 +14,9 @@ public class TileEndTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !destructionStarted)
         {
-            // Notify the spawner to spawn more tiles
+            destructionStarted = true;
             if (spawner != null)
                 spawner.OnTileEndReached(this);
 
@@ -26,6 +27,8 @@ public class TileEndTrigger : MonoBehaviour
     private System.Collections.IEnumerator DelayedDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (spawner != null)
+            spawner.OnTileDestroyed(parentTile);
         if (parentTile != null)
             Destroy(parentTile);
     }
