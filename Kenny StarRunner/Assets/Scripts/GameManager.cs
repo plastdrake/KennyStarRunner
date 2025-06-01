@@ -129,6 +129,33 @@ public class GameManager : MonoBehaviour
     public void EquipTitle(Powerup title)
     {
         EquippedTitle = title;
+
+        // Activate Forcefield if GalaxyHero is equipped
+        if (title != null && title.TypeOfItem == Item.ItemType.GalaxyHero)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                Transform forcefield = playerObj.transform.Find("Forcefield");
+                if (forcefield != null)
+                {
+                    forcefield.gameObject.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            // Deactivate Forcefield if another title is equipped
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                Transform forcefield = playerObj.transform.Find("Forcefield");
+                if (forcefield != null)
+                {
+                    forcefield.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     // Score management

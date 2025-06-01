@@ -39,6 +39,15 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeDamage(float amount, GameObject obj)
     {
         DamageSounds(obj);
+
+        // Check for GalaxyHero title and halve damage if equipped
+        if (GameManager.Instance != null &&
+            GameManager.Instance.EquippedTitle != null &&
+            GameManager.Instance.EquippedTitle.TypeOfItem == Assets.Scripts.Store.Item.ItemType.GalaxyHero)
+        {
+            amount *= 0.5f;
+        }
+
         if (CurrentHealth <= 0f)
             return;
 

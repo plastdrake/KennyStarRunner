@@ -171,6 +171,20 @@ public class RunnerCharacterController : MonoBehaviour
 
     void Update()
     {
+        // --- Hairdresser title: slow down the entire game to 0.8x if not free running ---
+        if (GameManager.Instance != null &&
+            GameManager.Instance.EquippedTitle != null &&
+            GameManager.Instance.EquippedTitle.TypeOfItem == Item.ItemType.Hairdresser &&
+            !IsFreeRunning)
+        {
+            Time.timeScale = 0.8f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        // -------------------------------------------------------------------------------
+
         // --- GLIDE HAT GRAVITY LOGIC ---
         bool hasGlide = false;
         if (GameManager.Instance != null && GameManager.Instance.EquippedPowerupType.HasValue)
@@ -361,7 +375,7 @@ public class RunnerCharacterController : MonoBehaviour
             airTimer += Time.deltaTime;
             if (GameManager.Instance.EquippedHatIndex == 2)
                 maxAirTime = 6.5f;
-            else 
+            else
                 maxAirTime = 4;
 
             if (!hasFallenToDeath && airTimer >= maxAirTime)
