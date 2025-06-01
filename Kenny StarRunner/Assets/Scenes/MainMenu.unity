@@ -2255,7 +2255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7126216581949010662, guid: f5f1e32092c7c4347ac2ae6b10452c65, type: 3}
       propertyPath: sceneName
-      value: StoreScene
+      value: Intro
       objectReference: {fileID: 0}
     - target: {fileID: 7126216581949010662, guid: f5f1e32092c7c4347ac2ae6b10452c65, type: 3}
       propertyPath: fadeCanvasGroup
