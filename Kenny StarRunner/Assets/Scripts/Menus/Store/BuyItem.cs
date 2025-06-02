@@ -54,14 +54,14 @@ public class BuyItem : MonoBehaviour
             _price.gameObject.SetActive(false);
             _moneyManager.Adjust(-powerupToBuy.Price);
             _shopSounds.BuySound();
+            powerupManager.SelectPowerup(powerupToBuy);
+            powerupManager.RefreshBalance();
         }
     }
     public void BuySelectedItem()
     {
 
         Buy();
-        powerupManager.SelectPowerup(powerupToBuy);
-        powerupManager.RefreshBalance();
     }
 
 
