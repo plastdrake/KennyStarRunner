@@ -791,7 +791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: straightForwardWithHoles.Array.size
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: 'straightFormardWithHoles.Array.data[0]'
@@ -853,6 +853,26 @@ PrefabInstance:
       propertyPath: 'straightForwardWithHoles.Array.data[4]'
       value: 
       objectReference: {fileID: 239340012298965693, guid: 6058ae09f2c74d84e863be603e602706, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[5]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: 39285f7ebf564384aaed1f5b81a4be2d, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[6]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: 2ec442c4e8b884140a5bd18fce30f108, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[7]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: c3630cc85b061f44f87ebcf7cedac8c5, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[8]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: 147a196279bb4704385a064b63358d1a, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[9]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: a51db825949908f4d8541ccc642fbb13, type: 3}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: 'straightFormardWithHoles.Array.data[10]'
       value: 

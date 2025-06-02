@@ -790,7 +790,7 @@ PrefabInstance:
     - target: {fileID: 8084815167302523840, guid: c66ea527608a5d945a143e2a2109ee10, type: 3}
       propertyPath: spawnConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 245117d418dd74e4b8b5e277fc44f174, type: 2}
+      objectReference: {fileID: 11400000, guid: 50b9155148ada2244bcbb616473530a6, type: 2}
     - target: {fileID: 9114114260159103069, guid: c66ea527608a5d945a143e2a2109ee10, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.08
