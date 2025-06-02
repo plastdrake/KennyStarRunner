@@ -802,8 +802,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006509278554318288}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08648925, y: -0.74254835, z: 0.097758316, w: 0.6569512}
-  m_LocalPosition: {x: -38.057144, y: 8.900001, z: -12.314286}
+  m_LocalRotation: {x: 0.122183256, y: 0, z: 0, w: 0.9925076}
+  m_LocalPosition: {x: 0, y: 4.7971425, z: -12.309572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -841,7 +841,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 50000
   field of view: 60.000004
   orthographic: 0
   orthographic size: 5
@@ -6796,6 +6796,7 @@ GameObject:
   - component: {fileID: 4264466471647303013}
   - component: {fileID: 8378404391622012083}
   - component: {fileID: 6123243657203636770}
+  - component: {fileID: 6336933979879852951}
   - component: {fileID: 477077701756856860}
   - component: {fileID: 8702654290612508733}
   - component: {fileID: 8468037501006211677}
@@ -6970,6 +6971,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 5214472800063055835}
+--- !u!114 &6336933979879852951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194665501881875835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666bbaca25eb7c04ea3f088b614677cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forcefieldObject: {fileID: 8327388966298186471}
 --- !u!114 &477077701756856860
 MonoBehaviour:
   m_ObjectHideFlags: 0

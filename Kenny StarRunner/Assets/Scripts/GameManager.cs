@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     public int CurrentScore { get; private set; } = 0;
     public Item.ItemType? EquippedPowerupType { get; private set; } = null; // Nullable for "none"
     public Powerup EquippedPowerup { get; private set; } = null;
-
     public Powerup EquippedTitle { get; private set; } = null;
 
     // --- Event for powerup changes (can be left for future extensibility) ---
