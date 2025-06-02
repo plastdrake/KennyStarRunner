@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Assets.Scripts.Store; // Needed for Powerup and Item.ItemType
+using Assets.Scripts.Store;
+using UnityEngine.SceneManagement; // Needed for Powerup and Item.ItemType
 
 public class GameManager : MonoBehaviour
 {
@@ -12,14 +14,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Texture2D customCursor;
     [SerializeField] private Vector2 cursorHotspot = Vector2.zero;
 
+    public bool hasSeenEnding = false;
+
     // Session data
     public int EquippedHatIndex { get; private set; } = -1;
     public int Money { get; private set; } = 0;
     public int CurrentScore { get; private set; } = 0;
     public Item.ItemType? EquippedPowerupType { get; private set; } = null; // Nullable for "none"
     public Powerup EquippedPowerup { get; private set; } = null;
-
     public Powerup EquippedTitle { get; private set; } = null;
+
+    // --- Event for powerup changes (can be left for future extensibility) ---
+    public event Action OnEquippedPowerupChanged;
 
     // Top 3 high scores (persistent)
     private const string HighScore1Key = "HighScore1";
@@ -28,13 +34,18 @@ public class GameManager : MonoBehaviour
 
     public int[] HighScores { get; private set; } = new int[3];
     public List<int> Hats { get; } = new List<int>();
+    public List<Item.ItemType> Titles { get; } = new List<Item.ItemType>();
     public int HighScore => HighScores[0];
 
     public void SaveHat(int index)
     {
-       Hats.Add(index);
-       Debug.Log(index);
+        Hats.Add(index);
     }
+    public void SaveTitle(Item.ItemType type)
+    {
+        Titles.Add(type);
+    }
+
     private void LoadHighScores()
     {
         HighScores[0] = PlayerPrefs.GetInt(HighScore1Key, 0);
@@ -50,6 +61,14 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void GoToOutroScene()
+    {
+        if (hasSeenEnding == false)
+        {
+            hasSeenEnding = true;
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Outro");
+        }
+    }
     void Awake()
     {
         if (Instance == null)
@@ -123,7 +142,33 @@ public class GameManager : MonoBehaviour
     {
         EquippedPowerup = powerup;
         EquippedPowerupType = powerup != null ? powerup.TypeOfItem : (Item.ItemType?)null;
-        // Optionally: Trigger events or update visuals here
+        Debug.Log("Invoking OnEquippedPowerupChanged event");
+        OnEquippedPowerupChanged?.Invoke();
+
+        // --- Force update player health and UI directly ---
+        ForceUpdatePlayerHealthAndUI();
+    }
+
+    public void ForceUpdatePlayerHealthAndUI()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            var health = playerObj.GetComponent<Health>();
+            if (health != null)
+            {
+                Debug.Log("Force updating Health and HealthBar for player.");
+                health.RefreshMaxHealthFromPowerup();
+            }
+            else
+            {
+                Debug.LogWarning("No Health component found on Player.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No GameObject with tag 'Player' found.");
+        }
     }
 
     public void EquipTitle(Powerup title)

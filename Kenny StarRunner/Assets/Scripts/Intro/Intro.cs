@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Intro : MonoBehaviour
 {
     public SceneLoader sceneLoader;
-    public float waitTime = 50f;
+    [SerializeField] public float waitTime = 52f;
     public float requiredHoldDuration = 2f;
 
     private bool sceneStarted = false;
@@ -17,7 +18,7 @@ public class Intro : MonoBehaviour
             sceneLoader = Object.FindFirstObjectByType<SceneLoader>();
         }
 
-        StartCoroutine(DelayedSceneLoad());
+            StartCoroutine(DelayedSceneLoad());
     }
 
     private void Update()

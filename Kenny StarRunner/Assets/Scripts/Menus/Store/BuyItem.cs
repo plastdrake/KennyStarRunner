@@ -17,30 +17,30 @@ public class BuyItem : MonoBehaviour
     private ShopSound _shopSounds;
     private Button btn;
     private bool _hasBeenBought;
-    
+
     void Start()
     {
-        
-        
         _shopSounds = _audioManager.GetComponent<ShopSound>();
         powerupManager.Register(this);
         _price.GetComponentInChildren<TMP_Text>().text = powerupToBuy.Price.ToString();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
         btn = GetComponentInChildren<Button>();
-        
         if (GameManager.Instance != null && GameManager.Instance.Hats.Contains(powerupToBuy.HatIndex))
         {
-            Debug.Log(GameManager.Instance.EquippedPowerup);
-            Debug.Log(powerupToBuy.HatIndex);
             _hasBeenBought = true;
             _price.SetActive(false); 
-            UpdateVisuals(GameManager.Instance.EquippedPowerup == powerupToBuy);
+            if(powerupToBuy.TypeOfItem == Item.ItemType.Hairdresser || powerupToBuy.TypeOfItem == Item.ItemType.GalaxyHero)
+                UpdateVisuals(GameManager.Instance.EquippedTitle == powerupToBuy);
+            else
+                UpdateVisuals(GameManager.Instance.EquippedPowerup == powerupToBuy);
         }
         CheckBalance();
     }
     public Powerup GetPowerup() => powerupToBuy;
 
-    public void Buy()
+
+
+    private void Buy()
     {
         if (!_hasBeenBought)
         {
@@ -55,18 +55,22 @@ public class BuyItem : MonoBehaviour
             _moneyManager.Adjust(-powerupToBuy.Price);
             _shopSounds.BuySound();
         }
+    }
+    public void BuySelectedItem()
+    {
 
+        Buy();
         powerupManager.SelectPowerup(powerupToBuy);
         powerupManager.RefreshBalance();
     }
+
+
     //TODO Flytta till MoneyManager
     public bool CheckBalance()
     {
         if (powerupToBuy.Price <= _moneyManager.GetBalance() || _hasBeenBought)
             return true;
         
-        
-        //btn.interactable = false;
         
         _price.GetComponentInChildren<TMP_Text>().color = new Color(0.5f,0,0);
         return false;
