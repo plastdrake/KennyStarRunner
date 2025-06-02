@@ -31,13 +31,19 @@ public class GameManager : MonoBehaviour
 
     public int[] HighScores { get; private set; } = new int[3];
     public List<int> Hats { get; } = new List<int>();
+    public List<int> Titles { get; } = new List<int>();
     public int HighScore => HighScores[0];
 
     public void SaveHat(int index)
     {
         Hats.Add(index);
+    }
+    public void SaveTitle(int index)
+    {
+        Hats.Add(index);
         Debug.Log(index);
     }
+
     private void LoadHighScores()
     {
         HighScores[0] = PlayerPrefs.GetInt(HighScore1Key, 0);
