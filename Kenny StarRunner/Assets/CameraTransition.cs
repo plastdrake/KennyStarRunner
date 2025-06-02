@@ -50,16 +50,11 @@ public class CameraTransition : MonoBehaviour
 
     void InitializeCamera()
     {
-        try
+        mainCamera = GameObject.FindWithTag("MainCam").GetComponent<CinemachineVirtualCameraBase>();
+        highScoreCamera = GameObject.FindWithTag("HighScoreCam").GetComponent<CinemachineVirtualCameraBase>();
+        if (mainCamera is null || highScoreCamera is null)
         {
-            mainCamera = GameObject.FindWithTag("MainCam").GetComponent<CinemachineVirtualCameraBase>();
-            highScoreCamera = GameObject.FindWithTag("HighScoreCam").GetComponent<CinemachineVirtualCameraBase>();
-            if(mainCamera is null || highScoreCamera is null) Debug.Log("A Camera is null");
-
-        }
-        catch (Exception)
-        {
-            // ignored
+            Debug.Log("A Camera is null");  
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
