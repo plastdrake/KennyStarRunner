@@ -1,5 +1,6 @@
 using Assets.Scripts.Store;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AchievementManager : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class AchievementManager : MonoBehaviour
         {
             case Item.ItemType.GalaxyHero when !mainAchievementOverlay.activeSelf:
                 mainAchievementOverlay.SetActive(true);
+                GameManager.Instance.GoToOutroScene();
                 break;
             case Item.ItemType.Hairdresser when !optionalAchievementOverlay.activeSelf:
                 optionalAchievementOverlay.SetActive(true);

@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoader: {fileID: 143380701}
-  waitTime: 50
+  waitTime: 53
   requiredHoldDuration: 2
 --- !u!4 &533832989
 Transform:

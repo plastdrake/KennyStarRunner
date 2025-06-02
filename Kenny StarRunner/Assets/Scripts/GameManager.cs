@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Assets.Scripts.Store; // Needed for Powerup and Item.ItemType
+using Assets.Scripts.Store;
+using UnityEngine.SceneManagement; // Needed for Powerup and Item.ItemType
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     // Custom cursor fields
     [SerializeField] private Texture2D customCursor;
     [SerializeField] private Vector2 cursorHotspot = Vector2.zero;
+
+    public bool hasSeenEnding = false;
 
     // Session data
     public int EquippedHatIndex { get; private set; } = -1;
@@ -58,6 +61,14 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void GoToOutroScene()
+    {
+        if (hasSeenEnding == false)
+        {
+            hasSeenEnding = true;
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Outro");
+        }
+    }
     void Awake()
     {
         if (Instance == null)
