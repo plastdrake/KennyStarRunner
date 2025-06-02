@@ -57,10 +57,15 @@ public class BuyItem : MonoBehaviour
             powerupManager.SelectPowerup(powerupToBuy);
             powerupManager.RefreshBalance();
         }
+        else
+        {
+            _shopSounds.EquipSound();
+            powerupManager.SelectPowerup(powerupToBuy);
+        }
+
     }
     public void BuySelectedItem()
     {
-
         Buy();
     }
 
