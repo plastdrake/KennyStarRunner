@@ -1249,8 +1249,12 @@ PrefabInstance:
       value: MenuManager
       objectReference: {fileID: 0}
     - target: {fileID: 3213941819642143758, guid: 2d3a0eb1348944b98bb02c80675621e7, type: 3}
+      propertyPath: m_Spacing
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213941819642143758, guid: 2d3a0eb1348944b98bb02c80675621e7, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3718113038474223012, guid: 2d3a0eb1348944b98bb02c80675621e7, type: 3}
       propertyPath: m_LocalPosition.x

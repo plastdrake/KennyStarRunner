@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -36,18 +37,30 @@ public class CameraTransition : MonoBehaviour
     {
         if (!isMoving) 
             return;
+
         if(mainCamera is null || highScoreCamera is null)
             InitializeCamera();
         _isHighScoreMenuOpen = false;
+
+        if (mainCamera is null || highScoreCamera is null)
+            return;
         mainCamera.Priority = 10;
         highScoreCamera.Priority = 0;
     }
 
     void InitializeCamera()
     {
-        mainCamera = GameObject.FindWithTag("MainCam").GetComponent<CinemachineVirtualCameraBase>();
-        highScoreCamera = GameObject.FindWithTag("HighScoreCam").GetComponent<CinemachineVirtualCameraBase>();
-        if(mainCamera is null || highScoreCamera is null) Debug.Log("A Camera is null");
+        try
+        {
+            mainCamera = GameObject.FindWithTag("MainCam").GetComponent<CinemachineVirtualCameraBase>();
+            highScoreCamera = GameObject.FindWithTag("HighScoreCam").GetComponent<CinemachineVirtualCameraBase>();
+            if(mainCamera is null || highScoreCamera is null) Debug.Log("A Camera is null");
+
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
