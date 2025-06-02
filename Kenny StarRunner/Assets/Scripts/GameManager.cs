@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     public Powerup EquippedTitle { get; private set; } = null;
 
+    // --- Event for powerup changes (can be left for future extensibility) ---
+    public event Action OnEquippedPowerupChanged;
+
     // Top 3 high scores (persistent)
     private const string HighScore1Key = "HighScore1";
     private const string HighScore2Key = "HighScore2";
@@ -32,8 +36,8 @@ public class GameManager : MonoBehaviour
 
     public void SaveHat(int index)
     {
-       Hats.Add(index);
-       Debug.Log(index);
+        Hats.Add(index);
+        Debug.Log(index);
     }
     private void LoadHighScores()
     {
@@ -123,7 +127,33 @@ public class GameManager : MonoBehaviour
     {
         EquippedPowerup = powerup;
         EquippedPowerupType = powerup != null ? powerup.TypeOfItem : (Item.ItemType?)null;
-        // Optionally: Trigger events or update visuals here
+        Debug.Log("Invoking OnEquippedPowerupChanged event");
+        OnEquippedPowerupChanged?.Invoke();
+
+        // --- Force update player health and UI directly ---
+        ForceUpdatePlayerHealthAndUI();
+    }
+
+    public void ForceUpdatePlayerHealthAndUI()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            var health = playerObj.GetComponent<Health>();
+            if (health != null)
+            {
+                Debug.Log("Force updating Health and HealthBar for player.");
+                health.RefreshMaxHealthFromPowerup();
+            }
+            else
+            {
+                Debug.LogWarning("No Health component found on Player.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No GameObject with tag 'Player' found.");
+        }
     }
 
     public void EquipTitle(Powerup title)

@@ -12,28 +12,45 @@ public class Health : MonoBehaviour, IDamageable
     public event Action OnDeath;
     private PlayerSounds playerSounds;
 
+    private float baseMaxHealth = 20f;
+
+    [Header("UI Reference")]
+    [SerializeField] private HealthBar healthBar; // Assign in Inspector
+
     private void Awake()
     {
         playerSounds = GetComponentInChildren<PlayerSounds>();
+        baseMaxHealth = MaxHealth; // Store the original value
+        RefreshMaxHealthFromPowerup();
+    }
+
+    public void RefreshMaxHealthFromPowerup()
+    {
+        Debug.Log("RefreshMaxHealthFromPowerup called");
 
         float extraHealth = 0f;
 
-        // Check if the player has a heart powerup equipped
         if (GameManager.Instance != null && GameManager.Instance.EquippedPowerupType == Item.ItemType.Heart)
         {
-            // If you want to use a fixed value, set it here (e.g., 5f)
-            // extraHealth = 5f;
-
-            // If you want to use the Powerup asset's Amount, you need to store a reference to the equipped Powerup in GameManager
-            // Example (if you add EquippedPowerup to GameManager):
-            // if (GameManager.Instance.EquippedPowerup != null)
-            //     extraHealth = GameManager.Instance.EquippedPowerup.Amount;
-
-            extraHealth = 10f; // Change this value as needed or fetch from Powerup asset
+            extraHealth = 10f;
         }
 
-        MaxHealth += extraHealth;
+        MaxHealth = baseMaxHealth + extraHealth;
+        Debug.Log("MaxHealth: " + MaxHealth);
+
+        // Always heal to full when max health increases
         CurrentHealth = MaxHealth;
+
+        // Update the HealthBar UI
+        if (healthBar != null)
+        {
+            Debug.Log("Calling RebuildHearts on HealthBar");
+            healthBar.RebuildHearts();
+        }
+        else
+        {
+            Debug.LogWarning("HealthBar reference not set on " + gameObject.name);
+        }
     }
 
     public void TakeDamage(float amount, GameObject obj)
