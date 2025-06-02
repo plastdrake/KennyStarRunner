@@ -70,6 +70,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1990467702339165122, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
+      propertyPath: meshTransform
+      value: 
+      objectReference: {fileID: 55982527250707531}
     - target: {fileID: 2489861645466249486, guid: 1ebf4f8d76fb1b74b91d2d0cdaee7a5c, type: 3}
       propertyPath: m_Name
       value: ExplosiveMine
