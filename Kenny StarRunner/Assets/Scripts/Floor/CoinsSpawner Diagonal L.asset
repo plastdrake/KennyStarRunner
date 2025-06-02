@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePrefabs:
   - prefab: {fileID: 2459104522221579813, guid: 9c017df8a327cb846887ceecccb9456a, type: 3}
-    spawnChance: 6
+    spawnChance: 10
