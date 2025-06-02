@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerupManager : MonoBehaviour
 {
     private Powerup _equippedPowerUp;
+    private Powerup _equippedTitle;
     private List<BuyItem> allItems = new List<BuyItem>();
     private HatManager hatManager;
 
@@ -16,7 +17,11 @@ public class PowerupManager : MonoBehaviour
 
     public void SelectPowerup(Powerup powerup)
     {
-        _equippedPowerUp = powerup;
+        if (powerup.TypeOfItem == Item.ItemType.GalaxyHero || powerup.TypeOfItem == Item.ItemType.Hairdresser)
+            _equippedTitle = powerup;
+        else
+            _equippedPowerUp = powerup;
+
         UpdateAll();
         RefreshBalance();
 
@@ -56,7 +61,18 @@ public class PowerupManager : MonoBehaviour
     private void UpdateAll()
     {
         foreach (var item in allItems)
-            item.UpdateVisuals(item.GetPowerup() == _equippedPowerUp);
+        {
+            var powerup = item.GetPowerup();
+
+            if (powerup.TypeOfItem == Item.ItemType.GalaxyHero || powerup.TypeOfItem == Item.ItemType.Hairdresser)
+            {
+                item.UpdateVisuals(powerup == _equippedTitle);
+            }
+            else
+            {
+                item.UpdateVisuals(powerup == _equippedPowerUp);
+            }
+        }
     }
 
     public void RefreshBalance()
