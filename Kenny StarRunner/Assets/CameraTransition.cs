@@ -34,7 +34,6 @@ public class CameraTransition : MonoBehaviour
 
     public void MoveToMainCamera(bool isMoving)
     {
-        Debug.Log("Moving to Main Camera");
         if (!isMoving) 
             return;
         if(mainCamera is null || highScoreCamera is null)

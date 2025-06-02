@@ -17,6 +17,7 @@ public class MenuManager : MonoBehaviour
     public GameObject _hatsMenu;
     public GameObject _titlesMenu;
     public GameObject _infoObject;
+    private AchievementManager _achievementManager;
     
     private ShopSound _sounds;
 
@@ -104,6 +105,8 @@ public class MenuManager : MonoBehaviour
 
     void Awake()
     {
+        _achievementManager = GetComponent<AchievementManager>();
+        _achievementManager.CheckAchievements();
         _cameraTransition = GetComponent<CameraTransition>();
         _sounds = _audioManager.GetComponent<ShopSound>();
         menuAction = new();

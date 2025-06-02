@@ -31,17 +31,16 @@ public class GameManager : MonoBehaviour
 
     public int[] HighScores { get; private set; } = new int[3];
     public List<int> Hats { get; } = new List<int>();
-    public List<int> Titles { get; } = new List<int>();
+    public List<Item.ItemType> Titles { get; } = new List<Item.ItemType>();
     public int HighScore => HighScores[0];
 
     public void SaveHat(int index)
     {
         Hats.Add(index);
     }
-    public void SaveTitle(int index)
+    public void SaveTitle(Item.ItemType type)
     {
-        Hats.Add(index);
-        Debug.Log(index);
+        Titles.Add(type);
     }
 
     private void LoadHighScores()

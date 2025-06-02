@@ -17,17 +17,14 @@ public class BuyItem : MonoBehaviour
     private ShopSound _shopSounds;
     private Button btn;
     private bool _hasBeenBought;
-    
+
     void Start()
     {
-        
-        
         _shopSounds = _audioManager.GetComponent<ShopSound>();
         powerupManager.Register(this);
         _price.GetComponentInChildren<TMP_Text>().text = powerupToBuy.Price.ToString();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
         btn = GetComponentInChildren<Button>();
-        
         if (GameManager.Instance != null && GameManager.Instance.Hats.Contains(powerupToBuy.HatIndex))
         {
             _hasBeenBought = true;
