@@ -791,7 +791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: straightForwardWithHoles.Array.size
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: 'straightFormardWithHoles.Array.data[0]'
@@ -885,6 +885,18 @@ PrefabInstance:
       propertyPath: 'straightFormardWithHoles.Array.data[12]'
       value: 
       objectReference: {fileID: 239340012298965693, guid: 6e6d495847c8a844392e85598485dd07, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[10]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: a51db825949908f4d8541ccc642fbb13, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[11]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: 147a196279bb4704385a064b63358d1a, type: 3}
+    - target: {fileID: 2423397005699638667, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
+      propertyPath: 'straightForwardWithHoles.Array.data[12]'
+      value: 
+      objectReference: {fileID: 239340012298965693, guid: c3630cc85b061f44f87ebcf7cedac8c5, type: 3}
     - target: {fileID: 4227238576342062621, guid: 67c5954519b0dca498e9e747dd56979c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePrefabs:
   - prefab: {fileID: 6491911711553738016, guid: df2aae72ea853124392cc05ed981f9c4, type: 3}
-    spawnChance: 5
+    spawnChance: 1
   - prefab: {fileID: 6491911711553738016, guid: f4f5fe22bf34d0042aff2324031f4ced, type: 3}
-    spawnChance: 10
+    spawnChance: 3
   - prefab: {fileID: 6491911711553738016, guid: 5c36e0ea71cb62d4fb4f2176ae0afc95, type: 3}
-    spawnChance: 20
+    spawnChance: 5
   - prefab: {fileID: 6719451633267163463, guid: 08d3d7b65c0274f4c96ddf5d77e0e071, type: 3}
-    spawnChance: 50
+    spawnChance: 100
