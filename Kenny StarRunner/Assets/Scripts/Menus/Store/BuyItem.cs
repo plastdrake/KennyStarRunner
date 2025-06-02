@@ -30,11 +30,12 @@ public class BuyItem : MonoBehaviour
         
         if (GameManager.Instance != null && GameManager.Instance.Hats.Contains(powerupToBuy.HatIndex))
         {
-            Debug.Log(GameManager.Instance.EquippedPowerup);
-            Debug.Log(powerupToBuy.HatIndex);
             _hasBeenBought = true;
             _price.SetActive(false); 
-            UpdateVisuals(GameManager.Instance.EquippedPowerup == powerupToBuy);
+            if(powerupToBuy.TypeOfItem == Item.ItemType.Hairdresser || powerupToBuy.TypeOfItem == Item.ItemType.GalaxyHero)
+                UpdateVisuals(GameManager.Instance.EquippedTitle == powerupToBuy);
+            else
+                UpdateVisuals(GameManager.Instance.EquippedPowerup == powerupToBuy);
         }
         CheckBalance();
     }

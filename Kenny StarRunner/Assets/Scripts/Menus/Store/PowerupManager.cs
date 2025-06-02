@@ -26,13 +26,13 @@ public class PowerupManager : MonoBehaviour
             if (powerup.TypeOfItem == Item.ItemType.Hairdresser || powerup.TypeOfItem == Item.ItemType.GalaxyHero)
             {
                 GameManager.Instance.EquipTitle(powerup);
-                return;
+                
             }
             else
             {
                 GameManager.Instance.EquipPowerup(powerup);
-                GameManager.Instance.SaveHat(powerup.HatIndex);
             }
+            GameManager.Instance.SaveHat(powerup.HatIndex);
         }
 
         // Find HatManager if needed
