@@ -46,6 +46,13 @@ public class MenuManager : MonoBehaviour
     public void CloseMainMenu()
     {
         _mainMenu.SetActive(false);
+        ShowCursor(false);
+    }
+
+    public void ToggleMainMenu()
+    {
+        _mainMenu.SetActive(!_mainMenu.activeSelf);
+        ShowCursor(true);
     }
 
     public void OpenSettings()
@@ -72,16 +79,20 @@ public class MenuManager : MonoBehaviour
         _titlesMenu.SetActive(true);
     }
 
-    private void ShowCursor()
+    private void ShowCursor(bool showCursor)
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (showCursor)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
-    private void CloseCursor()
-    {
-        
-    }
     public void QuitGameMode()
     {
 #if UNITY_EDITOR
@@ -109,7 +120,8 @@ public class MenuManager : MonoBehaviour
             else if (_settings.activeSelf)
                 _settings.SetActive(false);
             else
-                _mainMenu.SetActive(!_mainMenu.activeSelf);
+                ToggleMainMenu();
+                
         };
     }
 }

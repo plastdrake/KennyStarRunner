@@ -21,7 +21,7 @@ public class CameraTransition : MonoBehaviour
         RunnerCharacterController.OnMovementChanged -= MoveToMainCamera;
     }
 
-    private void MoveToHighScore()
+    public void MoveToHighScore()
     {
         if(mainCamera is null || highScoreCamera is null)
             InitializeCamera();
