@@ -40,7 +40,9 @@ public class BuyItem : MonoBehaviour
     }
     public Powerup GetPowerup() => powerupToBuy;
 
-    public void Buy()
+
+
+    private void Buy()
     {
         if (!_hasBeenBought)
         {
@@ -55,18 +57,22 @@ public class BuyItem : MonoBehaviour
             _moneyManager.Adjust(-powerupToBuy.Price);
             _shopSounds.BuySound();
         }
+    }
+    public void BuySelectedItem()
+    {
 
+        Buy();
         powerupManager.SelectPowerup(powerupToBuy);
         powerupManager.RefreshBalance();
     }
+
+
     //TODO Flytta till MoneyManager
     public bool CheckBalance()
     {
         if (powerupToBuy.Price <= _moneyManager.GetBalance() || _hasBeenBought)
             return true;
         
-        
-        //btn.interactable = false;
         
         _price.GetComponentInChildren<TMP_Text>().color = new Color(0.5f,0,0);
         return false;
