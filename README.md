@@ -22,6 +22,8 @@ coins, avoids hazards, and uses the in-game store to unlock and equip upgrades.
 I contributed gameplay programming, systems integration, debugging, and
 polishing across the project. Selected contributions include:
 
+- Created all of the game's environment props and gameplay props.
+- Designed and implemented the core main-game loop.
 - Implemented and fixed store purchasing and item re-equipping behavior.
 - Added coin spawning and visual growth behavior across level prefabs.
 - Reworked the health display from a health bar to a heart-based UI.
